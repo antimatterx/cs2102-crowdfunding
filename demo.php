@@ -34,7 +34,7 @@ $dbconn = pg_connect("host=localhost port=5432 dbname=test user=postgres passwor
         </select>
 
         <input type="radio" name="Status" id="Status1" value="closed">closed
-        <input type="radio" name="Status" id="Status2" value="ongoing">ongoing
+        <input type="radio" name="Status" id="Status2" value="ongoing" checked="checked">ongoing
 
         <input type="submit" name="formSubmit" value="Search" >
 </form>
