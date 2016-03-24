@@ -37,6 +37,11 @@ tag VARCHAR(64) REFERENCES category(name),
 PRIMARY KEY(id, tag)
 );
 
+CREATE TABLE image (
+id NUMERIC PRIMARY KEY REFERENCES project(id),
+data BYTEA
+);
+
 
 --PERSON
 INSERT INTO person (name, email, password) VALUES ('Peter', 'im_not_spiderman@gmail.com', '123456');
