@@ -11,7 +11,7 @@ $db = "test";
 $con = pg_connect("host=$host dbname=$db user=$user password=$pass")
     or die ("Could not connect to server\n");
 
-$file_name = "qr.png";
+$file_name = "images\idea.jpg";
 
 $img = fopen($file_name, 'r') or die("cannot read image\n");
 $data = fread($img, filesize($file_name));
