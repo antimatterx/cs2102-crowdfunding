@@ -99,7 +99,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 
 <li class="page-nav-popular-posts"><a href="javascript:void(0)" id="Countries-scroll" class="page-anchor-link">Countries</a></li>
 
-<li class="page-nav-top-posts active"><a href="index.php#categories" id="feature-scroll" class="page-anchor-link">Search</a></li>
+<li class="page-nav-top-posts active"><a href="search.php" id="feature-scroll" class="page-anchor-link">Search</a></li>
 </ul>
 
 <div id="site-nav" class="horizontal-list"><div class="menu-main-menu-container">

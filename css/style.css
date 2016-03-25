@@ -958,6 +958,23 @@ text-align: left;
 box-shadow: 0 -1px 0 #555;
 }
 
+input.search-field {
+min-width: 385px;
+height: 18px;
+padding: 8px 10px;
+font-size: 12px;
+background-color: #DDD;
+color: #666;
+border: none;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+border-radius: 5px;
+border-width: 1px;
+text-align: left;
+-webkit-appearance: none;
+box-shadow: 0 -1px 0 #555;
+}
+
 /* Search Form
 ------------------------------------------------------------ */
 
