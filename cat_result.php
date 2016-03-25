@@ -60,7 +60,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 </div><!-- end #content -->
 
 <!-- Categories Section -->
-<div id="cat" class="categories">
+<div class="categories">
 	<cap>Categories</cap>
 	<br>
 	<sub>Browse projects by categories</sub>
@@ -75,7 +75,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 
 <ul class="plain-list stories-table">    
 <?php
-$query = 'SELECT p.title FROM project p, has_category h WHERE p.id=h.id AND h.tag=$var_value ORDER BY p.title';
+$query = 'SELECT h.id FROM has_category h WHERE h.tag=$var_value';
 $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 ?>
 

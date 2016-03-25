@@ -104,6 +104,7 @@ font: 100%/120% "lft-etica", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 25pt;
 	border:15px;
 	line-height: 2em;
+	text-align:center;
 }
 
 .categories sub {
@@ -111,6 +112,7 @@ font: 100%/120% "lft-etica", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 20px;
 	border:15px;
 	font-weight: 400;
+	text-align:center;
 }
 
 .categories span {

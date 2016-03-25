@@ -110,8 +110,8 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 	</div><!-- end #content -->
 
 <!-- Categories Section -->
-<div id="cat" class="categories">
-	<cap>Categories</cap>
+<div class="categories">
+	<cap id="categories">Categories</cap>
 	<br>
 	<sub>Browse projects by categories</sub>
 </div>
@@ -121,13 +121,13 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 <div class="categories">
 	<a href="cat_result.php?varname=<?php echo "art" ?>"><span><img src="images/art.jpg" style="width: 100%" class="post-image">Art</span></a>
 	<a href="cat_result.php?varname=<?php echo "education" ?>"><span><img src="images/education.jpg" style="width: 100%" class="post-image">Education</span></a>
-	<a href="index.html"><span><img src="images/environment.jpg" style="width: 100%" class="post-image">Environment</span></a>
-	<a href="index.html"><span><img src="images/game.jpg" style="width: 100%" class="post-image">Gaming</span></a>
+	<a href="cat_result.php?varname=<?php echo "environment" ?>"><span><img src="images/environment.jpg" style="width: 100%" class="post-image">Environment</span></a>
+	<a href="cat_result.php?varname=<?php echo "gaming" ?>"><span><img src="images/game.jpg" style="width: 100%" class="post-image">Gaming</span></a>
 
-	<a href="index.html"><span><img src="images/music.jpg" style="width: 100%" class="post-image">Music</span></a>
-	<a href="index.html"><span><img src="images/technology.jpg" style="width: 100%" class="post-image">Technology</span></a>
-	<a href="index.html"><span><img src="images/video.jpg" style="width: 100%" class="post-image">Video</span></a>
-	<a href="index.html"><span><img src="images/other.jpg" style="width: 100%" class="post-image">Others</span></a>
+	<a href="cat_result.php?varname=<?php echo "music" ?>"><span><img src="images/music.jpg" style="width: 100%" class="post-image">Music</span></a>
+	<a href="cat_result.php?varname=<?php echo "technology" ?>"><span><img src="images/technology.jpg" style="width: 100%" class="post-image">Technology</span></a>
+	<a href="cat_result.php?varname=<?php echo "video" ?>"><span><img src="images/video.jpg" style="width: 100%" class="post-image">Video</span></a>
+	<a href="cat_result.php?varname=<?php echo "other" ?>"><span><img src="images/other.jpg" style="width: 100%" class="post-image">Others</span></a>
 </div>
 
 <!-- Popular List -->
