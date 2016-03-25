@@ -31,7 +31,7 @@ CREATE TABLE category (
 name VARCHAR(64) PRIMARY KEY
 );
 
-CREATE TABLE hasCategory (
+CREATE TABLE has_category (
 id NUMERIC REFERENCES project(id),
 tag VARCHAR(64) REFERENCES category(name),
 PRIMARY KEY(id, tag)
