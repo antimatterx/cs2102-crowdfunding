@@ -1,7 +1,17 @@
-<html>
+﻿<html>
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
 <head>
+<style>
+table,th,td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 2px;
+}
+</style>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 <title>Uptown Fund &raquo; Your One-Stop Crowdfunding Hub</title>
@@ -41,43 +51,21 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
   });
   
   jQuery(document).ready(function (){
-//scroll the popular
   jQuery('#popular-scroll').click(function (){
             //jQuery(this).animate(function(){
                 jQuery('html, body').animate({
                     scrollTop: jQuery('#popular-upcoming').offset().top
-                     }, 1000);
+                     }, 2000);
             //});
         });
-
-//scroll the home button
+		
 		jQuery('#feature-scroll').click(function (){
             //jQuery(this).animate(function(){
                 jQuery('html, body').animate({
                     scrollTop: jQuery('#inner').offset().top
-                     }, 1000);
+                     }, 2000);
             //});
         });
-
-//scroll the category button
-				jQuery('#category-scroll').click(function (){
-            //jQuery(this).animate(function(){
-                jQuery('html, body').animate({
-                    scrollTop: jQuery('#categories').offset().top
-                     }, 1000);
-            //});
-        });
-
-//scroll the country button
-				jQuery('#Countries-scroll').click(function (){
-            //jQuery(this).animate(function(){
-                jQuery('html, body').animate({
-                    scrollTop: jQuery('#countries').offset().top
-                     }, 1000);
-            //});
-        });
-
-
 		  });
 	  </script>
 </head>
@@ -95,11 +83,11 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 
 <li class="page-nav-popular-posts"><a href="javascript:void(0)" id="popular-scroll" class="page-anchor-link">Most Popular</a></li>
 
-<li class="page-nav-top-posts active"><a href="javascript:void(0)" id="category-scroll" class="page-anchor-link">Categories</a></li>
+<li class="page-nav-top-posts active"><a href="index.php#categories" id="feature-scroll" class="page-anchor-link">Categories</a></li>
 
-<li class="page-nav-popular-posts"><a href="javascript:void(0)" id="Countries-scroll" class="page-anchor-link">Countries</a></li>
+<li class="page-nav-popular-posts"><a href="index.php#countries" id="popular-scroll" class="page-anchor-link">Countries</a></li>
 
-<li class="page-nav-top-posts active"><a href="search.php" id="feature-scroll" class="page-anchor-link">Search</a></li>
+<li class="page-nav-top-posts active"><a href="index.php#categories" id="feature-scroll" class="page-anchor-link">Search</a></li>
 </ul>
 
 <div id="site-nav" class="horizontal-list"><div class="menu-main-menu-container">
@@ -117,86 +105,121 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 <div id="inner">
 <div class="wrap">
 <div id="content-sidebar-wrap">
+
 				
-				<div id="content" class="hfeed">
-				<div class="post-5 post type-post status-publish format-standard hentry category-featured category-parent-category-i entry feature feature">
-
-		<a href="#" title="Welcome to Uptown Fund"><img width="660" height="370" src="images/1.jpg" class="alignleft post-image" alt="1" /></a>		<h2 class="entry-title"><a href="#" title="Welcome to Uptown Fund" rel="bookmark">Welcome to Uptown Fund</a></h2> 
-		
-				<div class="entry-content">
-			<p>Uptown Fund is the one-stop hub to turn ideas into successful inventions.  Here, you can reach out to potential investors by hosting your projects and ideas.  Alternatively, you can browse through and contribute to thousands of new inventions from all around the world. </p>
-
-			<a href="index.php#categories" class="bigg-read-more">Browse</a>		</div><!-- end .entry-content -->
-		
-	</div><!-- end .postclass -->
-	</div><!-- end #content -->
-
-<!-- Categories Section -->
-<div class="categories">
-	<cap id="categories">Categories</cap>
-	<br>
-	<sub>Browse projects by categories</sub>
-</div>
+<br><br><br><br>
+<!--user profile-->
+<h1> User Profile </h1>
+<p title="User Profile"></p>
+<table style="width:60%">
+  <tr>
+    <td>Name:</td>
+    <td>CS2102 </td>
+ </tr>
+<tr>
+    <td>Email:</td>
+    <td>CS2102@nus.edu.sg </td>
+ </tr>
+<tr>
+    <td>Phone:</td>
+    <td>999-999-999</td>
+ </tr>
+<tr>
+    <td>DOB:</td>
+    <td>20-9-2000 </td>
+ </tr>
+<tr>
+    <td>Register Date</td>
+    <td>16-7-2000 </td>
+ </tr>
+<tr>
+    <td>Address:</td>
+    <td>NUS SOC CS2102 LT19 </td>
+ </tr>
+<tr>
+    <td>Total Donation(US $):</td>
+    <td>$1500 </td>
+ </tr>
+<tr>
+    <td>Total Collection(US $):</td>
+    <td>$2500 </td>
+ </tr>
+</table>
 <br>
 
-<!-- Categories List -->
-<div class="categories">
-	<a href="cat_result.php?varname=<?php echo "art" ?>"><span><img src="images/art.jpg" style="width: 100%" class="post-image">Art</span></a>
-	<a href="cat_result.php?varname=<?php echo "education" ?>"><span><img src="images/education.jpg" style="width: 100%" class="post-image">Education</span></a>
-	<a href="cat_result.php?varname=<?php echo "environment" ?>"><span><img src="images/environment.jpg" style="width: 100%" class="post-image">Environment</span></a>
-	<a href="cat_result.php?varname=<?php echo "gaming" ?>"><span><img src="images/game.jpg" style="width: 100%" class="post-image">Gaming</span></a>
-
-	<a href="cat_result.php?varname=<?php echo "music" ?>"><span><img src="images/music.jpg" style="width: 100%" class="post-image">Music</span></a>
-	<a href="cat_result.php?varname=<?php echo "technology" ?>"><span><img src="images/technology.jpg" style="width: 100%" class="post-image">Technology</span></a>
-	<a href="cat_result.php?varname=<?php echo "video" ?>"><span><img src="images/video.jpg" style="width: 100%" class="post-image">Video</span></a>
-	<a href="cat_result.php?varname=<?php echo "other" ?>"><span><img src="images/other.jpg" style="width: 100%" class="post-image">Others</span></a>
-</div>
-
-<!-- Popular List -->
-<div id="popular-upcoming" class="stories-container sixcol">
-
-<div class="stories-section-header">
-<h2 id="popular" class="stories-section-header-hed">Popular</h2>
-<h3 class="stories-section-header-subhed">The most popular crowdfunding projects</h3>
-</div>
-
-<ul class="plain-list stories-table">    
-<?php
-$query = "SELECT p.title FROM donation d, project p WHERE p.id=d.project AND p.status='ongoing' GROUP BY p.title  ORDER BY COUNT(d.project) DESC LIMIT 10";
-
-$result = pg_query($query) or die('Query failed: ' . pg_last_error());
-?>
-
-<?php while($line = pg_fetch_array($result, null, PGSQL_ASSOC)){ ?>
-	<?php foreach ($line as $col_value) { ?>
-  	<li><a href="#"><?php echo $col_value; ?></a></li>
-   <?php } ?>
- <?php } ?>
-<?php pg_free_result($result); ?>
-</ul>
-</div>
-
-<!-- Countries List -->
-<div id="countries" class="stories-container sixcol last">
-<div class="stories-section-header">
-<h2 class="stories-section-header-hed">Countries</h2>
-<h3 class="stories-section-header-subhed">Browse projects by countries</h3>
-</div>
-
-<ul class="plain-list stories-table">    
-<?php
-$query = 'SELECT DISTINCT country FROM project ORDER BY country';
-$result = pg_query($query) or die('Query failed: ' . pg_last_error());
-?>
-
-<?php while($line = pg_fetch_array($result, null, PGSQL_ASSOC)){ ?>
-	<?php foreach ($line as $col_value) { ?>
-  	<li><a href="#"><?php echo $col_value; ?></a></li>
-   <?php } ?>
- <?php } ?>
-<?php pg_free_result($result); ?>
-</ul>
-
+<!--donated project profile-->
+<h1> Donated Projects </h1>
+<p title="Donated Projects"></p>
+<table style="width:60%">
+  <tr>
+    <td>Project Name:</td>
+    <td>CS2102 Project </td>
+ </tr>
+<tr>
+    <td>Project ID:</td>
+    <td>112113114 </td>
+ </tr>
+<tr>
+    <td>Starts Date:</td>
+    <td>9-7-2015</td>
+ </tr>
+<tr>
+    <td>Ends Date:</td>
+    <td>20-9-2015 </td>
+ </tr>
+<tr>
+    <td>Donated Date:</td>
+    <td>11-9-2015 </td>
+ </tr>
+<tr>
+    <td>Donated Amount:</td>
+    <td>$19.00</td>
+ </tr>
+<tr>
+    <td>Project Status:</td>
+    <td>closed</td>
+ </tr>
+</table>
+<!--proposed project profile-->
+<br>
+<h1> Proposed Projects </h1>
+<p title="Proposed Projects"></p>
+<table style="width:60%">
+  <tr>
+    <td>Project Name:</td>
+    <td>2102Project</td>
+ </tr>
+<tr>
+    <td>Project ID:</td>
+    <td>12341234</td>
+ </tr>
+<tr>
+    <td>Starts Date:</td>
+    <td>9-7-2015</td>
+ </tr>
+<tr>
+    <td>Ends Date:</td>
+    <td>20-9-2015</td>
+ </tr>
+<tr>
+    <td>Target Amount:</td>
+    <td>$100.00 </td>
+ </tr>
+   
+<tr>
+    <td> Current Amount:</td>
+    <td>$19.00</td>
+ </tr>
+   <tr>
+    <td>Contributor ID:</td>
+    <td>45646789</td>
+ </tr>
+ <tr>
+    <td>Project Status:</td>
+    <td>ongoing</td>
+ </tr>
+    
+</table>
 
 	</div><!-- end #content-sidebar-wrap -->
 	</div><!-- end .wrap --></div><!-- end #inner --> 
@@ -251,5 +274,7 @@ Opt-out anytime with one click and we'll never share your information.
 
 
 </div>
+
 </body>
 </html>
+
