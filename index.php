@@ -41,21 +41,43 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
   });
   
   jQuery(document).ready(function (){
+//scroll the popular
   jQuery('#popular-scroll').click(function (){
             //jQuery(this).animate(function(){
                 jQuery('html, body').animate({
                     scrollTop: jQuery('#popular-upcoming').offset().top
-                     }, 2000);
+                     }, 1000);
             //});
         });
-		
+
+//scroll the home button
 		jQuery('#feature-scroll').click(function (){
             //jQuery(this).animate(function(){
                 jQuery('html, body').animate({
                     scrollTop: jQuery('#inner').offset().top
-                     }, 2000);
+                     }, 1000);
             //});
         });
+
+//scroll the category button
+				jQuery('#category-scroll').click(function (){
+            //jQuery(this).animate(function(){
+                jQuery('html, body').animate({
+                    scrollTop: jQuery('#categories').offset().top
+                     }, 1000);
+            //});
+        });
+
+//scroll the country button
+				jQuery('#Countries-scroll').click(function (){
+            //jQuery(this).animate(function(){
+                jQuery('html, body').animate({
+                    scrollTop: jQuery('#countries').offset().top
+                     }, 1000);
+            //});
+        });
+
+
 		  });
 	  </script>
 </head>
@@ -73,9 +95,9 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 
 <li class="page-nav-popular-posts"><a href="javascript:void(0)" id="popular-scroll" class="page-anchor-link">Most Popular</a></li>
 
-<li class="page-nav-top-posts active"><a href="index.php#categories" id="feature-scroll" class="page-anchor-link">Categories</a></li>
+<li class="page-nav-top-posts active"><a href="javascript:void(0)" id="category-scroll" class="page-anchor-link">Categories</a></li>
 
-<li class="page-nav-popular-posts"><a href="index.php#countries" id="popular-scroll" class="page-anchor-link">Countries</a></li>
+<li class="page-nav-popular-posts"><a href="javascript:void(0)" id="Countries-scroll" class="page-anchor-link">Countries</a></li>
 
 <li class="page-nav-top-posts active"><a href="index.php#categories" id="feature-scroll" class="page-anchor-link">Search</a></li>
 </ul>
