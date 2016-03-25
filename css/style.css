@@ -19,6 +19,7 @@
 * Import Fonts
 * Hyperlinks
 * Body
+* Categories
 * Grid
 * Wrap
 * Header
@@ -90,6 +91,53 @@ font: 100%/120% "lft-etica", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	background-color: #0d72c7;
 	color: #fff;
 }
+
+/* Categories
+------------------------------------------------------------ */
+.categories{ 
+	width:100%; margin:0 auto; text-align:center
+}
+
+.categories cap {
+	font:Helvetica;
+	font-weight:bold;
+	font-size: 25pt;
+	border:15px;
+	line-height: 2em;
+}
+
+.categories sub {
+	color: silver;
+	font-size: 20px;
+	border:15px;
+	font-weight: 400;
+}
+
+.categories span {
+	float: left; 
+	font:Helvetica;
+	font-weight:bold;
+	font-size: 15pt; 
+	text-align: center; 
+	width: 22.8%; 
+	margin-left: 1%; 
+	margin-right: 1%; 
+	margin-bottom: 0.5em;
+}
+
+
+a:link {
+	color:black;
+}
+
+.categories span:hover {
+	color:#0085ff;
+}
+
+.categories span:visited {
+	color:purple;
+}
+
 
 /* Grid
 ------------------------------------------------------------ */
@@ -529,7 +577,7 @@ popular-upcoming {
 }
 
 .stories-section-header {
-padding: 20px 17px 45px 10px;
+padding: 20px 17px 20px 10px;
 }
 
 .stories-section-header-hed {
@@ -730,7 +778,7 @@ h2.entry-title {
 
 .feature h2.entry-title a {
 	clear: none;
-	font-size: 37px;
+	font-size: 33px;
 	line-height: 38px;
 }
 

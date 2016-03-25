@@ -1,17 +1,24 @@
-<!DOCTYPE HTML>
+<html>
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 <title>Uptown Fund &raquo; Your One-Stop Crowdfunding Hub</title>
-<meta name="description" content="Just another Open Designs template." />
-<meta name="robots" content="noodp,noydir" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" id="child-theme-css" href="css/style.css" type="text/css" media="all" />
 <link rel="stylesheet" id="responsive-main-css-css" href="css/responsive-main.min.css" type="text/css" media="all" />
 <link rel="stylesheet" id="responsive-css-css" href="css/responsive.css" type="text/css" media="all" />
 <link rel="stylesheet" id="tb_styles-css" href="css/tb-styles.min.css" type="text/css" media="all" />
+
+<?php
+$host = "localhost"; 
+$user = "postgres"; 
+$pass = "password"; 
+$db = "test"; 
+
+$dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
+    or die('Could not connect: ' . pg_last_error());
+?>
 
 <script type="text/javascript" src="js/jquery.js"></script>
 
@@ -100,103 +107,35 @@
 		<a href="#" title="Welcome to Uptown Fund"><img width="660" height="370" src="images/1.jpg" class="alignleft post-image" alt="1" /></a>		<h2 class="entry-title"><a href="#" title="Welcome to Uptown Fund" rel="bookmark">Welcome to Uptown Fund</a></h2> 
 		
 				<div class="entry-content">
-			<p>Uptown Fund is the one-stop hub for new inventions.  Here, you can easily browse through and contribute to thousands of new inventions from all around the world. Or reach out to potential investors by hosting your amazing ideas here.</p>
+			<p>Uptown Fund is the one-stop hub to turn ideas into successful inventions.  Here, you can reach out to potential investors by hosting your projects and ideas.  Alternatively, you can browse through and contribute to thousands of new inventions from all around the world. </p>
 
-			<a class="bigg-read-more" href="http://demo.opendesigns.org/welcome/">Read Article</a>		</div><!-- end .entry-content -->
+			<a href="index.php#cat" class="bigg-read-more">Browse</a>		</div><!-- end .entry-content -->
 		
 	</div><!-- end .postclass -->
-		<div class="post-1 post type-post status-publish format-standard hentry category-featured category-uncategorized entry fourcol first one-third teaser first">
+	</div><!-- end #content -->
 
-		<a id="categories" href="#" title="Hello world!"><img width="300" height="168" src="images/2-300x168.jpg" class="alignleft post-image" alt="2" /></a>		<h2 class="entry-title"><a href="#" title="Hello world!" rel="bookmark">Hello world!</a></h2> 
-		
-				<div class="entry-content">
-			<p>Bacon ipsum dolor sit amet kielbasa swine pariatur consequat consectetur esse tongue ea biltong. Fatback dolore ullamco labore in spare ribs ad hamburger cupidatat tongue. Nisi frankfurter duis proident, officia ham aliqua.</p>
+<!-- Categories Section -->
+<div id="cat" class="categories">
+	<cap>Categories</cap>
+	<br>
+	<sub>Browse projects by categories</sub>
+</div>
+<br>
 
-			<a class="bigg-read-more" href="http://demo.opendesigns.org/hello-world/">Read Article</a>		</div><!-- end .entry-content -->
-		
-	</div><!-- end .postclass -->
-		<div class="post-63 post type-post status-publish format-standard hentry category-child-category-i category-featured category-parent-category-i category-parent-category-ii tag-tag2 tag-tag5 tag-tag6 entry fourcol one-third teaser">
 
-		<a href="#" title="Another Post with Everything"><img width="300" height="168" src="images/3-300x168.jpg" class="alignleft post-image" alt="3" /></a>		<h2 class="entry-title"><a href="#" title="Another Post with Everything In It" rel="bookmark">Another Post with Everything</a></h2> 
-		
-				<div class="entry-content">
-			<p>Bacon ipsum dolor sit amet kielbasa swine pariatur consequat consectetur esse tongue ea biltong. Fatback dolore ullamco labore in spare ribs ad hamburger cupidatat tongue. Nisi frankfurter duis proident, officia ham aliqua.</p>
+<div class="categories">
+	<a href="index.html"><span><img src="images/art.jpg" style="width: 100%" class="post-image">Art</span></a>
+	<a href="index.html"><span><img src="images/education.jpg" style="width: 100%" class="post-image">Education</span></a>
+	<a href="index.html"><span><img src="images/environment.jpg" style="width: 100%" class="post-image">Environment</span></a>
+	<a href="index.html"><span><img src="images/game.jpg" style="width: 100%" class="post-image">Gaming</span></a>
 
-			<a class="bigg-read-more" href="http://demo.opendesigns.org/another-post-with-everything-in-it/">Read Article</a>		</div><!-- end .entry-content -->
-		
-	</div><!-- end .postclass -->
-		<div class="post-61 post type-post status-publish format-standard hentry category-featured category-uncategorized entry fourcol one-third teaser">
+	<a href="index.html"><span><img src="images/music.jpg" style="width: 100%" class="post-image">Music</span></a>
+	<a href="index.html"><span><img src="images/technology.jpg" style="width: 100%" class="post-image">Technology</span></a>
+	<a href="index.html"><span><img src="images/video.jpg" style="width: 100%" class="post-image">Video</span></a>
+	<a href="index.html"><span><img src="images/other.jpg" style="width: 100%" class="post-image">Others</span></a>
+</div>
 
-		<a href="#" title="An Ordered List Post"><img width="300" height="168" src="images/4-300x168.jpg" class="alignleft post-image" alt="4" /></a>		<h2 class="entry-title"><a href="#" title="An Ordered List Post" rel="bookmark">An Ordered List Post</a></h2> 
-		
-				<div class="entry-content">
-			<p>Bacon ipsum dolor sit amet kielbasa swine pariatur consequat consectetur esse tongue ea biltong. Fatback dolore ullamco labore in spare ribs ad hamburger cupidatat tongue. Nisi frankfurter duis proident, officia ham aliqua.</p>
-
-			<a class="bigg-read-more" href="http://demo.opendesigns.org/an-ordered-list-post/">Read Article</a>		</div><!-- end .entry-content -->
-		
-	</div><!-- end .postclass -->
-		<div class="post-56 post type-post status-publish format-standard hentry category-child-category-iii category-featured category-parent-category-iii tag-tag1 tag-tag3 tag-tag6 entry fourcol first last one-third teaser first">
-
-		<a href="#" title="A Simple Text Post"><img width="300" height="168" src="images/5-300x168.jpg" class="alignleft post-image" alt="5" /></a>		<h2 class="entry-title"><a href="#" title="A Simple Text Post" rel="bookmark">A Simple Text Post</a></h2> 
-		
-				<div class="entry-content">
-			<p>Bacon ipsum dolor sit amet kielbasa swine pariatur consequat consectetur esse tongue ea biltong. Fatback dolore ullamco labore in spare ribs ad hamburger cupidatat tongue. Nisi frankfurter duis proident, officia ham aliqua.</p>
-
-			<a class="bigg-read-more" href="#">Read Article</a>		</div><!-- end .entry-content -->
-		
-	</div><!-- end .postclass -->
-		<div class="post-53 post type-post status-publish format-standard hentry category-featured category-uncategorized entry fourcol one-third teaser">
-
-		<a href="#" title="Hello world!"><img width="300" height="168" src="images/6-300x168.jpg" class="alignleft post-image" alt="6" /></a>		<h2 class="entry-title"><a href="#" title="Hello world!" rel="bookmark">Hello world!</a></h2> 
-		
-				<div class="entry-content">
-			<p>Bacon ipsum dolor sit amet kielbasa swine pariatur consequat consectetur esse tongue ea biltong. Fatback dolore ullamco labore in spare ribs ad hamburger cupidatat tongue. Nisi frankfurter duis proident, officia ham aliqua.</p>
-
-			<a class="bigg-read-more" href="#">Read Article</a>		</div><!-- end .entry-content -->
-		
-	</div><!-- end .postclass -->
-		<div class="post-51 post type-post status-publish format-standard hentry category-child-category-ii category-featured category-grandchild-category-i category-parent-category-i category-parent-category-ii tag-tag1 tag-tag2 tag-tag5 tag-tag7 entry fourcol one-third teaser">
-
-		<a href="#" title="A Post With Everything In It"><img width="300" height="168" src="images/7-300x168.jpg" class="alignleft post-image" alt="7" /></a>		<h2 class="entry-title"><a href="#" title="A Post With Everything In It" rel="bookmark">A Post With Everything In It</a></h2> 
-		
-				<div class="entry-content">
-			<p>Bacon ipsum dolor sit amet kielbasa swine pariatur consequat consectetur esse tongue ea biltong. Fatback dolore ullamco labore in spare ribs ad hamburger cupidatat tongue. Nisi frankfurter duis proident, officia ham aliqua.</p>
-
-			<a class="bigg-read-more" href="#">Read Article</a>		</div><!-- end .entry-content -->
-		
-	</div><!-- end .postclass -->
-		<div class="post-49 post type-post status-publish format-standard hentry category-featured category-uncategorized tag-tag2 tag-tag5 tag-tag7 entry fourcol first one-third teaser first">
-
-		<a href="#" title="Quotes Time!"><img width="300" height="168" src="images/8-300x168.jpg" class="alignleft post-image" alt="8" /></a>		<h2 class="entry-title"><a href="#" title="Quotes Time!" rel="bookmark">Quotes Time!</a></h2> 
-		
-				<div class="entry-content">
-			<p>Bacon ipsum dolor sit amet kielbasa swine pariatur consequat consectetur esse tongue ea biltong. Fatback dolore ullamco labore in spare ribs ad hamburger cupidatat tongue. Nisi frankfurter duis proident, officia ham aliqua.</p>
-
-			<a class="bigg-read-more" href="#">Read Article</a>		</div><!-- end .entry-content -->
-		
-	</div><!-- end .postclass -->
-		<div class="post-47 post type-post status-publish format-standard hentry category-featured category-parent-category-ii category-parent-category-iii tag-tag2 tag-tag4 tag-tag7 entry fourcol one-third teaser">
-
-		<a href="#" title="Left-Aligned Image"><img width="300" height="168" src="images/9-300x168.jpg" class="alignleft post-image" alt="9" /></a>		<h2 class="entry-title"><a href="#" title="A Post With a Left-Aligned Image" rel="bookmark">Left-Aligned Image</a></h2> 
-		
-				<div class="entry-content">
-			<p>Bacon ipsum dolor sit amet kielbasa swine pariatur consequat consectetur esse tongue ea biltong. Fatback dolore ullamco labore in spare ribs ad hamburger cupidatat tongue. Nisi frankfurter duis proident, officia ham aliqua.</p>
-
-			<a class="bigg-read-more" href="#">Read Article</a>		</div><!-- end .entry-content -->
-		
-	</div><!-- end .postclass -->
-		<div class="post-45 post type-post status-publish format-standard hentry category-child-category-ii category-featured category-grandchild-category-i category-parent-category-i entry fourcol one-third teaser">
-
-		<a href="#" title="Another Text-Only Post"><img width="300" height="168" src="images/10-300x168.jpg" class="alignleft post-image" alt="10" /></a>		<h2 class="entry-title"><a href="#" title="Another Text-Only Post" rel="bookmark">Another Text-Only Post</a></h2> 
-		
-				<div class="entry-content">
-			<p>Bacon ipsum dolor sit amet kielbasa swine pariatur consequat consectetur esse tongue ea biltong. Fatback dolore ullamco labore in spare ribs ad hamburger cupidatat tongue. Nisi frankfurter duis proident, officia ham aliqua.</p>
-
-			<a class="bigg-read-more" href="#">Read Article</a>		</div><!-- end .entry-content -->
-		
-	</div><!-- end .postclass -->
-			</div><!-- end #content -->
-		
+<!-- Popular List -->
 <div id="popular-upcoming" class="stories-container sixcol">
 
 <div class="stories-section-header">
@@ -204,49 +143,43 @@
 <h3 class="stories-section-header-subhed">The most popular crowdfunding projects</h3>
 </div>
 
-<ul class="plain-list stories-table">
+<ul class="plain-list stories-table">    
+<?php
+$query = 'SELECT p.title FROM donation d, project p WHERE p.id=d.project GROUP BY p.title ORDER BY COUNT(d.project) DESC LIMIT 10';
 
-<li><a href="#">Welcome to Bigg</a></li>
-<li><a href="#">Another Post with Everything In It</a></li>
-<li><a href="#">A Post With Everything In It</a></li>
-<li><a href="#">An Ordered List Post</a></li>
-<li><a href="#">A Post With a Left-Aligned Image</a></li>
-<li><a href="#">Hello world!</a></li>
-<li><a href="#">Hello world!</a></li>
-<li><a href="#">Another Text-Only Post</a></li>
-<li><a href="#">Quotes Time!</a></li>
-<li><a href="#">A Post With an Unordered List</a></li>
-<li><a href="#">A Post With a Right-Aligned Image</a></li>
-<li><a href="#">A Simple Text Post</a></li>
-<li><a href="#">A Simple Post with Text</a></li>
-<li><a href="#">A Post With an Ordered List</a></li>
+$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+?>
+
+<?php while($line = pg_fetch_array($result, null, PGSQL_ASSOC)){ ?>
+	<?php foreach ($line as $col_value) { ?>
+  	<li><a href="#"><?php echo $col_value; ?></a></li>
+   <?php } ?>
+ <?php } ?>
+<?php pg_free_result($result); ?>
 </ul>
-
 </div>
 
+<!-- Countries List -->
 <div id="countries" class="stories-container sixcol last">
 <div class="stories-section-header">
 <h2 class="stories-section-header-hed">Countries</h2>
 <h3 class="stories-section-header-subhed">Browse projects by countries</h3>
 </div>
 
-<ul class="plain-list stories-table">
+<ul class="plain-list stories-table">    
+<?php
+$query = 'SELECT DISTINCT country FROM project ORDER BY country';
+$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+?>
 
-<li><a href="#">Welcome to Bigg</a></li>
-<li><a href="#">Hello world!</a></li>
-<li><a href="#">Another Post with Everything In It</a></li>
-<li><a href="#">An Ordered List Post</a></li>
-<li><a href="#">A Simple Text Post</a></li>
-<li><a href="#">Hello world!</a></li>
-<li><a href="#">A Post With Everything In It</a></li>
-<li><a href="#">Quotes Time!</a></li>
-<li><a href="#">A Post With a Left-Aligned Image</a></li>
-<li><a href="#">Another Text-Only Post</a></li>
-<li><a href="#">A Post With an Ordered List</a></li>
-<li><a href="#">A Post With a Right-Aligned Image</a></li>
-<li><a href="#">A Post With an Unordered List</a></li>
-<li><a href="#">A Simple Post with Text</a></li>
+<?php while($line = pg_fetch_array($result, null, PGSQL_ASSOC)){ ?>
+	<?php foreach ($line as $col_value) { ?>
+  	<li><a href="#"><?php echo $col_value; ?></a></li>
+   <?php } ?>
+ <?php } ?>
+<?php pg_free_result($result); ?>
 </ul>
+
 
 	</div><!-- end #content-sidebar-wrap -->
 	</div><!-- end .wrap --></div><!-- end #inner --> 
