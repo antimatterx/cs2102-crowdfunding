@@ -136,7 +136,7 @@ a:link {
 	color:#0085ff;
 }
 
-.categories span:visited {
+.categories a:visited {
 	color:purple;
 }
 

@@ -140,7 +140,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 
 <ul class="plain-list stories-table">    
 <?php
-$query = 'SELECT p.title FROM donation d, project p WHERE p.id=d.project GROUP BY p.title  ORDER BY COUNT(d.project) DESC LIMIT 10';
+$query = "SELECT p.title FROM donation d, project p WHERE p.id=d.project AND p.status='ongoing' GROUP BY p.title  ORDER BY COUNT(d.project) DESC LIMIT 10";
 
 $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 ?>
