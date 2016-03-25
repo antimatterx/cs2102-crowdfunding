@@ -73,32 +73,45 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 <ul class="plain-list stories-table">    
 <?php
 
-$query = "SELECT p.title FROM has_category h, project p WHERE p.id=h.id AND h.tag='$var_value'";
+$query = "SELECT p.id, p.title FROM has_category h, project p WHERE p.id=h.id AND h.tag='$var_value'";
 $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 ?>
 
+<?php 
+// create temp folder to store images
+function makeDir($path)
+{
+     return is_dir($path) || mkdir($path);
+}
+
+makeDir("temp");
+?>
+
+<div class="categories">
+
 <?php while($line = pg_fetch_array($result, null, PGSQL_ASSOC)){ ?>
-	<?php foreach ($line as $col_value) { ?>
-  	<li><a href="#"><?php echo $col_value; ?></a></li>
-   <?php } ?>
+    <?php if(!$line['title']) { ?>
+    <?php continue; ?>
+    <?php } ?>
+
+    <?php 
+    $id=$line['id'];
+    $queryImg = "SELECT data FROM image WHERE id=$id";
+    $resImg = pg_query($dbcon, $queryImg) or die (pg_last_error($con));
+    $dataImg = pg_fetch_result($resImg, 'data');
+    $unes_image = pg_unescape_bytea($dataImg);
+
+    // save image to file
+    $file_name = "temp/" . $id . ".jpg";
+    $img = fopen($file_name, 'wb') or die("cannot open image\n");
+    fwrite($img, $unes_image) or die("cannot write image data\n");
+    fclose($img);
+    ?>
+
+    <a href="#"><span><img src="<?php echo $file_name; ?>" style="width: 100%" class="post-image"><?php echo $line['title']; ?></span></a>
  <?php } ?>
 <?php pg_free_result($result); ?>
-</ul>
-
-
-<!-- <div class="categories">
-	<a href="index.html"><span><img src="images/art.jpg" style="width: 100%" class="post-image">Art</span></a>
-	<a href="index.html"><span><img src="images/education.jpg" style="width: 100%" class="post-image">Education</span></a>
-	<a href="index.html"><span><img src="images/environment.jpg" style="width: 100%" class="post-image">Environment</span></a>
-	<a href="index.html"><span><img src="images/game.jpg" style="width: 100%" class="post-image">Gaming</span></a>
-
-	<a href="index.html"><span><img src="images/music.jpg" style="width: 100%" class="post-image">Music</span></a>
-	<a href="index.html"><span><img src="images/technology.jpg" style="width: 100%" class="post-image">Technology</span></a>
-	<a href="index.html"><span><img src="images/video.jpg" style="width: 100%" class="post-image">Video</span></a>
-	<a href="index.html"><span><img src="images/other.jpg" style="width: 100%" class="post-image">Others</span></a>
-</div> -->
-
-
+</div>
 
 
 	</div><!-- end #content-sidebar-wrap -->

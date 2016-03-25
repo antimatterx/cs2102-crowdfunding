@@ -126,7 +126,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 				<div class="entry-content">
 			<p>Uptown Fund is the one-stop hub to turn ideas into successful inventions.  Here, you can reach out to potential investors by hosting your projects and ideas.  Alternatively, you can browse through and contribute to thousands of new inventions from all around the world. </p>
 
-			<a href="index.php#cat" class="bigg-read-more">Browse</a>		</div><!-- end .entry-content -->
+			<a href="index.php#categories" class="bigg-read-more">Browse</a>		</div><!-- end .entry-content -->
 		
 	</div><!-- end .postclass -->
 	</div><!-- end #content -->
