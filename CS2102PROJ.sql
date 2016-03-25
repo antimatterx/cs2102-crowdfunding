@@ -70,8 +70,8 @@ INSERT INTO category (name) VALUES ('start-up');
 INSERT INTO category (name) VALUES ('dream');
 
 --HAS_CATEGORY
-INSERT INTO hasCategory (id, tag) VALUES (123, 'education');
-INSERT INTO hasCategory (id, tag) VALUES (234, 'dream');
-INSERT INTO hasCategory (id, tag) VALUES (234, 'start-up');
-INSERT INTO hasCategory (id, tag) VALUES (567, 'start-up');
-INSERT INTO hasCategory (id, tag) VALUES (897, 'trip');
+INSERT INTO has_category (id, tag) VALUES (123, 'education');
+INSERT INTO has_category (id, tag) VALUES (234, 'dream');
+INSERT INTO has_category (id, tag) VALUES (234, 'start-up');
+INSERT INTO has_category (id, tag) VALUES (567, 'start-up');
+INSERT INTO has_category (id, tag) VALUES (897, 'trip');
