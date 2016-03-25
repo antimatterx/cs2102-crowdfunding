@@ -59,23 +59,21 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 </div>end .postclass
 </div><!-- end #content -->
 
-<!-- Categories Section -->
-<div class="categories">
-	<cap>Categories</cap>
-	<br>
-	<sub>Browse projects by categories</sub>
-</div>
-<br>
-
 <!-- fetch the variable name -->
 <?php $var_value = $_GET['varname'];?>
 
-<?php echo $var_value;?>
+<?php $title = ucfirst ($var_value);?>
+<!-- Categories Section -->
+<div class="categories">
+	<br>
+	<cap><?php echo $title;?></cap>
+</div>
 
 
 <ul class="plain-list stories-table">    
 <?php
-$query = 'SELECT h.id FROM has_category h WHERE h.tag=$var_value';
+
+$query = "SELECT p.title FROM has_category h, project p WHERE p.id=h.id AND h.tag='$var_value'";
 $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 ?>
 
