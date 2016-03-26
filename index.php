@@ -149,7 +149,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 	<a href="cat_result.php?varname=<?php echo "music" ?>"><span><img src="images/music.jpg" style="width: 100%" class="post-image">Music</span></a>
 	<a href="cat_result.php?varname=<?php echo "technology" ?>"><span><img src="images/technology.jpg" style="width: 100%" class="post-image">Technology</span></a>
 	<a href="cat_result.php?varname=<?php echo "video" ?>"><span><img src="images/video.jpg" style="width: 100%" class="post-image">Video</span></a>
-	<a href="cat_result.php?varname=<?php echo "other" ?>"><span><img src="images/other.jpg" style="width: 100%" class="post-image">Others</span></a>
+	<a href="cat_result.php?varname=<?php echo "others" ?>"><span><img src="images/other.jpg" style="width: 100%" class="post-image">Others</span></a>
 </div>
 
 <!-- Popular List -->
@@ -172,7 +172,7 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
   <?php continue; ?>
   <?php } ?>
   <?php $id = $line['id'];?>
-  <li><a href="item.php?id=<?php echo $id ?>"><?php echo $line['title']; ?></a></li>
+  <li><a href="project_detail.php?id=<?php echo $id ?>"><?php echo $line['title']; ?></a></li>
  <?php } ?>
 <?php pg_free_result($result); ?>
 </ul>

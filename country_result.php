@@ -111,7 +111,7 @@ makeDir("temp");
       $file_name = "images/blank.jpg";
     }
     ?>
-    <a href="item.php?id=<?php echo $id ?>"><span><img src="<?php echo $file_name; ?>" style="width: 100%" class="post-image"><?php echo $line['title']; ?></span></a>
+    <a href="project_detail.php?id=<?php echo $id ?>"><span><img src="<?php echo $file_name; ?>" style="width: 100%" class="post-image"><?php echo $line['title']; ?></span></a>
  <?php } ?>
 <?php pg_free_result($result); ?>
 </div>
