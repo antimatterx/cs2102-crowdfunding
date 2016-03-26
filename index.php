@@ -162,15 +162,17 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 
 <ul class="plain-list stories-table">    
 <?php
-$query = "SELECT p.title FROM donation d, project p WHERE p.id=d.project AND p.status='ongoing' GROUP BY p.title  ORDER BY COUNT(d.project) DESC LIMIT 10";
+$query = "SELECT p.id, p.title FROM donation d, project p WHERE p.id=d.project AND p.status='ongoing' GROUP BY p.title, p.id  ORDER BY COUNT(d.project) DESC LIMIT 10";
 
 $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 ?>
 
 <?php while($line = pg_fetch_array($result, null, PGSQL_ASSOC)){ ?>
-	<?php foreach ($line as $col_value) { ?>
-  	<li><a href="#"><?php echo $col_value; ?></a></li>
-   <?php } ?>
+  <?php if(!$line['title']) { ?>
+  <?php continue; ?>
+  <?php } ?>
+  <?php $id = $line['id'];?>
+  <li><a href="item.php?id=<?php echo $id ?>"><?php echo $line['title']; ?></a></li>
  <?php } ?>
 <?php pg_free_result($result); ?>
 </ul>
@@ -191,7 +193,7 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
 <?php while($line = pg_fetch_array($result, null, PGSQL_ASSOC)){ ?>
 	<?php foreach ($line as $col_value) { ?>
-  	<li><a href="#"><?php echo $col_value; ?></a></li>
+  	<li><a href="country_result.php?country=<?php echo $col_value ?>"><?php echo $col_value; ?></a></li>
    <?php } ?>
  <?php } ?>
 <?php pg_free_result($result); ?>
