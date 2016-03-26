@@ -60,10 +60,10 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 </div><!-- end #content -->
 
 <!-- fetch the variable name -->
-<?php $var_value = $_GET['varname'];?>
+<?php $country = $_GET['country'];?>
 
-<?php $title = ucfirst ($var_value);?>
-<!-- Categories Section -->
+<?php $title = ucfirst ($country);?>
+<!-- Country Section -->
 <div class="categories">
 	<br>
 	<cap><?php echo $title;?></cap>
@@ -73,7 +73,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 <ul class="plain-list stories-table">    
 <?php
 
-$query = "SELECT p.id, p.title FROM has_category h, project p WHERE p.id=h.id AND h.tag='$var_value'";
+$query = "SELECT p.id, p.title FROM project p WHERE p.country='$country'";
 $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 ?>
 
@@ -111,7 +111,6 @@ makeDir("temp");
       $file_name = "images/blank.jpg";
     }
     ?>
-
     <a href="item.php?id=<?php echo $id ?>"><span><img src="<?php echo $file_name; ?>" style="width: 100%" class="post-image"><?php echo $line['title']; ?></span></a>
  <?php } ?>
 <?php pg_free_result($result); ?>
