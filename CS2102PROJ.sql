@@ -13,9 +13,7 @@ start DATE,
 expiry DATE CHECK(expiry > start),
 country VARCHAR(64),
 target NUMERIC CHECK(target > 0),
-current NUMERIC,
-status VARCHAR(16) CHECK(status='ongoing' OR status='closed'),
-contributors NUMERIC
+status VARCHAR(16) CHECK(status='ongoing' OR status='closed')
 );
 
 CREATE TABLE donation (
@@ -50,10 +48,10 @@ INSERT INTO person (name, email, password) VALUES ('Isaac', 'apple_on_my_head@ho
 INSERT INTO person (name, email, password) VALUES ('Lazarus', 'back_from_the_dead@yahoo.com', '876543');
 
 --PROJECT
-INSERT INTO project (id, creator, title, description, start, expiry, country, target, current, status, contributors) VALUES (123, 'im_not_spiderman@gmail.com', 'study', 'GIB $$$ PLOX', '2015/09/22', '2015/10/24', 'Vietnam', 500, 1, 'ongoing', 1);
-INSERT INTO project (id, creator, title, description, start, expiry, country, target, current, status, contributors) VALUES (234, 'spam_me@hotmail.com', 'dream', 'This is important!! MONEY PLS', '2015/09/25', '2015/10/27', 'Malaysia', 600, 599, 'ongoing', 2);
-INSERT INTO project (id, creator, title, description, start, expiry, country, target, current, status, contributors) VALUES (567, 'apple_on_my_head@hotmail.com', 'business', 'Help more people and give me money', '2015/09/26', '2015/11/26', 'Indonesia', 1500, 2, 'ongoing', 3);
-INSERT INTO project (id, creator, title, description, start, expiry, country, target, current, status, contributors) VALUES (897, 'back_from_the_dead@yahoo.com', 'overseas', 'snake oil', '2014/09/22', '2014/11/22', 'China', 200, 0, 'closed', 0);
+INSERT INTO project (id, creator, title, description, start, expiry, country, target, status) VALUES (123, 'im_not_spiderman@gmail.com', 'study', 'GIB $$$ PLOX', '2015/09/22', '2015/10/24', 'Vietnam', 500, 'ongoing');
+INSERT INTO project (id, creator, title, description, start, expiry, country, target, status) VALUES (234, 'spam_me@hotmail.com', 'dream', 'This is important!! MONEY PLS', '2015/09/25', '2015/10/27', 'Malaysia', 600, 'ongoing');
+INSERT INTO project (id, creator, title, description, start, expiry, country, target, status) VALUES (567, 'apple_on_my_head@hotmail.com', 'business', 'Help more people and give me money', '2015/09/26', '2015/11/26', 'Indonesia', 1500, 'ongoing');
+INSERT INTO project (id, creator, title, description, start, expiry, country, target, status) VALUES (897, 'back_from_the_dead@yahoo.com', 'overseas', 'snake oil', '2014/09/22', '2014/11/22', 'China', 200, 'closed');
 
 --DONATION
 INSERT INTO donation (time, amount, donor, project) VALUES ('2015-09-23 08:23:40', 1, 'im_not_spiderman@gmail.com', 123);
