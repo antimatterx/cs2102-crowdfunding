@@ -3,26 +3,27 @@
    $user = "postgres"; 
    $pass = "password"; 
    $db = "test"; 
-   $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
-    or die('Could not connect: ' . pg_last_error());
+   $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass") or die('Could not connect: ' . pg_last_error());
    session_start();
    
    if($_SERVER["REQUEST_METHOD"] == "POST") {
       // username and password sent from form 
       
-      $myusername = mysqli_real_escape_string($db,$_POST['username']);
-      $mypassword = mysqli_real_escape_string($db,$_POST['password']); 
-      
-      $sql = "SELECT * FROM person WHERE email = '$myusername' and password = '$mypassword'";
+
+      $myusername = trim($_POST['username']);
+      $mypassword = trim($_POST['password']); 
+
+      $sql = "SELECT * FROM person WHERE name = '$myusername' and password = '$mypassword'";
       $result = pg_query($dbcon, $sql);
       $count = pg_num_rows($result);
       
       // If result matched $myusername and $mypassword, table row must be 1 row
-      
+
       if($count == 1) {
          session_register("myusername");
          $_SESSION['login_user'] = $myusername;
          header("location: welcome.php");
+         print "Login successfull";
       }else {
          $error = "Your Login Name or Password is invalid";
       }
@@ -72,7 +73,7 @@
 					
 
                         <div id="register" class="animate form">
-                            <form  action="mysuperscript.php" autocomplete="on"> 
+                            <form  action="" method="post"> 
                                 <h1> Sign up </h1> 
                                 <p> 
                                     <label for="usernamesignup" class="uname" data-icon="u">Your name</label>
