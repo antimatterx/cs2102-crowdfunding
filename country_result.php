@@ -73,7 +73,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 <ul class="plain-list stories-table">    
 <?php
 
-$query = "SELECT p.id, p.title FROM project p WHERE p.country='$country'";
+$query = "SELECT p.id, p.title, p.status FROM project p WHERE p.country='$country' ORDER BY p.title";
 $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 ?>
 
@@ -95,7 +95,8 @@ makeDir("temp");
     <?php } ?>
 
     <?php 
-    $id=$line['id'];
+    $status = $line['status'];
+    $id = $line['id'];
     $queryImg = "SELECT data FROM image WHERE id=$id";
     $resImg = pg_query($dbcon, $queryImg) or die (pg_last_error($con));
     if(pg_num_rows($resImg) > 0) {
@@ -111,7 +112,14 @@ makeDir("temp");
       $file_name = "images/blank.jpg";
     }
     ?>
-    <a href="project_detail.php?id=<?php echo $id ?>"><span><img src="<?php echo $file_name; ?>" style="width: 100%" class="post-image"><?php echo $line['title']; ?></span></a>
+    <a href="project_detail.php?id=<?php echo $id ?>">
+    <div>
+    <img src="<?php echo $file_name; ?>" style="width: 100%" class="post-image"><?php echo $line['title']; ?>
+    <?php if($status=='closed') { ?>
+      <img src="images/expired.png" class="overlay" />
+    <?php } ?>
+    </div>
+    </a>
  <?php } ?>
 <?php pg_free_result($result); ?>
 </div>
