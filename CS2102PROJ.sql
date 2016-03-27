@@ -55,7 +55,7 @@ INSERT INTO person (name, email, password) VALUES ('Able Too', 'able_too@gmail.c
 
 --PROJECT
 INSERT INTO project (id, creator, title, description, start, expiry, country, target, status) VALUES (123, 'im_not_spiderman@gmail.com', 'Study', 'GIB $$$ PLOX', '2015/09/22', '2016/10/24', 'Vietnam', 500, 'ongoing');
-INSERT INTO project (id, creator, title, description, start, expiry, country, target, status) VALUES (234, 'spam_me@hotmail.com', 'dDream', 'This is important!! MONEY PLS', '2015/09/25', '2016/10/27', 'Malaysia', 600, 'ongoing');
+INSERT INTO project (id, creator, title, description, start, expiry, country, target, status) VALUES (234, 'spam_me@hotmail.com', 'Dream', 'This is important!! MONEY PLS', '2015/09/25', '2016/10/27', 'Malaysia', 600, 'ongoing');
 INSERT INTO project (id, creator, title, description, start, expiry, country, target, status) VALUES (567, 'apple_on_my_head@hotmail.com', 'Business', 'Help more people and give me money', '2015/09/26', '2016/01/26', 'Indonesia', 1500, 'ongoing');
 INSERT INTO project (id, creator, title, description, start, expiry, country, target, status) VALUES (897, 'back_from_the_dead@yahoo.com', 'Overseas', 'snake oil', '2014/09/22', '2014/11/22', 'China', 200, 'closed');
 INSERT INTO project (id, creator, title, description, start, expiry, country, target, status) VALUES (55, 'zack_brown@gmail.com', 'New Art', 'A new way to create art', '2016/01/22', '2016/04/01', 'Vietnam', 5000, 'ongoing');
