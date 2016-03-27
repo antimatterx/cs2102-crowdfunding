@@ -21,9 +21,19 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     or die('Could not connect: ' . pg_last_error());
 ?>
 
+<!-- Change the status of expired projects to 'expired' -->
+<?php 
+$query = "SELECT p.id FROM project p WHERE p.expiry < CURRENT_DATE AND p.status='ongoing'";
+$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+?>
 
-
-
+<?php while($line = pg_fetch_array($result, null, PGSQL_ASSOC)){ ?>
+  <?php foreach ($line as $proj_id) { ?>
+    <?php $update = "UPDATE project SET status='closed' WHERE id='$proj_id'"; ?>
+    <?php $update_res = pg_query($update) or die('Query failed: ' . pg_last_error()); ?>
+   <?php } ?>
+ <?php } ?>
+<?php pg_free_result($result); ?>
 
 
 <script type="text/javascript" src="js/jquery.js"></script>
@@ -133,19 +143,6 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 			<p>Uptown Fund is the one-stop hub to turn ideas into successful inventions.  Here, you can reach out to potential investors by hosting your projects and ideas.  Alternatively, you can browse through and contribute to thousands of new inventions from all around the world. </p>
 
 			<a href="index.php#categories" class="bigg-read-more">Browse</a>		</div><!-- end .entry-content -->
-
-<!-- Change the status of expired projects to 'expired' -->
-<?php 
-$query = "SELECT p.id FROM project p WHERE p.expiry < CURRENT_DATE";
-$result = pg_query($query) or die('Query failed: ' . pg_last_error());
-?>
-
-<?php while($line = pg_fetch_array($result, null, PGSQL_ASSOC)){ ?>
-  <?php foreach ($line as $col_value) { ?>
-    <?php echo $col_value . "\n"; ?>
-   <?php } ?>
- <?php } ?>
-<?php pg_free_result($result); ?>
 
 	</div><!-- end .postclass -->
 	</div><!-- end #content -->
