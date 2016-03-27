@@ -15,15 +15,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $start = trim($_POST['start']);
     $expiry = trim($_POST['expiry']);
     $target = trim($_POST['target']);
+    $status = $_POST['status'];
+    $mail = $_SESSION['email'];
+    $insertT = "INSERT INTO project (id, creator, title, description, start, expiry, country, target, status) VALUES (18, 'able_too@gmail.com', 'Food Maker', 'Cook twice the amount of food in half the time!', '2015/09/14', '2016/10/14', 'Japan', 2000, 'ongoing')";
 
-    $insert = "INSERT INTO project(id, title, description, start, expiry, target, current) 
-            VALUES ('$cnt', '$title', '$description', '$start', '$expiry', '$target', '0')";
-      $result = pg_query($dbcon, $insert);
-      if(!$result) {
-          $error = "Error creating new project, please try again";
-      }else {
-          $success = "You have successfully added a new project";
-      }
+    $insert = "INSERT INTO project(id, title, description, start, expiry, target, status) 
+            VALUES ('$cnt', '$mail'. '$title', '$description', '$start', '$expiry', '$target', '$status')";
+    //$result = pg_query($dbcon, $insert);
+    $result = pg_query($dbcon, $insertT);
+    if(!$result) {
+        echo 'true';
+    }else {
+        echo 'false';
+    }
 }
 ?>
 
@@ -72,6 +76,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 </p>
                 <p class="create button">
                     <input type="submit" value="Submit"/>
+                </p>
+                <p>
+                    <input type="radio" name="status" value="ongoing" checked> Ongoing<br>
+                    <input type="radio" name="status" value="closed"> Closed<br>
                 </p>
             </form>
             <div style = "font-size:11px; color:#cc0000; margin-top:10px"><?php echo $error; ?></div>

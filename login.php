@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
    $host = "localhost"; 
    $user = "postgres"; 
@@ -49,25 +50,25 @@
 
       <?php
       if($_SERVER["REQUEST_METHOD"] == "POST") {
-      // username and password sent from form 
-      $myusername = trim($_POST['username']);
-      $mypassword = $_POST['password'];
+        // username and password sent from form 
+        $myusername = trim($_POST['username']);
+        $mypassword = $_POST['password'];
 
-      $sql = "SELECT * FROM person WHERE email='$myusername' AND password = '$mypassword'";
-      $result = pg_query($dbcon, $sql);
-      $count = pg_num_rows($result);
-      
-      // If result matched $myusername and $mypassword, table row must be 1 row
+        $sql = "SELECT * FROM person WHERE email='$myusername' AND password = '$mypassword'";
+        $result = pg_query($dbcon, $sql);
+        $count = pg_num_rows($result);
+        
+        // If result matched $myusername and $mypassword, table row must be 1 row
 
-      if($count == 1) {
-         session_register("myusername");
-         $_SESSION['login_user'] = $myusername;
-         header("location: welcome.php");
-         //print "Login successfull";
-      }else {
-         $error = "Your Login Name or Password is invalid";
+        if($count == 1) {
+           session_register("myusername");
+           $_SESSION['login_user'] = $myusername;
+           header("location: welcome.php");
+           //print "Login successfull";
+        }else {
+           $error = "Your Login Name or Password is invalid";
+        }
       }
-    }
      ?> 
                </form>
                    <div style = "font-size:11px; color:#cc0000; margin-top:10px"><?php echo $error; ?></div>
@@ -78,3 +79,31 @@
 
    </body>
 </html>
+<?php
+session_start();
+
+$username = $_POST['username'];
+$password = $_POST['password'];
+
+$host = "localhost";
+$user = "postgres";
+$pass = "password";
+$db = "test";
+
+$con = pg_connect("host=$host dbname=$db user=$user password=$pass")
+or die('Could not connect: ' . pg_last_error());
+
+//$query = "SELECT * FROM person WHERE name='$username' AND password='$password'";
+$query = "SELECT * FROM person WHERE name='Peter' AND password='123456'";
+$result = pg_query($con, $query)or die(pg_last_error());
+$num_row = pg_num_rows($result);
+		$row=pg_fetch_array($result);
+		if( $num_row ==1 ) {
+			echo 'true';
+			$_SESSION['user_name']=$row['name'];			
+			
+		}
+		else{
+			echo "$username";
+		}
+?>
