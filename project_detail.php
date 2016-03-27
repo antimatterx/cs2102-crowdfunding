@@ -8,7 +8,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     or die('Could not connect: ' . pg_last_error());
 
 $curr_id = $_POST['id'];
-    $sql = "SELECT * FROM project WHERE id = $id";
+    $sql = "SELECT * FROM project WHERE id = '$id'";
     $result = pg_query($dbcon, $sql);
     if (!$result) {
         echo "Nothing found";
@@ -38,7 +38,5 @@ $curr_id = $_POST['id'];
     <p><?php echo $expiry; ?></p>
     <p>Target amount:</p>
     <p><?php echo $target; ?></p>
-    <p>Completed:</p>
-    <p><?php echo $current; ?></p>
 </body>
 </html>
