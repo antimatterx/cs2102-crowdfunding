@@ -52,6 +52,7 @@ INSERT INTO person (name, email, password) VALUES ('John Doe', 'john_doe@hotmail
 INSERT INTO person (name, email, password) VALUES ('Sam Loh', 'sam_loh@yahoo.com', 'verysmart');
 INSERT INTO person (name, email, password) VALUES ('Sarah Lee', 'sarah_lee@gmail.com', 'abcdefgh');
 INSERT INTO person (name, email, password) VALUES ('Able Too', 'able_too@gmail.com', 'supercapableperson');
+INSERT INTO person (name, email, password) VALUES ('Mark Twain', 'mark_twain@hotmail.com', 'martawink');
 
 --PROJECT
 INSERT INTO project (id, creator, title, description, start, expiry, country, target, status) VALUES (123, 'im_not_spiderman@gmail.com', 'Study', 'GIB $$$ PLOX', '2015/09/22', '2016/10/24', 'Vietnam', 500, 'ongoing');
