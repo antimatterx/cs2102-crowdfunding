@@ -7,6 +7,7 @@ $db = "test";
 $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     or die('Could not connect: ' . pg_last_error());
 
+$curr_id = $_POST['id'];
     $sql = "SELECT * FROM project WHERE id = $id";
     $result = pg_query($dbcon, $sql);
     if (!$result) {
@@ -14,7 +15,6 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     }
     else {
         $row = pg_fetch_assoc($result);
-        $id = $row['id'];
         $creator = $row['creator'];
         $title  = $row['title'];
         $description = $row['description'];
@@ -22,7 +22,6 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
         $expiry = $row['expiry'];
         $country = $row['country'];
         $target = $row['target'];
-        $current = $row['current'];
     }
 ?>
 
