@@ -52,6 +52,9 @@ INSERT INTO person (name, email, password) VALUES ('John Doe', 'john_doe@hotmail
 INSERT INTO person (name, email, password) VALUES ('Sam Loh', 'sam_loh@yahoo.com', 'verysmart');
 INSERT INTO person (name, email, password) VALUES ('Sarah Lee', 'sarah_lee@gmail.com', 'abcdefgh');
 INSERT INTO person (name, email, password) VALUES ('Able Too', 'able_too@gmail.com', 'supercapableperson');
+INSERT INTO person (name, email, password) VALUES ('Jack Goh', 'jack_goh@yahoo.com', 'mypassword');
+INSERT INTO person (name, email, password) VALUES ('Mary Johnson', 'mary_john@gmail.com', 'secret');
+INSERT INTO person (name, email, password) VALUES ('Molly Miller', 'molly_miller@gmail.com', 'dontknow');
 
 --PROJECT
 INSERT INTO project (id, creator, title, description, start, expiry, country, target, status) VALUES (123, 'im_not_spiderman@gmail.com', 'Study', 'GIB $$$ PLOX', '2015/09/22', '2016/10/24', 'Vietnam', 500, 'ongoing');
@@ -73,6 +76,13 @@ INSERT INTO donation (time, amount, donor, project) VALUES ('2015-09-26 01:21:08
 INSERT INTO donation (time, amount, donor, project) VALUES ('2015-09-27 23:10:56', 100, 'im_not_spiderman@gmail.com', 567);
 INSERT INTO donation (time, amount, donor, project) VALUES ('2015-10-23 12:12:12', 99, 'im_not_spiderman@gmail.com', 567);
 INSERT INTO donation (time, amount, donor, project) VALUES ('2015-10-03 00:00:01', 1, 'apple_on_my_head@hotmail.com', 567);
+INSERT INTO donation (time, amount, donor, project) VALUES ('2016-02-02 10:10:10', 99, 'molly_miller@gmail.com', 67);
+INSERT INTO donation (time, amount, donor, project) VALUES ('2016-03-01 00:00:01', 5000, 'mary_john@gmail.com', 55);
+INSERT INTO donation (time, amount, donor, project) VALUES ('2016-02-03 12:12:12', 23, 'sam_loh@gmail.com', 67);
+INSERT INTO donation (time, amount, donor, project) VALUES ('2015-10-03 00:00:01', 1, 'sarah_lee@hotmail.com', 567);
+INSERT INTO donation (time, amount, donor, project) VALUES ('2016-02-014 10:10:10', 5, 'john_doe@gmail.com', 72);
+INSERT INTO donation (time, amount, donor, project) VALUES ('2016-02-28 00:00:01', 400, 'zach_brown@gmail.com', 72);
+
 
 --CATEGORY
 INSERT INTO category (name) VALUES ('art');
