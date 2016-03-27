@@ -16,9 +16,13 @@ $user = "postgres";
 $pass = "password"; 
 $db = "test"; 
 
+// Connect to the SQL Server
 $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     or die('Could not connect: ' . pg_last_error());
 ?>
+
+
+
 
 <script type="text/javascript" src="js/jquery.js"></script>
 

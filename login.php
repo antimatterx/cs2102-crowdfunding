@@ -6,26 +6,7 @@
    $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass") or die('Could not connect: ' . pg_last_error());
    session_start();
    
-   if($_SERVER["REQUEST_METHOD"] == "POST") {
-      // username and password sent from form 
-      $myusername = trim($_POST['username']);
-      $mypassword = $_POST['password'];
-
-      $sql = "SELECT * FROM person WHERE name = '$myusername' AND password = '$mypassword'";
-      $result = pg_query($dbcon, $sql);
-      $count = pg_num_rows($result);
-      
-      // If result matched $myusername and $mypassword, table row must be 1 row
-
-      if($count == 1) {
-         session_register("myusername");
-         $_SESSION['login_user'] = $myusername;
-         header("location: welcome.php");
-         //print "Login successfull";
-      }else {
-         $error = "Your Login Name or Password is invalid";
-      }
-   }
+   
 ?>
 <html>
    
@@ -65,6 +46,29 @@
                            Not a member yet ?
                            <a href="register.php" class="to_register">Join us</a>
                         </p>
+
+      <?php
+      if($_SERVER["REQUEST_METHOD"] == "POST") {
+      // username and password sent from form 
+      $myusername = trim($_POST['username']);
+      $mypassword = $_POST['password'];
+
+      $sql = "SELECT * FROM person WHERE email='$myusername' AND password = '$mypassword'";
+      $result = pg_query($dbcon, $sql);
+      $count = pg_num_rows($result);
+      
+      // If result matched $myusername and $mypassword, table row must be 1 row
+
+      if($count == 1) {
+         session_register("myusername");
+         $_SESSION['login_user'] = $myusername;
+         header("location: welcome.php");
+         //print "Login successfull";
+      }else {
+         $error = "Your Login Name or Password is invalid";
+      }
+    }
+     ?> 
                </form>
                    <div style = "font-size:11px; color:#cc0000; margin-top:10px"><?php echo $error; ?></div>
 
