@@ -6,8 +6,13 @@ $user = "postgres";
 $pass = "password";
 $db = "test";
 $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass") or die('Could not connect: ' . pg_last_error());
-$cnt = pg_query($dbcon, "SELECT COUNT(*) FROM project") + 1;
-
+$sql = "SELECT p.id FROM project p
+        HAVING p.id >= ALL (
+          SELECT id FROM project
+        );";
+$result = pg_query($dbcon, $sql);
+$row = pg_fetch_assoc($result);
+$newid = $row['id'] + 1;
 if($_SERVER["REQUEST_METHOD"] == "POST") {
     // username and password sent from form
     $title = trim($_POST['title']);
@@ -74,12 +79,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label for="target" class="expiry" data-icon="p">Target amount</label>
                     <input id="target" name="target" required="required" type="number" placeholder="In US$"/>
                 </p>
-                <p class="create button">
-                    <input type="submit" value="Submit"/>
-                </p>
+
                 <p>
                     <input type="radio" name="status" value="ongoing" checked> Ongoing<br>
                     <input type="radio" name="status" value="closed"> Closed<br>
+                </p>
+                <p class="create button">
+                    <input type="submit" value="Submit"/>
                 </p>
             </form>
             <div style = "font-size:11px; color:#cc0000; margin-top:10px"><?php echo $error; ?></div>
