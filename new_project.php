@@ -22,10 +22,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $target = trim($_POST['target']);
     $status = $_POST['status'];
     $mail = $_SESSION['email'];
-    $insertT = "INSERT INTO project (id, creator, title, description, start, expiry, country, target, status) VALUES (18, 'able_too@gmail.com', 'Food Maker', 'Cook twice the amount of food in half the time!', '2015/09/14', '2016/10/14', 'Japan', 2000, 'ongoing')";
+    //$insertT = "INSERT INTO project (id, creator, title, description, start, expiry, country, target, status) VALUES (18, 'able_too@gmail.com', 'Food Maker', 'Cook twice the amount of food in half the time!', '2015/09/14', '2016/10/14', 'Japan', 2000, 'ongoing')";
 
     $insert = "INSERT INTO project(id, title, description, start, expiry, target, status) 
-            VALUES ('$cnt', '$mail'. '$title', '$description', '$start', '$expiry', '$target', '$status')";
+            VALUES ('$newid', '$mail'. '$title', '$description', '$start', '$expiry', '$target', '$status')";
     //$result = pg_query($dbcon, $insert);
     $result = pg_query($dbcon, $insertT);
     if(!$result) {
