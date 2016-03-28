@@ -16,9 +16,25 @@ $user = "postgres";
 $pass = "password"; 
 $db = "test"; 
 
+// Connect to the SQL Server
 $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     or die('Could not connect: ' . pg_last_error());
 ?>
+
+<!-- Change the status of expired projects to 'expired' -->
+<?php 
+$query = "SELECT p.id FROM project p WHERE p.expiry < CURRENT_DATE AND p.status='ongoing'";
+$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+?>
+
+<?php while($line = pg_fetch_array($result, null, PGSQL_ASSOC)){ ?>
+  <?php foreach ($line as $proj_id) { ?>
+    <?php $update = "UPDATE project SET status='closed' WHERE id='$proj_id'"; ?>
+    <?php $update_res = pg_query($update) or die('Query failed: ' . pg_last_error()); ?>
+   <?php } ?>
+ <?php } ?>
+<?php pg_free_result($result); ?>
+
 
 <script type="text/javascript" src="js/jquery.js"></script>
 
@@ -120,14 +136,14 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 				
 				<div id="content" class="hfeed">
 				<div class="post-5 post type-post status-publish format-standard hentry category-featured category-parent-category-i entry feature feature">
-
+    <br><br>
 		<a href="#" title="Welcome to Uptown Fund"><img width="660" height="370" src="images/1.jpg" class="alignleft post-image" alt="1" /></a>		<h2 class="entry-title"><a href="#" title="Welcome to Uptown Fund" rel="bookmark">Welcome to Uptown Fund</a></h2> 
-		
+
 				<div class="entry-content">
 			<p>Uptown Fund is the one-stop hub to turn ideas into successful inventions.  Here, you can reach out to potential investors by hosting your projects and ideas.  Alternatively, you can browse through and contribute to thousands of new inventions from all around the world. </p>
 
 			<a href="index.php#categories" class="bigg-read-more">Browse</a>		</div><!-- end .entry-content -->
-		
+
 	</div><!-- end .postclass -->
 	</div><!-- end #content -->
 
@@ -254,4 +270,6 @@ Opt-out anytime with one click and we'll never share your information.
 
 </div>
 </body>
+
+
 </html>

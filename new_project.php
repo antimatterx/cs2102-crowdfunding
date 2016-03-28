@@ -6,8 +6,13 @@ $user = "postgres";
 $pass = "password";
 $db = "test";
 $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass") or die('Could not connect: ' . pg_last_error());
-$cnt = pg_query($dbcon, "SELECT COUNT(*) FROM project") + 1;
-
+$sql = "SELECT p.id FROM project p
+        HAVING p.id >= ALL (
+          SELECT id FROM project
+        );";
+$result = pg_query($dbcon, $sql);
+$row = pg_fetch_assoc($result);
+$newid = $row['id'] + 1;
 if($_SERVER["REQUEST_METHOD"] == "POST") {
     // username and password sent from form
     $title = trim($_POST['title']);
@@ -15,15 +20,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $start = trim($_POST['start']);
     $expiry = trim($_POST['expiry']);
     $target = trim($_POST['target']);
+    $status = $_POST['status'];
+    $mail = $_SESSION['email'];
+    //$insertT = "INSERT INTO project (id, creator, title, description, start, expiry, country, target, status) VALUES (18, 'able_too@gmail.com', 'Food Maker', 'Cook twice the amount of food in half the time!', '2015/09/14', '2016/10/14', 'Japan', 2000, 'ongoing')";
 
-    $insert = "INSERT INTO project(id, title, description, start, expiry, target, current) 
-            VALUES ('$cnt', '$title', '$description', '$start', '$expiry', '$target', '0')";
-      $result = pg_query($dbcon, $insert);
-      if(!$result) {
-          $error = "Error creating new project, please try again";
-      }else {
-          $success = "You have successfully added a new project";
-      }
+    $insert = "INSERT INTO project(id, title, description, start, expiry, target, status) 
+            VALUES ('$newid', '$mail'. '$title', '$description', '$start', '$expiry', '$target', '$status')";
+    //$result = pg_query($dbcon, $insert);
+    $result = pg_query($dbcon, $insertT);
+    if(!$result) {
+        echo 'true';
+    }else {
+        echo 'false';
+    }
 }
 ?>
 
@@ -69,6 +78,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 <p>
                     <label for="target" class="expiry" data-icon="p">Target amount</label>
                     <input id="target" name="target" required="required" type="number" placeholder="In US$"/>
+                </p>
+
+                <p>
+                    <input type="radio" name="status" value="ongoing" checked> Ongoing<br>
+                    <input type="radio" name="status" value="closed"> Closed<br>
                 </p>
                 <p class="create button">
                     <input type="submit" value="Submit"/>
