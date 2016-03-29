@@ -12,6 +12,9 @@
 <link rel="stylesheet" id="responsive-main-css-css" href="css/responsive-main.min.css" type="text/css" media="all" />
 <link rel="stylesheet" id="responsive-css-css" href="css/responsive.css" type="text/css" media="all" />
 <link rel="stylesheet" id="tb_styles-css" href="css/tb-styles.min.css" type="text/css" media="all" />
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script type="text/javascript" src="js/jquery.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 <?php
 $host = "localhost"; 
@@ -23,7 +26,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     or die('Could not connect: ' . pg_last_error());
 ?>
 
-<script type="text/javascript" src="js/jquery.js"></script>
+
 
 <script type="text/javascript">
   jQuery(window).scroll(function (event) {
@@ -43,22 +46,16 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
      }
   });
   
+
+  //TODO for jQuery comment 
   jQuery(document).ready(function (){
-  jQuery('#popular-scroll').click(function (){
-            //jQuery(this).animate(function(){
-                jQuery('html, body').animate({
-                    scrollTop: jQuery('#popular-upcoming').offset().top
-                     }, 2000);
-            //});
-        });
-    
-    jQuery('#feature-scroll').click(function (){
-            //jQuery(this).animate(function(){
-                jQuery('html, body').animate({
-                    scrollTop: jQuery('#inner').offset().top
-                     }, 2000);
-            //});
-        });
+    jQuery("#advancedSearch_JH").hide();
+    jQuery("#search-type-btn").click(function(){
+    jQuery("#advancedSearch_JH").toggle();
+});
+    jQuery("#closs_button_JH").click(function(){
+      jQuery("#advancedSearch_JH").hide();
+    })
       });
     </script>
 </head>
@@ -72,9 +69,9 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     </h1>
       
             <ul id="page-nav" class="horizontal-list">
-<li class="page-nav-top-posts active"><a href="javascript:void(0)" id="feature-scroll" class="page-anchor-link">Home</a></li>
+<li class="page-nav-top-posts active"><a href="index.php#inner" id="feature-scroll" class="page-anchor-link">Home</a></li>
 
-<li class="page-nav-popular-posts"><a href="javascript:void(0)" id="popular-scroll" class="page-anchor-link">Most Popular</a></li>
+<li class="page-nav-popular-posts"><a href="index.php#popular-upcoming" id="popular-scroll" class="page-anchor-link">Most Popular</a></li>
 
 <li class="page-nav-top-posts active"><a href="index.php#categories" id="feature-scroll" class="page-anchor-link">Categories</a></li>
 
@@ -102,6 +99,8 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 <br><br><br><br>
 </div><!-- end #top--> 
 
+<!-- bootstrap start here-->
+<div class = "container">
 <!-- startsearch -->
 <div style = "text-align:center;">
   <h1 id="Search" class="stories-section-header-hed" style = "text-align:center;font-size:150%;">Search</h1>
@@ -110,18 +109,22 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
   <div id="content" class="hfeed"></div>
 </div>
 
-
+<div id = "advancedSearch_JH">
 <div style = "text-align:center;">
-<br><br><br><br><br><br>
+<p id = "closs_button_JH" type = "button" style="text-align: right;">&times;</p>
+<br><br><br><br>
 </div>
 
+<!-- advanced search below  -->
+
+
+
+
+<div class = "col-md-offset-4 col-md-4">
 <div class="stories-section-header"><h1 id="Advanced Search" class="stories-section-header-hed" style = "text-align:center;font-size:180%;">Advanced Search</h1>
 <br>
 </div>
-
-<div class = "three col"></div>
-<div class = "three col" style = "text-align:center;">
-  <table border = "0" style="width:60%; text-align: left; margin-left: 30%;">
+  <table border = "0" style="width:60%; text-align: left;">
     <tr>
       <td style>Project Title</td>
       <td><input style = "width:335px; text-align:left;" type = "text" name = "project-title" id = "project-title"></td>
@@ -190,6 +193,8 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 
 <!-- LOOK FOR SOME DATE PICKER -->
 
+</div>
+</div>
 <!-- endsearch -->
 
 
