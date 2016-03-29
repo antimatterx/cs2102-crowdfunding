@@ -419,7 +419,10 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
             </tr>";
           }
           echo "<tr>";
-          echo "<td>" . $row[1] . "</td>"; #title
+          /* 
+          <a href="project_detail.php?id=<?php echo $id ?>"><?php echo $line['title']; ?></a>
+          */
+          echo "<td><a href = \"project_detail.php?id=".$row[0]."\">".$row[1]."</a></td>"; #title
           echo "<td>" . $row[2] . "</td>"; #creator
           
           #categories
@@ -585,7 +588,10 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
           </tr>";
         }
         echo "<tr>";
+        /*
         echo "<td>" . $row[1] . "</td>"; #title
+        */
+        echo "<td><a href = \"project_detail.php?id=".$row[0]."\">".$row[1]."</a></td>";
         echo "<td>" . $row[2] . "</td>"; #creator
         
         #categories
