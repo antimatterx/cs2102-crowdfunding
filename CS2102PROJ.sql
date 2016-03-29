@@ -6,7 +6,8 @@ password VARCHAR(256) NOT NULL,
 sex CHAR CHECK(sex='M' OR sex='F' OR sex='O') NOT NULL,
 address VARCHAR(512),
 register_date DATE NOT NULL,
-phone NUMERIC NOT NULL
+phone NUMERIC NOT NULL,
+admin CHAR CHECK(admin='Y' OR admin='N') NOT NULL
 );
 
 CREATE TABLE project (
@@ -46,19 +47,20 @@ data BYTEA
 
 
 --PERSON
-INSERT INTO person (firstname, lastname, email, password, sex, address, register_date, phone) VALUES ('Peter', 'Pan', 'im_not_spiderman@gmail.com', '123456', 'M', 'Block 345, Clementi Street 4', '2013-01-01', 9123456);
-INSERT INTO person (firstname, lastname, email, password, sex, address, register_date, phone) VALUES ('Jackson', 'Tan', 'spam_me@hotmail.com', '456789', 'M', 'Block 1 Unity Street', '2011-10-12', 90845678);
-INSERT INTO person (firstname, lastname, email, password, sex, address, register_date, phone) VALUES ('Isaac', 'Newton', 'apple_on_my_head@hotmail.com', '098765', 'M', '37 Cambridge Road', '1956-01-01', 12345612);
-INSERT INTO person (firstname, email, password, sex, address, register_date, phone) VALUES ('Lazarus', 'back_from_the_dead@yahoo.com', '876543', 'M', '4 Jerusalem Street', '2000-10-10', 87652345);
-INSERT INTO person (firstname, lastname, email, password, sex, address, register_date, phone) VALUES ('Zack', 'Brown', 'zack_brown@gmail.com', 'password', 'M', '54 Wisconsin Drive', '2014-12-12', 78945671223);
-INSERT INTO person (firstname, lastname, email, password, sex, address, register_date, phone) VALUES ('April', 'Foo', 'april_foo@hotmail.com', 'password1', 'F', '1 Clown Way', '2015-02-02', 99087653);
-INSERT INTO person (firstname, lastname, email, password, sex, address, register_date, phone) VALUES ('John', 'Doe', 'john_doe@hotmail.com', 'mypassword', 'O', '404 Not Found', '2008-08-08', 89341764);
-INSERT INTO person (firstname, lastname, email, password, sex, address, register_date, phone) VALUES ('Sam', 'Loh', 'sam_loh@yahoo.com', 'verysmart', 'M', 'Block 409, Tampines Avenue 8', '2009-05-16', 86578754);
-INSERT INTO person (firstname, lastname, email, password, sex, address, register_date, phone) VALUES ('Sarah', 'Lee', 'sarah_lee@gmail.com', 'abcdefgh', 'F', 'Block 32 Changi Park', '2010-03-08', 92345654);
-INSERT INTO person (firstname, lastname, email, password, sex, address, register_date, phone) VALUES ('Able', 'Too', 'able_too@gmail.com', 'supergood', 'M', '9 Brown Drive', '2003-09-10', 1234325679);
-INSERT INTO person (firstname, lastname, email, password, sex, address, register_date, phone) VALUES ('Jack', 'Goh', 'jack_goh@yahoo.com', 'mypassword', 'M', '23 Guang Zhou Road 1', '2012-12-12', 67587456);
-INSERT INTO person (firstname, lastname, email, password, sex, address, register_date, phone) VALUES ('Mary', 'Johnson', 'mary_john@gmail.com', 'secret', 'F', '15 Madison Avenue', '2015-09-10', 92345124);
-INSERT INTO person (firstname, lastname, email, password, sex, address, register_date, phone) VALUES ('Molly', 'Miller', 'molly_miller@gmail.com', 'dontknow', 'F', '89 Hellow Wing', '2014-07-10', 87981234);
+INSERT INTO person (firstname, lastname, email, password, sex, address, register_date, phone, admin) VALUES ('Admin', 'Master', 'im_an_admin@gmail.com', 'unbreakablepassword', 'O', '1st Avenue', '2011-11-11', 12345678, 'Y');
+INSERT INTO person (firstname, lastname, email, password, sex, address, register_date, phone, admin) VALUES ('Peter', 'Pan', 'im_not_spiderman@gmail.com', '123456', 'M', 'Block 345, Clementi Street 4', '2013-01-01', 9123456, 'N');
+INSERT INTO person (firstname, lastname, email, password, sex, address, register_date, phone, admin) VALUES ('Jackson', 'Tan', 'spam_me@hotmail.com', '456789', 'M', 'Block 1 Unity Street', '2011-10-12', 90845678, 'N');
+INSERT INTO person (firstname, lastname, email, password, sex, address, register_date, phone, admin) VALUES ('Isaac', 'Newton', 'apple_on_my_head@hotmail.com', '098765', 'M', '37 Cambridge Road', '1956-01-01', 12345612, 'N');
+INSERT INTO person (firstname, email, password, sex, address, register_date, phone, admin) VALUES ('Lazarus', 'back_from_the_dead@yahoo.com', '876543', 'M', '4 Jerusalem Street', '2000-10-10', 87652345, 'N');
+INSERT INTO person (firstname, lastname, email, password, sex, address, register_date, phone, admin) VALUES ('Zack', 'Brown', 'zack_brown@gmail.com', 'password', 'M', '54 Wisconsin Drive', '2014-12-12', 78945671223, 'N');
+INSERT INTO person (firstname, lastname, email, password, sex, address, register_date, phone, admin) VALUES ('April', 'Foo', 'april_foo@hotmail.com', 'password1', 'F', '1 Clown Way', '2015-02-02', 99087653, 'N');
+INSERT INTO person (firstname, lastname, email, password, sex, address, register_date, phone, admin) VALUES ('John', 'Doe', 'john_doe@hotmail.com', 'mypassword', 'O', '404 Not Found', '2008-08-08', 89341764, 'N');
+INSERT INTO person (firstname, lastname, email, password, sex, address, register_date, phone, admin) VALUES ('Sam', 'Loh', 'sam_loh@yahoo.com', 'verysmart', 'M', 'Block 409, Tampines Avenue 8', '2009-05-16', 86578754, 'N');
+INSERT INTO person (firstname, lastname, email, password, sex, address, register_date, phone, admin) VALUES ('Sarah', 'Lee', 'sarah_lee@gmail.com', 'abcdefgh', 'F', 'Block 32 Changi Park', '2010-03-08', 92345654, 'N');
+INSERT INTO person (firstname, lastname, email, password, sex, address, register_date, phone, admin) VALUES ('Able', 'Too', 'able_too@gmail.com', 'supergood', 'M', '9 Brown Drive', '2003-09-10', 1234325679, 'N');
+INSERT INTO person (firstname, lastname, email, password, sex, address, register_date, phone, admin) VALUES ('Jack', 'Goh', 'jack_goh@yahoo.com', 'mypassword', 'M', '23 Guang Zhou Road 1', '2012-12-12', 67587456, 'N');
+INSERT INTO person (firstname, lastname, email, password, sex, address, register_date, phone, admin) VALUES ('Mary', 'Johnson', 'mary_john@gmail.com', 'secret', 'F', '15 Madison Avenue', '2015-09-10', 92345124, 'N');
+INSERT INTO person (firstname, lastname, email, password, sex, address, register_date, phone, admin) VALUES ('Molly', 'Miller', 'molly_miller@gmail.com', 'dontknow', 'F', '89 Hellow Wing', '2014-07-10', 87981234, 'N');
 
 --PROJECT
 INSERT INTO project (id, creator, title, description, start, expiry, country, target, status) VALUES (2, 'back_from_the_dead@yahoo.com', 'Innovative Gaming Controller', 'Special controller for gaming, for improved peformance', '2014/09/22', '2014/11/22', 'China', 300, 'closed');
