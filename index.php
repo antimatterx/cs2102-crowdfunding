@@ -203,7 +203,7 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
   <?php continue; ?>
   <?php } ?>
   <?php $id = $line['id'];?>
-  <li><a href="project_detail.php?id=<?php echo $id ?>?email=<?php echo $email?>"><?php echo $line['title']; ?></a></li>
+  <li><a href="project_detail.php?id=<?php echo $id ?>"><?php echo $line['title']; ?></a></li>
  <?php } ?>
 <?php pg_free_result($result); ?>
 </ul>
