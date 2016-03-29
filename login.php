@@ -58,9 +58,7 @@
         // If result matched $myusername and $mypassword, table row must be 1 row
 
         if($count == 1) {
-           session_register("myusername");
-           $_SESSION['username'] = $row['name'];
-           $_SESSION['email'] = $row['email'];
+           $_SESSION['email'] = $myusername;
            header("location: index.php");
            //print "Login successfull";
         }else {

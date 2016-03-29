@@ -122,11 +122,19 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 <li class="page-nav-top-posts active"><a href="search.php" id="feature-scroll" class="page-anchor-link">Search</a></li>
 </ul>
 
+<?php 
+if (!isset($_SESSION['email'])) {
+  $host_url = "login.php";
+} else {
+  $host_url = "new_project.php";
+}
+?>
+
 <div id="site-nav" class="horizontal-list"><div class="menu-main-menu-container">
 	<ul id="menu-main-menu" class="menu">
 		<li id="menu-item-144" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-144"><a href="/">Sign Up</a></li>
 		<li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="sample-page.htm">Log In</a></li>
-		<li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="sample-page.htm">Host Project</a></li>
+		<li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="<?php echo $host_url ?>">Host Project</a></li>
 	</ul></div></div><!-- #site-nav -->
 <div id="site-header-bigg-social">
     
@@ -145,12 +153,6 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
 				<div class="entry-content">
 			<p>Uptown Fund is the one-stop hub to turn ideas into successful inventions.  Here, you can reach out to potential investors by hosting your projects and ideas.  Alternatively, you can browse through and contribute to thousands of new inventions from all around the world. </p>
-
-<?php 
-if (!isset($_SESSION['email'])) {
-  echo "PLEASE LOGIN";
-}
-?>
 
 			<a href="index.php#categories" class="bigg-read-more">Browse</a>		</div><!-- end .entry-content -->
 
