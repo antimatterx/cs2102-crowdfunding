@@ -45,8 +45,10 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 <?php 
 if (!isset($_SESSION['email'])) {
   $host_url = "login.php";
+  $admin_url = "login.php";
 } else {
   $host_url = "new_project.php";
+  $admin_url = "admin.php";
 }
 ?>
 
@@ -55,8 +57,9 @@ if (!isset($_SESSION['email'])) {
     <li id="menu-item-144" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-144"><a href="/">Sign Up</a></li>
     <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="sample-page.htm">Log In</a></li>
     <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="<?php echo $host_url ?>">Host Project</a></li>
+    <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="<?php echo $host_url ?>">Admin</a></li>
   </ul></div></div><!-- #site-nav -->
-<div id="site-header-bigg-social">
+<div id="site-header">
     
     </div>  
     </div>

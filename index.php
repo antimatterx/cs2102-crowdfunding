@@ -139,7 +139,7 @@ if (!isset($_SESSION['email'])) {
 		<li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="<?php echo $host_url ?>">Host Project</a></li>
 	  <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="<?php echo $host_url ?>">Admin</a></li>
   </ul></div></div><!-- #site-nav -->
-<div id="site-header-bigg-social">
+<div id="site-header">
     
     </div>  
     </div>
