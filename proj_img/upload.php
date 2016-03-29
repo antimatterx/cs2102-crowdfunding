@@ -12,7 +12,7 @@ $con = pg_connect("host=$host dbname=$db user=$user password=$pass")
     or die ("Could not connect to server\n");
 
 
-$images = array(14, 55, 56, 67, 72, 73, 84);
+$images = array(2, 14, 55, 56, 67, 72, 73, 84);
 
 foreach($images as $id) {
 	$file_name = $id . ".jpg";	
