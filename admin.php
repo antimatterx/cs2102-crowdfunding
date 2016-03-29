@@ -21,7 +21,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 ?>
 
 <script type="text/javascript" src="js/jquery.js"></script>
-
+<?php //session_start(); ?>
 <script type="text/javascript">
   jQuery(window).scroll(function (event) {
       
@@ -323,133 +323,26 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     </tr>
   </table>
 
-  <div style = "text-align:center;"><input type="submit" value="Submit" class="button" name="adv-search-submit-btn"></div>
+  <div style = "text-align:center;"><input type="submit" value="Apply Filter" class="button" name="adv-search-submit-btn"></div>
   </form>
 
 <!--   <h1>test35</h1><br> -->
   <?php
-    if(isset($_GET['search-submit-btn']))  { #NORMAL SEARCH
-      $result2 = array();
-      $words = explode(" ", $_GET['search-query']);
-      foreach ($words as $word) {
-        if ($word != "") {
-          $query = 
-            "(SELECT p.id AS ID,
-            p.title AS Title,
-            c.name AS Creator,
-            to_char(p.start, 'DD/MM/YYYY') AS Start,
-            to_char(p.expiry, 'DD/MM/YYYY') AS Expiry,
-            p.target AS Target,
-            p.status AS Status 
-            FROM project p, donation d, person c, has_category h 
-            WHERE h.id = p.id
-            AND c.email = p.creator
-            AND LOWER(p.title) LIKE LOWER('%".$word."%')
-            GROUP BY p.id, p.title, c.name, p.start, p.expiry, p.target, p.status)
-            UNION
-            (SELECT p.id AS ID,
-            p.title AS Title,
-            c.name AS Creator,
-            to_char(p.start, 'DD/MM/YYYY') AS Start,
-            to_char(p.expiry, 'DD/MM/YYYY') AS Expiry,
-            p.target AS Target,
-            p.status AS Status 
-            FROM project p, donation d, person c, has_category h 
-            WHERE h.id = p.id
-            AND c.email = p.creator
-            AND LOWER(c.name) LIKE LOWER('%".$word."%')
-            GROUP BY p.id, p.title, c.name, p.start, p.expiry, p.target, p.status)";
+    
+    $query = "SELECT p.id AS ID,
+          p.title AS Title,
+          c.name AS Creator,
+          to_char(p.start, 'DD/MM/YYYY') AS Start,
+          to_char(p.expiry, 'DD/MM/YYYY') AS Expiry,
+          p.target AS Target,
+          p.status AS Status 
+          FROM project p, donation d, person c, has_category h 
+          WHERE h.id = p.id
+          AND c.email = p.creator
+          GROUP BY p.id, p.title, c.name, p.start, p.expiry, p.target, p.status
+          ORDER BY p.id;";
 
-          #echo "<b>SQL:   </b>".$query."<br><br>";
-          $temp = pg_query($query) or die('Query failed: ' . pg_last_error());
-          while($row = pg_fetch_array($temp)) {
-            array_push($result2, $row);
-          }
-        }
-      } 
-      
-      $past = array();
-      $first = 1;
-      foreach ($result2 as $row) {
-        $isPast = 0;
-        foreach ($past as $pastVal) {
-          if ($pastVal == $row[0]) {
-            $isPast = 1;
-            break;
-          }
-        }
-        array_push($past, $row[0]);
-        if ($isPast == 0) {
-          if ($first == 1) {
-            $first = 0;
-            echo "<br><br><h4> Search Results for: \"".$_GET['search-query']."\"</h4>";
-            echo "<br><table border=\"1\" >
-            <col width=\"20%\">
-            <col width=\"15%\">
-            <col width=\"15%\">
-            <col width=\"10%\">
-            <col width=\"10%\">
-            <col width=\"10%\">
-            <col width=\"10%\">
-            <col width=\"10%\">
-            <tr>
-            <th>Title</th>
-            <th>Creator</th>
-            <th>Categories</th>
-            <th>Start Date</th>
-            <th>Expiry Date</th>
-            <th>Contributions</th>
-            <th>Target</th>
-            <th>Status</th>
-            </tr>";
-          }
-          echo "<tr>";
-          echo "<td>" . $row[1] . "</td>"; #title
-          echo "<td>" . $row[2] . "</td>"; #creator
-          
-          #categories
-          $q = "SELECT h.tag FROM has_category h WHERE h.id = ".$row[0]." ORDER BY h.tag ASC;";
-          $res = pg_query($q) or die('Query Failed: ' . pg_last_error());
-          
-          echo "<td>";
-          while($line = pg_fetch_array($res, null, PGSQL_ASSOC)){
-            foreach ($line as $col_value) { 
-              echo"".$col_value."<br>";
-            }
-          }
-          pg_free_result($res);
-          echo "</td>";
-
-          echo "<td>" . $row[3] . "</td>"; #start
-          echo "<td>" . $row[4] . "</td>"; #expiry
-
-          #contributions
-          $q = "SELECT SUM(d.amount) FROM donation d WHERE d.project = ".$row[0].";";
-          $res = pg_query($q) or die('Query Failed: ' . pg_last_error());
-          
-          echo "<td>";
-          while($line = pg_fetch_array($res, null, PGSQL_ASSOC)){
-            foreach ($line as $col_value) {
-              if ($col_value == "") {
-                $col_value = "0";
-              } 
-              echo"$".$col_value.".00";
-            }
-          }
-          pg_free_result($res);
-
-          echo "<td>$" . $row[5] . ".00</td>"; #target
-          echo "<td>" . $row[6] . "</td>"; #status
-          echo "</tr>";
-        }
-      }
-
-      if ($first == 1) {
-        echo "<br><br><p>No Results Found</p>";
-      } else {
-        echo "</table>";
-      }
-    } else if(isset($_GET['adv-search-submit-btn']))  { #ADVANCED SEARCH
+    if(isset($_GET['adv-search-submit-btn']))  { #ADVANCED SEARCH
       $startDay = $_GET['project-start-D'];
       $expiryDay = $_GET['project-expiry-D'];
       $startMonth = $_GET['project-start-M'];
@@ -497,8 +390,6 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
         $expiryDay = "31";
       }
       
-      
-      $query = "";
       if ($_GET['project-ID'] == "") {
         $query = 
           "SELECT p.id AS ID,
@@ -517,7 +408,8 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
           AND LOWER(p.country) LIKE LOWER('%".$_GET['project-country']."%')
           AND p.start >= '".$startYear."-".$startMonth."-".$startDay."'
           AND p.expiry <= '".$expiryYear."-".$expiryMonth."-".$expiryDay."'
-          GROUP BY p.id, p.title, c.name, p.start, p.expiry, p.target, p.status;";
+          GROUP BY p.id, p.title, c.name, p.start, p.expiry, p.target, p.status
+          ORDER BY p.id;";
       } else {
         $query = 
         "SELECT p.id AS ID, 
@@ -537,86 +429,90 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
         AND LOWER(p.country) LIKE LOWER('%".$_GET['project-country']."%')
         AND p.id = ".$_GET['project-ID']."
         AND p.start >= '".$startYear."-".$startMonth."-".$startDay."'
-          AND p.expiry <= '".$expiryYear."-".$expiryMonth."-".$expiryDay."'
-        GROUP BY p.id, p.title, c.name, p.start, p.expiry, p.target, p.status;";
+        AND p.expiry <= '".$expiryYear."-".$expiryMonth."-".$expiryDay."'
+        GROUP BY p.id, p.title, c.name, p.start, p.expiry, p.target, p.status
+        ORDER BY p.id;";
       }
       
       #echo "<b>ADV SQL:   </b>".$query."<br><br>";
-      $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-    
-      $first = 1;
-      while ($row = pg_fetch_row($result)){
-        if ($first == 1) {
-          $first = 0;
-          echo "<br><br><h4> Advanced Search Results: </h4>";
-          echo "<br><table border=\"1\" >
-          <col width=\"20%\">
-          <col width=\"15%\">
-          <col width=\"15%\">
-          <col width=\"10%\">
-          <col width=\"10%\">
-          <col width=\"10%\">
-          <col width=\"10%\">
-          <col width=\"10%\">
-          <tr>
-          <th>Title</th>
-          <th>Creator</th>
-          <th>Categories</th>
-          <th>Start Date</th>
-          <th>Expiry Date</th>
-          <th>Contributions</th>
-          <th>Target</th>
-          <th>Status</th>
-          </tr>";
-        }
-        echo "<tr>";
-        echo "<td>" . $row[1] . "</td>"; #title
-        echo "<td>" . $row[2] . "</td>"; #creator
-        
-        #categories
-        $q = "SELECT h.tag FROM has_category h WHERE h.id = ".$row[0]." ORDER BY h.tag ASC;";
-        $res = pg_query($q) or die('Query Failed: ' . pg_last_error());
-        
-        echo "<td>";
-        while($line = pg_fetch_array($res, null, PGSQL_ASSOC)){
-          foreach ($line as $col_value) { 
-            echo"".$col_value."<br>";
-          }
-        }
-        pg_free_result($res);
-        echo "</td>";
-
-        echo "<td>" . $row[3] . "</td>"; #start
-        echo "<td>" . $row[4] . "</td>"; #expiry
-
-        #contributions
-        $q = "SELECT SUM(d.amount) FROM donation d WHERE d.project = ".$row[0].";";
-        $res = pg_query($q) or die('Query Failed: ' . pg_last_error());
-        
-        echo "<td>";
-        while($line = pg_fetch_array($res, null, PGSQL_ASSOC)){
-          foreach ($line as $col_value) {
-            if ($col_value == "") {
-              $col_value = "0";
-            } 
-            echo"$".$col_value.".00";
-          }
-        }
-        pg_free_result($res);
-
-        echo "<td>$" . $row[5] . ".00</td>"; #target
-        echo "<td>" . $row[6] . "</td>"; #status
-        echo "</tr>";
-      }
-
-      if ($first == 1) {
-        echo "<br><br><p>No Results Found</p>";
-      } else {
-        echo "</table>";
-      }
-
-      pg_free_result($result);
     }
+
+    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+  
+    $first = 1;
+    while ($row = pg_fetch_row($result)){
+      if ($first == 1) {
+        $first = 0;
+        echo "<br><table border=\"1\">
+        <col width=\"5%\">
+        <col width=\"20%\">
+        <col width=\"15%\">
+        <col width=\"15%\">
+        <col width=\"10%\">
+        <col width=\"10%\">
+        <col width=\"10%\">
+        <col width=\"10%\">
+        <col width=\"10%\">
+        <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Creator</th>
+        <th>Categories</th>
+        <th>Start Date</th>
+        <th>Expiry Date</th>
+        <th>Contributions</th>
+        <th>Target</th>
+        <th>Status</th>
+        </tr>";
+      }
+      echo "<tr>";
+      echo "<td><a href = \"project_admin.php?id=".$row[0]."\">".$row[0]."</a></td>"; #ID
+      echo "<td><a href = \"project_admin.php?id=".$row[0]."\">".$row[1]."</a></td>"; #title
+      echo "<td>" . $row[2] . "</td>"; #creator
+      
+      #categories
+      $q = "SELECT h.tag FROM has_category h WHERE h.id = ".$row[0]." ORDER BY h.tag ASC;";
+      $res = pg_query($q) or die('Query Failed: ' . pg_last_error());
+      
+      echo "<td>";
+      while($line = pg_fetch_array($res, null, PGSQL_ASSOC)){
+        foreach ($line as $col_value) { 
+          echo"".$col_value."<br>";
+        }
+      }
+      pg_free_result($res);
+      echo "</td>";
+
+      echo "<td>" . $row[3] . "</td>"; #start
+      echo "<td>" . $row[4] . "</td>"; #expiry
+
+      #contributions
+      $q = "SELECT SUM(d.amount) FROM donation d WHERE d.project = ".$row[0].";";
+      $res = pg_query($q) or die('Query Failed: ' . pg_last_error());
+      
+      echo "<td>";
+      while($line = pg_fetch_array($res, null, PGSQL_ASSOC)){
+        foreach ($line as $col_value) {
+          if ($col_value == "") {
+            $col_value = "0";
+          } 
+          echo"$".$col_value.".00";
+        }
+      }
+      pg_free_result($res);
+
+      echo "<td>$" . $row[5] . ".00</td>"; #target
+      echo "<td>" . $row[6] . "</td>"; #status
+      echo "</tr>";
+    }
+
+    if ($first == 1) {
+      echo "<br><br><p>No Results Found</p>";
+    } else {
+      echo "</table>";
+    }
+
+    pg_free_result($result);
   ?>
 
 </div>
