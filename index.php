@@ -21,6 +21,10 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     or die('Could not connect: ' . pg_last_error());
 ?>
 
+<?php session_start(); ?>
+<?php $email = $_POST['email']; ?>
+
+
 <!-- Change the status of expired projects to 'expired' -->
 <?php 
 $query = "SELECT p.id FROM project p WHERE p.expiry < CURRENT_DATE AND p.status='ongoing'";
@@ -142,6 +146,12 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 				<div class="entry-content">
 			<p>Uptown Fund is the one-stop hub to turn ideas into successful inventions.  Here, you can reach out to potential investors by hosting your projects and ideas.  Alternatively, you can browse through and contribute to thousands of new inventions from all around the world. </p>
 
+<?php 
+if (!isset($_SESSION['email'])) {
+  echo "PLEASE LOGIN";
+}
+?>
+
 			<a href="index.php#categories" class="bigg-read-more">Browse</a>		</div><!-- end .entry-content -->
 
 	</div><!-- end .postclass -->
@@ -188,7 +198,7 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
   <?php continue; ?>
   <?php } ?>
   <?php $id = $line['id'];?>
-  <li><a href="project_detail.php?id=<?php echo $id ?>"><?php echo $line['title']; ?></a></li>
+  <li><a href="project_detail.php?id=<?php echo $id ?>?email=<?php echo $email?>"><?php echo $line['title']; ?></a></li>
  <?php } ?>
 <?php pg_free_result($result); ?>
 </ul>
