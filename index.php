@@ -12,7 +12,7 @@
 
 <?php
 $host = "localhost"; 
-$user = "postgres"; 
+$user = "postgres";
 $pass = "password"; 
 $db = "test"; 
 
@@ -20,6 +20,10 @@ $db = "test";
 $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     or die('Could not connect: ' . pg_last_error());
 ?>
+
+<?php session_start(); ?>
+<?php $email = $_POST['email']; ?>
+
 
 <!-- Change the status of expired projects to 'expired' -->
 <?php 
@@ -118,13 +122,24 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 <li class="page-nav-top-posts active"><a href="search.php" id="feature-scroll" class="page-anchor-link">Search</a></li>
 </ul>
 
+<?php 
+if (!isset($_SESSION['email'])) {
+  $host_url = "login.php";
+  $admin_url = "login.php";
+} else {
+  $host_url = "new_project.php";
+  $admin_url = "admin.php";
+}
+?>
+
 <div id="site-nav" class="horizontal-list"><div class="menu-main-menu-container">
 	<ul id="menu-main-menu" class="menu">
-		<li id="menu-item-144" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-144"><a href="/">Sign Up</a></li>
-		<li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="sample-page.htm">Log In</a></li>
-		<li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="sample-page.htm">Host Project</a></li>
-	</ul></div></div><!-- #site-nav -->
-<div id="site-header-bigg-social">
+		<li id="menu-item-144" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-144"><a href="register.php">Sign Up</a></li>
+		<li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="login.php">Log In</a></li>
+		<li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="<?php echo $host_url ?>">Host Project</a></li>
+	  <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="<?php echo $host_url ?>">Admin</a></li>
+  </ul></div></div><!-- #site-nav -->
+<div id="site-header">
     
     </div>  
     </div>

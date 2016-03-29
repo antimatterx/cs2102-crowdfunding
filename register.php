@@ -24,7 +24,7 @@
        $mypassword = $_POST['password'];
        $mypassword2 = $_POST['password_confirm'];
 
-      $sql = "INSERT INTO person(name, email, password) VALUES ($myusername, $myemail, $mypassword)";
+      $sql = "INSERT INTO person(name, email, password) VALUES ('$myusername', '$myemail', '$mypassword')";
       $result = pg_query($dbcon, $sql);
       if(!$result) {
         $error = "The email address is already used";
@@ -80,7 +80,6 @@
                         </p>
                </form>
                             <div style = "font-size:11px; color:#cc0000; margin-top:10px"><?php echo $error; ?></div>
-                            <div><?php echo "Entered user ".$myusername."email ".$myemail."pw ".$mypassword; ?></div>
                             <div style = "font-size:11px; color:#0000cc; margin-top:10px"><?php echo $success; ?></div>
                         </div>
             </div>

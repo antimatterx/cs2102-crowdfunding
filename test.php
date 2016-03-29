@@ -20,6 +20,8 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     or die('Could not connect: ' . pg_last_error());
 ?>
 
+<?php session_start(); ?>
+
 <body class="home blog header-full-width full-width-content">
   <div id="header">
   <div class="site-header">
@@ -63,6 +65,13 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 <?php $proj_id = $_GET['id'];?>
 
 <?php $title = ucfirst ($proj_id);?>
+
+<?php $name0 = $_POST['name0']; ?>
+
+<?php $name1 = $_POST['name1']; ?>
+
+<h1> <?php echo $name0 . $name1; ?> </h1>
+
 <!-- Categories Section -->
 <div class="categories">
 	<br>
