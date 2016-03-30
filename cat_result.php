@@ -86,7 +86,7 @@ if (!isset($_SESSION['email'])) {
 <ul class="plain-list stories-table">    
 <?php
 
-$query = "SELECT p.id, p.title, p.status FROM has_category h, project p WHERE p.id=h.id AND h.tag='$var_value' ORDER BY p.title";
+$query = "SELECT p.id, p.title, p.status FROM has_category h, project p WHERE p.id=h.id AND h.tag='$var_value' ORDER BY p.status DESC, p.title;";
 $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 ?>
 
