@@ -248,7 +248,7 @@ $sql = "SELECT p.email AS EMAIL,
 		  </h1>
 
 			<ul id="page-nav" class="horizontal-list">
-				<li class="page-nav-top-posts active"><a href="javascript:void(0)" id="feature-scroll" class="page-anchor-link">Home</a></li>
+				<li class="page-nav-top-posts active"><a href="index.php" id="feature-scroll" class="page-anchor-link">Home</a></li>
 				<li class="page-nav-popular-posts"><a href="index.php#countries" id="popular-scroll" class="page-anchor-link">Most Popular</a></li>
 				<li class="page-nav-top-posts active"><a href="index.php#categories" id="category-scroll" class="page-anchor-link">Categories</a></li>
 				<li class="page-nav-popular-posts"><a href="index.php#countries" id="Countries-scroll" class="page-anchor-link">Countries</a></li>
@@ -275,7 +275,8 @@ $sql = "SELECT p.email AS EMAIL,
 			<div class="wrap">
 				<div id="content-sidebar-wrap">
 						
-					<!-- INSERT CONTENT HERE -->	
+					<!-- INSERT CONTENT HERE -->
+					<br><br><br>	
 					<?php
 						if ($email == "") {
 							echo "<h3> Account does not exist!</h3>";
@@ -290,7 +291,7 @@ $sql = "SELECT p.email AS EMAIL,
 						}
 					?>
 
-					<br><br><br><br>
+					<br>
 
 					<div class = "sixcol"> <form>
 						<table border = "0">

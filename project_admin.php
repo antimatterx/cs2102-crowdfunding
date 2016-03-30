@@ -190,7 +190,8 @@ $sql = "SELECT p.id AS ID,
     p.expiry AS Expiry,
     p.country AS Country,
     p.target AS Target,
-    p.status AS Status
+    p.status AS Status,
+    p.creator AS Email
     FROM project p, person c
     WHERE c.email = p.creator
     AND p.id = ".$curr_id."
@@ -217,6 +218,7 @@ $sql = "SELECT p.id AS ID,
 	    $country = $rowInit[7];
 	    $target = $rowInit[8];
 	    $status = $rowInit[9];
+	    $email = $rowInit[10];
 
 	    $_SESSION['session-title']  = $rowInit[1];
 	    $_SESSION['session-firstname'] = $rowInit[2];
@@ -380,7 +382,9 @@ $sql = "SELECT p.id AS ID,
 					        		<th style = "text-align:left;"><b>Creator: </b></th>
 				        		</td>
 				        		<td>
-				        			<p><?php echo $firstname . " " . $lastname;?></p>
+				        			<?php
+				        				echo"<p><a href = \"person_admin.php?id=".$email."\">".$firstname . " " . $lastname."</a></p>";
+			        				?>
 			        			</td>
 		        			</tr>
 					        <tr>

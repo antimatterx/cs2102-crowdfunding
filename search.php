@@ -566,7 +566,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     }
   } else {
     $past = array();
-    echo "<br><br><h4> Search Results</h4>";
+    echo "<br><br><h4 style = \"text-align:center;\"> Search Results</h4>";
     echo "<br><table border=\"1\" >
     <col width=\"20%\">
     <col width=\"15%\">
@@ -600,11 +600,8 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
       
       if (!$isPast) {
         echo "<tr>";
-        /* 
-        <a href="project_detail.php?id=<?php echo $id ?>"><?php echo $line['title']; ?></a>
-        */
         echo "<td><a href = \"project_detail.php?id=".$row[0]."\">".$row[1]."</a></td>"; #title
-        echo "<td>" . $row[2] . " " . $row[3] . "</td>"; #creator
+        echo "<td><a href = \"profile.php?id=".$row[8]."\">".$row[2]. " " . $row[3] . "</a></td>"; #creator
         
         #categories
         $q = "SELECT h.tag FROM has_category h WHERE h.id = ".$row[0]." ORDER BY h.tag ASC;";
