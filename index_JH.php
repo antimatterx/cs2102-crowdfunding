@@ -2,13 +2,17 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
 <head>
-<title>Uptown Fund &raquo; Your One-Stop Crowdfunding Hub</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<title>Uptown Fund &raquo; Your One-Stop Crowdfunding Hub</title>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css">
+<script src="js/jquery-2.2.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap.js"></script>
 
 
 <?php
@@ -39,9 +43,6 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
    <?php } ?>
  <?php } ?>
 <?php pg_free_result($result); ?>
-
-
-<script type="text/javascript" src="js/jquery.js"></script>
 
 <script type="text/javascript">
   jQuery(window).scroll(function (event) {
@@ -106,48 +107,52 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 <body>
 
 <!--header strat here-->
-  <div id="header">
-  <div class="site-header">
-    <h1 class="site-header-logo-container">
-    <a>Logo</span>
-    <img src="images/logo.png" width="100%" id="bigg-logo" alt="Bigg" /></a>
-    </h1>
-      
-            <ul id="page-nav" class="horizontal-list">
-<li class="page-nav-top-posts active"><a href="javascript:void(0)" id="feature-scroll" class="page-anchor-link">Home</a></li>
-
-<li class="page-nav-popular-posts"><a href="javascript:void(0)" id="popular-scroll" class="page-anchor-link">Most Popular</a></li>
-
-<li class="page-nav-top-posts active"><a href="javascript:void(0)" id="category-scroll" class="page-anchor-link">Categories</a></li>
-
-<li class="page-nav-popular-posts"><a href="javascript:void(0)" id="Countries-scroll" class="page-anchor-link">Countries</a></li>
-
-<li class="page-nav-top-posts active"><a href="search.php" id="feature-scroll" class="page-anchor-link">Search</a></li>
-</ul>
-
-<?php 
-if (!isset($_SESSION['email'])) {
-  $host_url = "login.php";
-  $admin_url = "login.php";
-} else {
-  $host_url = "new_project.php";
-  $admin_url = "admin.php";
-}
-?>
-
-<div id="site-nav" class="horizontal-list"><div class="menu-main-menu-container">
-	<ul id="menu-main-menu" class="menu">
-		<li id="menu-item-144" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-144"><a href="register.php">Sign Up</a></li>
-		<li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="login.php">Log In</a></li>
-		<li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="<?php echo $host_url ?>">Host Project</a></li>
-	  <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="<?php echo $host_url ?>">Admin</a></li>
-  </ul></div></div><!-- #site-nav -->
-<div id="site-header">
+<nav class="navbar navbar-default navbar-fixed-top">
+<div class="container">
     
-    </div>  
-    </div>
-  </div>
+<!--logo img starts here-->    
+<div class="navbar-header" >
+ <!--  <a class="navbar-brand">Project name</a> -->
+  <a><img src="images/logo.png" height="40px" /></a> 
+</div>
+<!--logo img ends here-->      
 
+        <!--nav content strats here -->
+<div id="navbar" class="navbar-collapse collapse">
+<!--nav bar left side content starts here-->          
+    <ul class="nav navbar-nav">
+      <li class="page-nav-top-posts active"><a href="javascript:void(0)" id="feature-scroll" class="page-anchor-link">Home</a></li>
+
+      <li class="page-nav-popular-posts"><a href="javascript:void(0)" id="popular-scroll" class="page-anchor-link">Most Popular</a></li>
+
+      <li class="page-nav-top-posts active"><a href="javascript:void(0)" id="category-scroll" class="page-anchor-link">Categories</a></li>
+
+      <li class="page-nav-popular-posts"><a href="javascript:void(0)" id="Countries-scroll" class="page-anchor-link">Countries</a></li>
+
+      <li class="page-nav-top-posts active"><a href="search.php" id="feature-scroll" class="page-anchor-link">Search</a></li>
+    </ul>
+<!--nav bar left side content ends here-->
+
+      <?php 
+      if (!isset($_SESSION['email'])) {
+        $host_url = "login.php";
+        $admin_url = "login.php";
+      } else {
+        $host_url = "new_project.php";
+        $admin_url = "admin.php";
+      }
+      ?>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li id="menu-item-144" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-144"><a href="register.php">Sign Up</a></li>
+        <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="login.php">Log In</a></li>
+        <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="<?php echo $host_url ?>">Host Project</a></li>
+        <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="<?php echo $host_url ?>">Admin</a></li>
+      </ul>
+</div>
+
+  </div>
+</nav>
 <!--header ends here-->
 
 <div id="wrap">
