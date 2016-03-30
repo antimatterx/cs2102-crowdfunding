@@ -144,11 +144,22 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
       <td><input style = "width:335px; text-align:left;" type = "text" name = "project-title" id = "project-title" value = <?php if (isset($_GET['project-title'])) echo $_GET['project-title']; ?>></td>
     </tr>
     <tr>
+      <td><b>Project ID </b></td>
+      <td><input style = "width:335px;" type = "text" name = "project-ID" id = "project-ID" value = <?php if (isset($_GET['project-ID'])) echo $_GET['project-ID']; ?>></td>
+    </tr>
+    <tr>
+      <td><b>Creator's First Name </b></td>
+      <td><input style = "width:335px;" type = "text" name = "project-firstname" id = "project-firstname" value = <?php if (isset($_GET['project-firstname'])) echo $_GET['project-firstname']; ?>></td>
+    </tr>
+    <tr>
+      <td><b>Creator's Last Name </b></td>
+      <td><input style = "width:335px;" type = "text" name = "project-lastname" id = "project-lastname" value = <?php if (isset($_GET['project-lastname'])) echo $_GET['project-lastname']; ?>></td>
+    </tr>
+    <tr>
       <td><b>Category </b></td>
       <td>
       <?php
         $list = $_GET['project-category'];
-
 
         $q = "SELECT c.name
             FROM category c 
@@ -158,15 +169,15 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 
         while($cats = pg_fetch_array($res, null, PGSQL_ASSOC)) {
           foreach($cats as $cat) {
-            $isFound = 0;
-            foreach($line as $col_value) {
+            $isFound = false;
+            foreach($_GET['project-category'] as $col_value) {
               if ($col_value == $cat) {
-                $isFound = 1;
+                $isFound = true;
                 break;
               }
             }
             
-            if ($isFound == 1) {
+            if ($isFound) {
               echo "<input type = \"checkbox\" name = \"project-category[]\" value = \"".$cat."\" checked>".$cat."<br>";
             } else {
               echo "<input type = \"checkbox\" name = \"project-category[]\" value = \"".$cat."\">".$cat."<br>";
@@ -178,18 +189,6 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
       ?>
         
       </td>
-    </tr>
-    <tr>
-      <td><b>Project ID </b></td>
-      <td><input style = "width:335px;" type = "text" name = "project-ID" id = "project-ID" value = <?php if (isset($_GET['project-ID'])) echo $_GET['project-ID']; ?>></td>
-    </tr>
-    <tr>
-      <td><b>Creator's First Name </b></td>
-      <td><input style = "width:335px;" type = "text" name = "project-firstname" id = "project-firstname" value = <?php if (isset($_GET['project-firstname'])) echo $_GET['project-firstname']; ?>></td>
-    </tr>
-    <tr>
-      <td><b>Creator's Last Name </b></td>
-      <td><input style = "width:335px;" type = "text" name = "project-lastname" id = "project-lastname" value = <?php if (isset($_GET['project-lastname'])) echo $_GET['project-lastname']; ?>></td>
     </tr>
     <tr>
       <td><b>Country </b></td>
@@ -571,6 +570,11 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
         $expiryDay = "31";
       }
       
+      $list = $_GET['project-category'];
+      $category = "";
+      foreach ($list as $key) {
+        $category = $category . " AND '" . $key . "' in (SELECT h1.tag FROM has_category h1 WHERE h1.id = p.id)";
+      }
       
       $query = "";
       if ($_GET['project-ID'] == "") {
@@ -583,10 +587,9 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
           to_char(p.expiry, 'DD/MM/YYYY') AS Expiry,
           p.target AS Target,
           p.status AS Status 
-          FROM project p, donation d, person c, has_category h 
-          WHERE h.id = p.id
-          AND c.email = p.creator
-          AND LOWER(p.title) LIKE LOWER('%".$_GET['project-title']."%')
+          FROM project p, donation d, person c 
+          WHERE c.email = p.creator ".
+          $category . " AND LOWER(p.title) LIKE LOWER('%".$_GET['project-title']."%')
           AND LOWER(c.firstname) LIKE LOWER('%".$_GET['project-firstname']."%')
           AND LOWER(c.lastname) LIKE LOWER('%".$_GET['project-lastname']."%')
           AND LOWER(h.tag) LIKE LOWER('%".$_GET['project-category']."%') 
@@ -604,10 +607,9 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
         to_char(p.expiry, 'DD/MM/YYYY') AS Expiry,
         p.target AS Target,
         p.status AS Status
-        FROM project p, donation d, person c, has_category h 
-        WHERE d.project = p.id 
-        AND h.id = p.id
-        AND c.email = p.creator
+        FROM project p, donation d, person c 
+        WHERE d.project = p.id ".
+          $category . " AND c.email = p.creator
         AND LOWER(p.title) LIKE LOWER('%".$_GET['project-title']."%')
         AND LOWER(c.firstname) LIKE LOWER('%".$_GET['project-firstname']."%')
         AND LOWER(c.lastname) LIKE LOWER('%".$_GET['project-lastname']."%')
