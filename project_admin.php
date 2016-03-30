@@ -26,7 +26,7 @@ if(isset($_GET['id'])) {
 }
 $curr_id = $_SESSION['session-ID'];
 
-if (isset($_GET['delete-project-submit'])) {
+if (isset($_GET['delete-project-submit'])) { #PROJECT DELETION
 	$sql = "DELETE FROM has_category 
 	WHERE id = " . $curr_id . "; DELETE FROM donation 
 	WHERE project = " . $curr_id . "; DELETE FROM image 
@@ -45,7 +45,7 @@ if (isset($_GET['delete-project-submit'])) {
 	$target = "";//$_SESSION['session-target'];
 	$status = "";//$_SESSION['session-status'];
 
-} else if (isset($_GET['edit-project-submit'])) {
+} else if (isset($_GET['edit-project-submit'])) { #PROJECT EDIT
 	
 	$titleSuccess = ($_GET['project-title'] != $_SESSION['session-title']);
 	$descriptionSuccess = ($_GET['project-description'] != $_SESSION['session-description']);
@@ -145,16 +145,16 @@ if (isset($_GET['delete-project-submit'])) {
 		$_SESSION['success'] = false;
 	}
 
-	echo "<br><br><br><br><h1>" .
-	"T" . $_SESSION['success'].  
-	"a" . $titleSuccess . 
-	"b" . $descriptionSuccess . 
-	"c" . $startSuccess . 
-	"d" . $countrySuccess . 
-	"e" . $expirySuccess . 
-	"f" . $targetSuccess . 
-	"g" . $categorySuccess . 
-	"h" . $statusSuccess ."</h1><br>";
+	// echo "<br><br><br><br><h1>" .
+	// "T" . $_SESSION['success'].  
+	// "a" . $titleSuccess . 
+	// "b" . $descriptionSuccess . 
+	// "c" . $startSuccess . 
+	// "d" . $countrySuccess . 
+	// "e" . $expirySuccess . 
+	// "f" . $targetSuccess . 
+	// "g" . $categorySuccess . 
+	// "h" . $statusSuccess ."</h1><br>";
 
 
 	$sql = "UPDATE project 
@@ -174,7 +174,8 @@ if (isset($_GET['delete-project-submit'])) {
 
 $sql = "SELECT p.id AS ID, 
     p.title AS Title,
-    c.name AS Creator,
+    c.firstname AS FirstName,
+    c.lastname AS LastName,
     p.description AS Description,
     p.start AS Start,
     p.expiry AS Expiry,
@@ -184,13 +185,13 @@ $sql = "SELECT p.id AS ID,
     FROM project p, person c
     WHERE c.email = p.creator
     AND p.id = ".$curr_id."
-    GROUP BY p.id, p.title, c.name, p.start, p.expiry, p.target, p.status
+    GROUP BY p.id, p.title, c.firstname, c.lastname, p.start, p.expiry, p.target, p.status
     ORDER BY p.id;";
 
 	echo"<br><br><br><br><br>";
 
 
-	$resultInit = pg_query($dbcon, $sql);
+	$resultInit = pg_query($dbcon, $sql) or die("Query Failed: " . pg_last_error());
 	if (!$resultInit) {
 	    echo "<h1> Nothing found </h1>";
 	}
@@ -198,23 +199,25 @@ $sql = "SELECT p.id AS ID,
 	    $rowInit = pg_fetch_row($resultInit);
 
 	    $ID = $rowInit[0];
-	    $creator = $rowInit[2];
 	    $title  = $rowInit[1];
-	    $description = $rowInit[3];
-	    $start = $rowInit[4];
-	    $expiry = $rowInit[5];
-	    $country = $rowInit[6];
-	    $target = $rowInit[7];
-	    $status = $rowInit[8];
+	    $firstname = $rowInit[2];
+	    $lastname = $rowInit[3];
+	    $description = $rowInit[4];
+	    $start = $rowInit[5];
+	    $expiry = $rowInit[6];
+	    $country = $rowInit[7];
+	    $target = $rowInit[8];
+	    $status = $rowInit[9];
 
-	    $_SESSION['session-creator'] = $rowInit[2];
 	    $_SESSION['session-title']  = $rowInit[1];
-	    $_SESSION['session-description'] = $rowInit[3];
-	    $_SESSION['session-start'] = $rowInit[4];
-	    $_SESSION['session-expiry'] = $rowInit[5];
-	    $_SESSION['session-country'] = $rowInit[6];
-	    $_SESSION['session-target'] = $rowInit[7];
-	    $_SESSION['session-status'] = $rowInit[8];
+	    $_SESSION['session-firstname'] = $rowInit[2];
+	    $_SESSION['session-lastname'] = $rowInit[3];
+	    $_SESSION['session-description'] = $rowInit[4];
+	    $_SESSION['session-start'] = $rowInit[5];
+	    $_SESSION['session-expiry'] = $rowInit[6];
+	    $_SESSION['session-country'] = $rowInit[7];
+	    $_SESSION['session-target'] = $rowInit[8];
+	    $_SESSION['session-status'] = $rowInit[9];
 	}
 ?>
 <script type="text/javascript" src="js/jquery.js"></script>
@@ -368,7 +371,7 @@ $sql = "SELECT p.id AS ID,
 					        		<th style = "text-align:left;"><b>Creator: </b></th>
 				        		</td>
 				        		<td>
-				        			<p><?php echo $creator;?></p>
+				        			<p><?php echo $firstname . " " . $lastname;?></p>
 			        			</td>
 		        			</tr>
 					        <tr>
