@@ -14,6 +14,10 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/bootstrap.js"></script>
 
+<!--own css, js links-->
+<link rel = "stylesheet" type = "text/css" href = "css/bodypadding.css">
+<link rel = "stylesheet" type = "text/css" href = "css/style_JH.css">
+
 
 <?php
 $host = "localhost"; 
@@ -76,7 +80,7 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 		jQuery('#feature-scroll').click(function (){
             //jQuery(this).animate(function(){
                 jQuery('html, body').animate({
-                    scrollTop: jQuery('#inner').offset().top
+                    scrollTop: jQuery('#homelinkhere').offset().top
                      }, 1000);
             //});
         });
@@ -105,7 +109,8 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 </head>
 
 <body>
-
+<div id = "homelinkhere"></div>
+<div id="paddingstart">
 <!--header strat here-->
 <nav class="navbar navbar-default navbar-fixed-top">
 <div class="container">
@@ -155,33 +160,52 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 </nav>
 <!--header ends here-->
 
+
+
+
+
+
+
 <div id="wrap">
-<div id="inner">
-<div class="wrap">
-<div id="content-sidebar-wrap">
+
+<!--start of middle content-->
+<div class = "container">
 				
-				<div id="content" class="hfeed">
-				<div class="post-5 post type-post status-publish format-standard hentry category-featured category-parent-category-i entry feature feature">
-    <br><br>
-		<a href="#" title="Welcome to Uptown Fund"><img width="660" height="370" src="images/1.jpg" class="alignleft post-image" alt="1" /></a>		<h2 class="entry-title"><a href="#" title="Welcome to Uptown Fund" rel="bookmark">Welcome to Uptown Fund</a></h2> 
+  <!--start of top big picture and intro-->
+  <div = class = "row">      
 
-				<div class="entry-content">
-			<p>Uptown Fund is the one-stop hub to turn ideas into successful inventions.  Here, you can reach out to potential investors by hosting your projects and ideas.  Alternatively, you can browse through and contribute to thousands of new inventions from all around the world. </p>
+    
+		<div class = "col-md-7">
+      <a href="#" title="Welcome to Uptown Fund"><img width="660" height="370" src="images/1.jpg" class="alignleft post-image" alt="1" /></a>	
+    </div>
 
-			<a href="index.php#categories" class="bigg-read-more">Browse</a>		</div><!-- end .entry-content -->
+    <div class = "col-md-5">
+      <h1 class="entry-title"><a href="#" title="Welcome to Uptown Fund" rel="bookmark">Welcome to Uptown Fund</a></h1> 
 
-	</div><!-- end .postclass -->
-	</div><!-- end #content -->
+  		
+  		<p id = "main_page_top_para">Uptown Fund is the one-stop hub to turn ideas into successful inventions.  Here, you can reach out to potential investors by hosting your projects and ideas.  Alternatively, you can browse through and contribute to thousands of new inventions from all around the world. </p>
+      <p><a class="btn btn-primary btn-lg" href="#categories" role="button">Browse</a></p>	
+    </div>
 
-<!-- Categories Section -->
+
+  </div>
+  <!--end of top big picture and intro-->
+
+<!-- start of Categories Section -->
+
+<div class = "row">
 <div class="categories">
 	<cap id="categories">Categories</cap>
 	<br>
 	<sub>Browse projects by categories</sub>
 </div>
+</div>
+<!-- end of Categories Section -->
+
 <br>
 
-<!-- Categories List -->
+<!--start of Categories List -->
+<div class = "row">
 <div class="categories">
 	<a href="cat_result.php?varname=<?php echo "art" ?>"><span><img src="images/art.jpg" style="width: 100%" class="post-image">Art</span></a>
 	<a href="cat_result.php?varname=<?php echo "education" ?>"><span><img src="images/education.jpg" style="width: 100%" class="post-image">Education</span></a>
@@ -193,57 +217,75 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 	<a href="cat_result.php?varname=<?php echo "video" ?>"><span><img src="images/video.jpg" style="width: 100%" class="post-image">Video</span></a>
 	<a href="cat_result.php?varname=<?php echo "others" ?>"><span><img src="images/other.jpg" style="width: 100%" class="post-image">Others</span></a>
 </div>
+</div>
+<!--end of Categories List -->
 
-<!-- Popular List -->
-<div id="popular-upcoming" class="stories-container sixcol">
+<div class = "row">
+<!-- start of Popular List -->
+<div class = "col-md-6">
+<div id="popular-upcoming">
 
-<div class="stories-section-header">
-<h2 id="popular" class="stories-section-header-hed">Popular</h2>
-<h3 class="stories-section-header-subhed">The most popular crowdfunding projects</h3>
+<div>
+<h2>Popular</h2>
+<h4>The most popular crowdfunding projects</h4>
 </div>
 
-<ul class="plain-list stories-table">    
-<?php
-$query = "SELECT p.id, p.title FROM donation d, project p WHERE p.id=d.project AND p.status='ongoing' GROUP BY p.title, p.id  ORDER BY COUNT(d.project) DESC LIMIT 10";
+<ul class="list-group">   
+    <?php
+    $query = "SELECT p.id, p.title FROM donation d, project p WHERE p.id=d.project AND p.status='ongoing' GROUP BY p.title, p.id  ORDER BY COUNT(d.project) DESC LIMIT 10";
 
-$result = pg_query($query) or die('Query failed: ' . pg_last_error());
-?>
+    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+    ?>
 
-<?php while($line = pg_fetch_array($result, null, PGSQL_ASSOC)){ ?>
-  <?php if(!$line['title']) { ?>
-  <?php continue; ?>
-  <?php } ?>
-  <?php $id = $line['id'];?>
-  <li><a href="project_detail.php?id=<?php echo $id ?>"><?php echo $line['title']; ?></a></li>
- <?php } ?>
-<?php pg_free_result($result); ?>
+    <?php while($line = pg_fetch_array($result, null, PGSQL_ASSOC)){ ?>
+      <?php if(!$line['title']) { ?>
+      <?php continue; ?>
+      <?php } ?>
+      <?php $id = $line['id'];?>
+      <li class="list-group-item"><a href="project_detail.php?id=<?php echo $id ?>"><?php echo $line['title']; ?></a></li>
+     <?php } ?>
+    <?php pg_free_result($result); ?>
 </ul>
 </div>
+</div>
+<!-- end of Popular List -->
 
-<!-- Countries List -->
-<div id="countries" class="stories-container sixcol last">
-<div class="stories-section-header">
-<h2 class="stories-section-header-hed">Countries</h2>
-<h3 class="stories-section-header-subhed">Browse projects by countries</h3>
+<!--start of Countries List -->
+<div class = "col-md-6">
+<div id="countries">
+<div >
+<h2 >Countries</h2>
+<h4 >Browse projects by countries</h4>
 </div>
 
-<ul class="plain-list stories-table">    
-<?php
-$query = 'SELECT DISTINCT country FROM project ORDER BY country';
-$result = pg_query($query) or die('Query failed: ' . pg_last_error());
-?>
+<ul class="list-group"> 
+  <?php
+  $query = 'SELECT DISTINCT country FROM project ORDER BY country';
+  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+  ?>
 
-<?php while($line = pg_fetch_array($result, null, PGSQL_ASSOC)){ ?>
-	<?php foreach ($line as $col_value) { ?>
-  	<li><a href="country_result.php?country=<?php echo $col_value ?>"><?php echo $col_value; ?></a></li>
+  <?php while($line = pg_fetch_array($result, null, PGSQL_ASSOC)){ ?>
+  	<?php foreach ($line as $col_value) { ?>
+    	<li class="list-group-item"><a href="country_result.php?country=<?php echo $col_value ?>"><?php echo $col_value; ?></a></li>
+     <?php } ?>
    <?php } ?>
- <?php } ?>
-<?php pg_free_result($result); ?>
+  <?php pg_free_result($result); ?>
 </ul>
+	
+ </div>
+ <!--end of Countries List -->
+ </div>
+
+  </div><!-- end #inner --> 
+
+<!--end of middle content-->
 
 
-	</div><!-- end #content-sidebar-wrap -->
-	</div><!-- end .wrap --></div><!-- end #inner --> 
+
+
+
+
+
 <div id="bigg-footer">
 <div class="wrap">
         <div class="twocol">
@@ -294,6 +336,7 @@ Opt-out anytime with one click and we'll never share your information.
 </div><!-- end #wrap -->
 
 
+</div>
 </div>
 </body>
 
