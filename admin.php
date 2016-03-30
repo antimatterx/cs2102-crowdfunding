@@ -511,7 +511,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
       echo "<td>";
       while($line = pg_fetch_array($res, null, PGSQL_ASSOC)){
         foreach ($line as $col_value) { 
-          echo"".$col_value."<br>";
+          echo"<a href = \"cat_result.php?varname=".$col_value."\">".$col_value."</a><br>";
         }
       }
       pg_free_result($res);
