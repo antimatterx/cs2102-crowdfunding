@@ -1,3 +1,5 @@
+<?session_start(); ?>
+
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
@@ -104,6 +106,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 <div class = "container">
 <!-- startsearch -->
 
+<!-- START NORMAL SEARCH FORM-->
 <div style = "text-align:center;">
   <h1 id="Search" class="stories-section-header-hed" style = "text-align:center;font-size:150%;">Search</h1>
   <form>
@@ -119,12 +122,13 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 <p id = "closs_button_JH" type = "button" style="text-align: right;">&times;</p>
 <br><br><br><br>
 </div>
+<!-- END NORMAL SEARCH FORM-->
 
 <!-- advanced search below  -->
 
 
 
-
+<!-- START ADV SEARCH FORM-->
 <div class = "col-md-offset-4 col-md-4">
 <div class="stories-section-header"><h1 id="Advanced Search" class="stories-section-header-hed" style = "text-align:center;font-size:180%;">Advanced Search</h1>
 <br>
@@ -136,6 +140,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
   
   <table border = "0" style="width:60%; text-align: left; margin-left: 30%;">
 -->
+
 <form>
   <table border = "0" style="width:100%; text-align: left;">
     <col width=\"70%\">
@@ -375,8 +380,9 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 
   <div style = "text-align:center;"><input type="submit" value="Submit" class="button" name="adv-search-submit-btn"></div>
   </form>
+<!-- END ADV SEARCH FORM-->
 
-<!--   <h1>test35</h1><br> -->
+<!-- START SEARCH QUERIES-->
   <?php
     if(isset($_GET['search-submit-btn']))  { #NORMAL SEARCH
       $result2 = array();
@@ -427,102 +433,13 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
             GROUP BY p.id, p.title, c.firstname, c.lastname, p.start, p.expiry, p.target, p.status, p.creator)";
 
           #echo "<b>SQL:    </b>".$query."<br><br>";
+          $print = array();
           $temp = pg_query($query) or die('Query failed: ' . pg_last_error());
           while($row = pg_fetch_array($temp)) {
-            array_push($result2, $row);
+            array_push($print, $row);
           }
         }
       } 
-      
-      $past = array();
-      $first = true;
-      foreach ($result2 as $row) {
-        $isPast = 0;
-        foreach ($past as $pastVal) {
-          if ($pastVal == $row[0]) {
-            $isPast = 1;
-            break;
-          }
-        }
-        array_push($past, $row[0]);
-        if ($isPast == 0) {
-          if ($first) {
-            $first = false;
-            echo "<br><br><h4> Search Results for: \"".$_GET['search-query']."\"</h4>";
-            echo "<br><table border=\"1\" >
-            <col width=\"20%\">
-            <col width=\"15%\">
-            <col width=\"15%\">
-            <col width=\"10%\">
-            <col width=\"10%\">
-            <col width=\"10%\">
-            <col width=\"10%\">
-            <col width=\"10%\">
-            <tr>
-            <th>Title</th>
-            <th>Creator</th>
-            <th>Categories</th>
-            <th>Start Date</th>
-            <th>Expiry Date</th>
-            <th>Contributions</th>
-            <th>Target</th>
-            <th>Status</th>
-            </tr>";
-          }
-          echo "<tr>";
-          /* 
-          <a href="project_detail.php?id=<?php echo $id ?>"><?php echo $line['title']; ?></a>
-          */
-          echo "<td><a href = \"project_detail.php?id=".$row[0]."\">".$row[1]."</a></td>"; #title
-          echo "<td>" . $row[2] . " " . $row[3] . "</td>"; #creator
-          
-          #categories
-          $q = "SELECT h.tag FROM has_category h WHERE h.id = ".$row[0]." ORDER BY h.tag ASC;";
-          $res = pg_query($q) or die('Query Failed: ' . pg_last_error());
-          
-          echo "<td>";
-          while($line = pg_fetch_array($res, null, PGSQL_ASSOC)){
-            foreach ($line as $col_value) { 
-              echo"".$col_value."<br>";
-            }
-          }
-          pg_free_result($res);
-          echo "</td>";
-
-          $temp = str_replace("/0", "/", $row[4]);
-          $temp = ltrim($temp, '0');
-          echo "<td>" . $temp . "</td>"; #start
-          
-          $temp = str_replace("/0", "/", $row[5]);
-          $temp = ltrim($temp, '0');
-          echo "<td>" . $temp . "</td>"; #expiry
-
-          #contributions
-          $q = "SELECT SUM(d.amount) FROM donation d WHERE d.project = ".$row[0].";";
-          $res = pg_query($q) or die('Query Failed: ' . pg_last_error());
-          
-          echo "<td>";
-          while($line = pg_fetch_array($res, null, PGSQL_ASSOC)){
-            foreach ($line as $col_value) {
-              if ($col_value == "") {
-                $col_value = "0";
-              } 
-              echo"$".$col_value.".00";
-            }
-          }
-          pg_free_result($res);
-
-          echo "<td>$" . $row[6] . ".00</td>"; #target
-          echo "<td>" . $row[7] . "</td>"; #status
-          echo "</tr>";
-        }
-      }
-
-      if ($first) {
-        echo "<br><br><p>No Results Found</p>";
-      } else {
-        echo "</table>";
-      }
     } else if(isset($_GET['adv-search-submit-btn']))  { #ADVANCED SEARCH
       $startDay = $_GET['project-start-D'];
       $expiryDay = $_GET['project-expiry-D'];
@@ -625,34 +542,69 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
       #echo "<b>ADV SQL:    </b>".$query."<br><br>";
       $result = pg_query($query) or die('Query failed: ' . pg_last_error());
     
-      $first = true;
-      while ($row = pg_fetch_row($result)){
-        if ($first) {
-          $first = false;
-          echo "<br><br><h4> Advanced Search Results: </h4>";
-          echo "<br><table border=\"1\" >
-          <col width=\"20%\">
-          <col width=\"15%\">
-          <col width=\"15%\">
-          <col width=\"10%\">
-          <col width=\"10%\">
-          <col width=\"10%\">
-          <col width=\"10%\">
-          <col width=\"10%\">
-          <tr>
-          <th>Title</th>
-          <th>Creator</th>
-          <th>Categories</th>
-          <th>Start Date</th>
-          <th>Expiry Date</th>
-          <th>Contributions</th>
-          <th>Target</th>
-          <th>Status</th>
-          </tr>";
+      $print = array();
+
+      while ($row = pg_fetch_row($result)) {
+        array_push($print, $row);
+      }
+    }
+  ?>
+</div>
+
+<!-- <p> nothing here</p> -->
+<!-- LOOK FOR SOME DATE PICKER -->
+
+</div>
+</div> <!-- END CONTAINER-->
+<!-- END SEARCH QUERIES-->
+
+<!-- START PRINT-->
+<?php
+  if (sizeof($print) == 0) {
+    if(isset($_GET['search-submit-btn']) or isset($_GET['adv-search-submit-btn'])){
+      echo "<br><br><p>No Results Found</p>";
+    }
+  } else {
+    $past = array();
+    echo "<br><br><h4> Search Results</h4>";
+    echo "<br><table border=\"1\" >
+    <col width=\"20%\">
+    <col width=\"15%\">
+    <col width=\"15%\">
+    <col width=\"10%\">
+    <col width=\"10%\">
+    <col width=\"10%\">
+    <col width=\"10%\">
+    <col width=\"10%\">
+    <tr>
+    <th>Title</th>
+    <th>Creator</th>
+    <th>Categories</th>
+    <th>Start Date</th>
+    <th>Expiry Date</th>
+    <th>Contributions</th>
+    <th>Target</th>
+    <th>Status</th>
+    </tr>";
+  
+    foreach ($print as $row) {
+      $isPast = false;
+      foreach ($past as $pastVal) {
+        if ($pastVal == $row[0]) {
+          $isPast = true;
+          break;
         }
+      }
+
+      array_push($past, $row[0]);
+      
+      if (!$isPast) {
         echo "<tr>";
+        /* 
+        <a href="project_detail.php?id=<?php echo $id ?>"><?php echo $line['title']; ?></a>
+        */
         echo "<td><a href = \"project_detail.php?id=".$row[0]."\">".$row[1]."</a></td>"; #title
-        echo "<td><a href = \"project_detail.php?id=".$row[8]."\">".$row[2]. " " . $row[3] . "</a></td>"; #creator
+        echo "<td>" . $row[2] . " " . $row[3] . "</td>"; #creator
         
         #categories
         $q = "SELECT h.tag FROM has_category h WHERE h.id = ".$row[0]." ORDER BY h.tag ASC;";
@@ -661,7 +613,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
         echo "<td>";
         while($line = pg_fetch_array($res, null, PGSQL_ASSOC)){
           foreach ($line as $col_value) { 
-            echo"<a href = \"cat_result.php?varname=".$col_value."\">" . $col_value . "</a><br>";
+            echo"".$col_value."<br>";
           }
         }
         pg_free_result($res);
@@ -670,7 +622,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
         $temp = str_replace("/0", "/", $row[4]);
         $temp = ltrim($temp, '0');
         echo "<td>" . $temp . "</td>"; #start
-
+        
         $temp = str_replace("/0", "/", $row[5]);
         $temp = ltrim($temp, '0');
         echo "<td>" . $temp . "</td>"; #expiry
@@ -694,25 +646,11 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
         echo "<td>" . $row[7] . "</td>"; #status
         echo "</tr>";
       }
-
-      if ($first) {
-        echo "<br><br><p>No Results Found</p>";
-      } else {
-        echo "</table>";
-      }
-
-      pg_free_result($result);
     }
-  ?>
-
-</div>
-
-<!-- <p> nothing here</p> -->
-<!-- LOOK FOR SOME DATE PICKER -->
-
-</div>
-</div>
-<!-- endsearch -->
+    echo "</table>";
+  }
+?>
+<!-- END PRINT-->
 
   </div><!-- end #content-sidebar-wrap -->
   </div><!-- end .wrap --></div><!-- end #inner --> 
