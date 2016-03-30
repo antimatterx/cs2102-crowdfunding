@@ -24,9 +24,9 @@ status VARCHAR(16) CHECK(status='ongoing' OR status='closed')
 
 CREATE TABLE donation (
 time TIMESTAMP, -- must be later than the project start and earlier than project end
-donor VARCHAR(256) REFERENCES person(email),
+donor VARCHAR(256) REFERENCES person(email) ON DELETE CASCADE ON UPDATE CASCADE,
 amount NUMERIC NOT NULL CHECK(amount > 0),
-project NUMERIC REFERENCES project(id),
+project NUMERIC REFERENCES project(id) ON DELETE CASCADE,
 PRIMARY KEY(time, donor, project)
 );
 
@@ -35,13 +35,13 @@ name VARCHAR(64) PRIMARY KEY
 );
 
 CREATE TABLE has_category (
-id NUMERIC REFERENCES project(id),
-tag VARCHAR(64) REFERENCES category(name),
+id NUMERIC REFERENCES project(id) ON DELETE CASCADE,
+tag VARCHAR(64) REFERENCES category(name) ON DELETE CASCADE ON UPDATE CASCADE,
 PRIMARY KEY(id, tag)
 );
 
 CREATE TABLE image (
-id NUMERIC PRIMARY KEY REFERENCES project(id),
+id NUMERIC PRIMARY KEY REFERENCES project(id) ON DELETE CASCADE ON UPDATE CASCADE,
 data BYTEA
 );
 

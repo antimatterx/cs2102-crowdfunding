@@ -60,8 +60,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 <body class="home blog header-full-width full-width-content">
   <div id="header">
   <div class="site-header">
-    <h1 class="site-header-logo-container">
-    <a>Logo</span>
+    <h1 class="site-header-logo-container"><a>Logo</span>
     <img src="images/logo.png" width="100%" id="bigg-logo" alt="Bigg" /></a>
     </h1>
       
@@ -137,45 +136,63 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
   <form>
   <table border = "0" style="width:60%; text-align: left; margin-left: 30%;">
 -->
-  <table border = "0" style="width:60%; text-align: left;">
+  <table border = "0" style="width:100%; text-align: left;">
+    <col width=\"70%\">
+    <col width=\"30%\">
     <tr>
-      <td style>Project Title</td>
+      <td><b>Project Title </b></td>
       <td><input style = "width:335px; text-align:left;" type = "text" name = "project-title" id = "project-title" value = <?php if (isset($_GET['project-title'])) echo $_GET['project-title']; ?>></td>
     </tr>
     <tr>
-      <td>Category</td>
+      <td><b>Category </b></td>
       <td>
-        <select name = "project-category" style = "width:340px;" id = "project-category">
-          <option value = ""></option>
-          <?php
-            $query = "SELECT c.name FROM category c;";
+      <?php
+        $list = $_GET['project-category'];
 
-            $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
-            while($line = pg_fetch_array($result, null, PGSQL_ASSOC)){
-              foreach ($line as $col_value) { 
-                echo"<option value = \"".$col_value."\">".$col_value."</option>";
+        $q = "SELECT c.name
+            FROM category c 
+            ORDER BY c.name ASC;";
+
+        $res = pg_query($q) or die('Query Failed: ' . pg_last_error());
+
+        while($cats = pg_fetch_array($res, null, PGSQL_ASSOC)) {
+          foreach($cats as $cat) {
+            $isFound = 0;
+            foreach($line as $col_value) {
+              if ($col_value == $cat) {
+                $isFound = 1;
+                break;
               }
             }
-            pg_free_result($result);
-          ?>
-        </select>
+            
+            if ($isFound == 1) {
+              echo "<input type = \"checkbox\" name = \"project-category[]\" value = \"".$cat."\" checked>".$cat."<br>";
+            } else {
+              echo "<input type = \"checkbox\" name = \"project-category[]\" value = \"".$cat."\">".$cat."<br>";
+            }
+          }
+        }
+
+        pg_free_result($res);
+      ?>
+        
       </td>
     </tr>
     <tr>
-      <td>Project ID</td>
+      <td><b>Project ID </b></td>
       <td><input style = "width:335px;" type = "text" name = "project-ID" id = "project-ID" value = <?php if (isset($_GET['project-ID'])) echo $_GET['project-ID']; ?>></td>
     </tr>
     <tr>
-      <td>Creator's First Name</td>
+      <td><b>Creator's First Name </b></td>
       <td><input style = "width:335px;" type = "text" name = "project-firstname" id = "project-firstname" value = <?php if (isset($_GET['project-firstname'])) echo $_GET['project-firstname']; ?>></td>
     </tr>
     <tr>
-      <td>Creator's Last Name</td>
+      <td><b>Creator's Last Name </b></td>
       <td><input style = "width:335px;" type = "text" name = "project-lastname" id = "project-lastname" value = <?php if (isset($_GET['project-lastname'])) echo $_GET['project-lastname']; ?>></td>
     </tr>
     <tr>
-      <td>Country</td>
+      <td><b>Country </b></td>
       <td>
         <select name = "project-country" style = "width:340px;" id = "project-country">
           <?php
@@ -204,7 +221,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
       </td>
     </tr>
     <tr>
-      <td>Project Start Date</td>
+      <td><b>Project Start Date </b></td>
       <td>
         <select name = "project-start-D" style = "width:44px;" id = "project-start-D">
           <?php
@@ -279,7 +296,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
        <input type = "number" placeholder = "YYYY" style = "width:57px;" name = "project-start-Y" id = "project-start-Y" min = "1900" value = <?php if (isset($_GET['project-start-Y'])) echo $_GET['project-start-Y']; ?>></td>
     </tr>
     <tr>
-      <td>Project Expiry</td>
+      <td><b>Project Expiry </b></td>
       <td>
       <select name = "project-expiry-D" style = "width:44px;" id = "project-expiry-D">
           <?php
@@ -409,7 +426,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
             AND LOWER(c.lastname) LIKE LOWER('%".$word."%')
             GROUP BY p.id, p.title, c.firstname, c.lastname, p.start, p.expiry, p.target, p.status)";
 
-          #echo "<b>SQL:   </b>".$query."<br><br>";
+          #echo "<b>SQL:    </b>".$query."<br><br>";
           $temp = pg_query($query) or die('Query failed: ' . pg_last_error());
           while($row = pg_fetch_array($temp)) {
             array_push($result2, $row);
@@ -602,7 +619,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
         GROUP BY p.id, p.title, c.firstname, c.lastname, p.start, p.expiry, p.target, p.status;";
       }
       
-      #echo "<b>ADV SQL:   </b>".$query."<br><br>";
+      #echo "<b>ADV SQL:    </b>".$query."<br><br>";
       $result = pg_query($query) or die('Query failed: ' . pg_last_error());
     
       $first = 1;
@@ -653,7 +670,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
         $temp = str_replace("/0", "/", $row[4]);
         $temp = ltrim($temp, '0');
         echo "<td>" . $temp . "</td>"; #start
-        
+
         $temp = str_replace("/0", "/", $row[5]);
         $temp = ltrim($temp, '0');
         echo "<td>" . $temp . "</td>"; #expiry

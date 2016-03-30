@@ -340,11 +340,12 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
           to_char(p.start, 'DD/MM/YYYY') AS Start,
           to_char(p.expiry, 'DD/MM/YYYY') AS Expiry,
           p.target AS Target,
-          p.status AS Status 
+          p.status AS Status,
+          p.creator AS Email 
           FROM project p, donation d, person c, has_category h 
           WHERE h.id = p.id
           AND c.email = p.creator
-          GROUP BY p.id, p.title, c.firstname, c.lastname, p.start, p.expiry, p.target, p.status
+          GROUP BY p.id, p.title, c.firstname, c.lastname, p.start, p.expiry, p.target, p.status, p.creator
           ORDER BY p.id;";
 
     if(isset($_GET['adv-search-submit-btn']))  { #ADVANCED SEARCH
@@ -404,7 +405,8 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
           to_char(p.start, 'DD/MM/YYYY') AS Start,
           to_char(p.expiry, 'DD/MM/YYYY') AS Expiry,
           p.target AS Target,
-          p.status AS Status 
+          p.status AS Status,
+          p.creator AS Email 
           FROM project p, donation d, person c, has_category h 
           WHERE h.id = p.id
           AND c.email = p.creator
@@ -415,7 +417,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
           AND LOWER(p.country) LIKE LOWER('%".$_GET['project-country']."%')
           AND p.start >= '".$startYear."-".$startMonth."-".$startDay."'
           AND p.expiry <= '".$expiryYear."-".$expiryMonth."-".$expiryDay."'
-          GROUP BY p.id, p.title, c.firstname, c.lastname, p.start, p.expiry, p.target, p.status
+          GROUP BY p.id, p.title, c.firstname, c.lastname, p.start, p.expiry, p.target, p.status, p.creator
           ORDER BY p.id;";
       } else {
         $query = 
@@ -426,7 +428,8 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
         to_char(p.start, 'DD/MM/YYYY') AS Start,
         to_char(p.expiry, 'DD/MM/YYYY') AS Expiry,
         p.target AS Target,
-        p.status AS Status
+        p.status AS Status,
+        p.creator AS Email
         FROM project p, donation d, person c, has_category h 
         WHERE d.project = p.id 
         AND h.id = p.id
@@ -439,13 +442,13 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
         AND p.id = ".$_GET['project-ID']."
         AND p.start >= '".$startYear."-".$startMonth."-".$startDay."'
         AND p.expiry <= '".$expiryYear."-".$expiryMonth."-".$expiryDay."'
-        GROUP BY p.id, p.title, c.firstname, c.lastname, p.start, p.expiry, p.target, p.status
+        GROUP BY p.id, p.title, c.firstname, c.lastname, p.start, p.expiry, p.target, p.status, p.creator
         ORDER BY p.id;";
       }
       
       #echo "<b>ADV SQL:   </b>".$query."<br><br>";
     }
-
+echo "<b>ADV SQL:   </b>".$query."<br><br>";
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
   
     $first = 1;
@@ -478,8 +481,8 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
       echo "<tr>";
       echo "<td><a href = \"project_admin.php?id=".$row[0]."\">".$row[0]."</a></td>"; #ID
       echo "<td><a href = \"project_admin.php?id=".$row[0]."\">".$row[1]."</a></td>"; #title
-      echo "<td>" . $row[2] . "</td>"; #creator fname
-      echo "<td>" . $row[3] . "</td>"; #creator lname
+      echo "<td><a href = \"person_admin.php?id=".$row[8]."\">".$row[2]."</a></td>"; #creator fname
+      echo "<td><a href = \"person_admin.php?id=".$row[8]."\">".$row[3]."</a></td>"; #creator lname
       #categories
       $q = "SELECT h.tag FROM has_category h WHERE h.id = ".$row[0]." ORDER BY h.tag ASC;";
       $res = pg_query($q) or die('Query Failed: ' . pg_last_error());
