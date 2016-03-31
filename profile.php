@@ -148,7 +148,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 <br>
 
 <!--donated project profile-->
-<h1> Donated Projects </h1>
+<h1> Projects Donated To: </h1>
 <p title="Donated Projects"></p>
 <table style="width:60%">
   <tr>
@@ -160,11 +160,11 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     <td>112113114 </td>
  </tr>
 <tr>
-    <td>Starts Date:</td>
+    <td>Project Start Date:</td>
     <td>9-7-2015</td>
  </tr>
 <tr>
-    <td>Ends Date:</td>
+    <td>Project End Date:</td>
     <td>20-9-2015 </td>
  </tr>
 <tr>
@@ -182,7 +182,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 </table>
 <!--proposed project profile-->
 <br>
-<h1> Proposed Projects </h1>
+<h1> Projects Proposed: </h1>
 <p title="Proposed Projects"></p>
 <table style="width:60%">
   <tr>
