@@ -1,0 +1,47 @@
+.post-image {
+	background-color: #f5f5f5;
+	border: none;
+	padding: 4px;
+}
+
+#main_page_top_para{
+	font-size: 17px;
+
+}
+
+/* Categories
+------------------------------------------------------------ */
+.categories{ 
+	width:100%; margin:0 auto; text-align:center
+}
+
+.categories sub {
+	color: silver;
+	font-size: 20px;
+	border:15px;
+	font-weight: 400;
+	text-align:center;
+}
+
+.categories cap {
+	font:Helvetica;
+	font-weight:bold;
+	font-size: 25pt;
+	border:15px;
+	line-height: 2em;
+	text-align:center;
+}
+
+.categories span {
+	float: left; 
+	font:Helvetica;
+	font-weight:bold;
+	font-size: 15pt; 
+	text-align: center; 
+	width: 22.8%; 
+	margin-left: 1%; 
+	margin-right: 1%; 
+	margin-bottom: 0.5em;
+}
+/*end of Categories
+------------------------------------------------------------ */
