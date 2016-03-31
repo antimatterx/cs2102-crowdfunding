@@ -66,30 +66,35 @@ if (isset($_GET['delete-project-submit'])) { #PROJECT DELETION
 	
 	if ($_GET['project-title'] == "") {
 		$title = $_SESSION['session-title'];
+		$titleSuccess = false;
 	} else {
 		$title = $_GET['project-title'];
 	}
 
-	if ($_GET['project-description'] == "") {
-		$description = $_SESSION['session-description'];
+	$description = $_GET['project-description'];
+	if ($description == "") {
+		$description = "NULL";
 	} else {
-		$description = $_GET['project-description'];
+		$description = "'" . $description . "'";
 	}
 
 	if ($_GET['project-country'] == "") {
 		$country = $_SESSION['session-country'];
+		$countrySuccess = false;
 	} else {
 		$country = $_GET['project-country'];
 	}
 	
 	if (!is_numeric($_GET['project-start-Y'])) {
 		$start = $_SESSION['session-start'];
+		$startSuccess = false;
 	} else {
 		$start = $_GET['project-start-Y'] . "-" . $_GET['project-start-M'] . "-" . $_GET['project-start-D'];
 	}
 
 	if (!is_numeric($_GET['project-expiry-Y'])) {
 		$expiry = $_SESSION['session-expiry'];
+		$expirySuccess = false;
 	} else {
 		$expiry = $_GET['project-expiry-Y'] . "-" . $_GET['project-expiry-M'] . "-" . $_GET['project-expiry-D'];
 	}
@@ -98,16 +103,20 @@ if (isset($_GET['delete-project-submit'])) { #PROJECT DELETION
 	if (strcmp($start, $expiry) >= 0) {
 		$start = $_SESSION['session-start'];
 		$expiry = $_SESSION['session-expiry'];
+		$startSuccess = false;
+		$expirySuccess = false;
 	}
 
 	if (!(is_numeric($_GET['project-target']))) {
 		$target = $_SESSION['session-target'];
+		$targetSuccess = false;
 	} else {
 		$target = $_GET['project-target'];
 	}
 
 	if ($_GET['project-status'] != "ongoing" && $_GET['project-status'] != "closed") {
 		$status = $_SESSION['session-status'];
+		$statusSuccess = false;
 	}  else {
 		$status = $_GET['project-status'];
 	}
@@ -159,7 +168,7 @@ if (isset($_GET['delete-project-submit'])) { #PROJECT DELETION
 
 	$sql = "UPDATE project 
 	SET title = '" . $title . "', 
-	description = '" . $description . "', 
+	description = " . $description . ", 
 	country = '" . $country . "', 
 	start = '" . $start . "', 
 	expiry = '" . $expiry . "', 
@@ -181,7 +190,8 @@ $sql = "SELECT p.id AS ID,
     p.expiry AS Expiry,
     p.country AS Country,
     p.target AS Target,
-    p.status AS Status
+    p.status AS Status,
+    p.creator AS Email
     FROM project p, person c
     WHERE c.email = p.creator
     AND p.id = ".$curr_id."
@@ -208,6 +218,7 @@ $sql = "SELECT p.id AS ID,
 	    $country = $rowInit[7];
 	    $target = $rowInit[8];
 	    $status = $rowInit[9];
+	    $email = $rowInit[10];
 
 	    $_SESSION['session-title']  = $rowInit[1];
 	    $_SESSION['session-firstname'] = $rowInit[2];
@@ -371,7 +382,9 @@ $sql = "SELECT p.id AS ID,
 					        		<th style = "text-align:left;"><b>Creator: </b></th>
 				        		</td>
 				        		<td>
-				        			<p><?php echo $firstname . " " . $lastname;?></p>
+				        			<?php
+				        				echo"<p><a href = \"person_admin.php?id=".$email."\">".$firstname . " " . $lastname."</a></p>";
+			        				?>
 			        			</td>
 		        			</tr>
 					        <tr>
@@ -625,11 +638,11 @@ $sql = "SELECT p.id AS ID,
 				        		<td>
 				        			<?php 
 				        				if ($status == "ongoing") {
-			        						echo "<input type = \"radio\" name = \"project-status\" value = \"ongoing\" checked> Ongoing<br>";
-				        					echo "<input type = \"radio\" name = \"project-status\" value = \"closed\"> Closed<br>";
+			        						echo "<input type = \"radio\" name = \"project-status\" value = \"ongoing\" checked> Ongoing ";
+				        					echo "<input type = \"radio\" name = \"project-status\" value = \"closed\"> Closed ";
 				        				} else {
-				        					echo "<input type = \"radio\" name = \"project-status\" value = \"ongoing\"> Ongoing<br>";
-				        					echo "<input type = \"radio\" name = \"project-status\" value = \"closed\" checked> Closed<br>";
+				        					echo "<input type = \"radio\" name = \"project-status\" value = \"ongoing\"> Ongoing ";
+				        					echo "<input type = \"radio\" name = \"project-status\" value = \"closed\" checked> Closed";
 				        				}
 				        			?>
 			        			</td>
