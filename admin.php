@@ -477,36 +477,43 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     while ($row = pg_fetch_row($result)) {
       array_push($print, $row);
     }
+  ?>
+</div>
 
+<!-- <p> nothing here</p> -->
+<!-- LOOK FOR SOME DATE PICKER -->
 
-  
-    $first = true;
-    while ($row = pg_fetch_row($result)){
-      if ($first) {
-        $first = false;
-        echo "<br><table border=\"1\" style=\"border-collapse:collapse;\">
-        <col width=\"5%\">
-        <col width=\"20%\">
-        <col width=\"15%\">
-        <col width=\"15%\">
-        <col width=\"10%\">
-        <col width=\"10%\">
-        <col width=\"10%\">
-        <col width=\"10%\">
-        <col width=\"10%\">
-        <tr>
-        <th>ID</th>
-        <th>Title</th>
-        <th>Creator's First Name</th>
-        <th>Creator's Last Name</th>
-        <th>Categories</th>
-        <th>Start Date</th>
-        <th>Expiry Date</th>
-        <th>Contributions</th>
-        <th>Target</th>
-        <th>Status</th>
-        </tr>";
-      }
+<!-- endsearch -->
+
+<!--START PRINT -->
+<?php
+  if (sizeof($print) == 0) {
+    echo "<br><br><p>No Results Found</p>";
+  } else {
+    echo "<br><table border=\"1\" style=\"border-collapse:collapse;\">
+    <col width=\"5%\">
+    <col width=\"20%\">
+    <col width=\"15%\">
+    <col width=\"15%\">
+    <col width=\"10%\">
+    <col width=\"10%\">
+    <col width=\"10%\">
+    <col width=\"10%\">
+    <col width=\"10%\">
+    <tr>
+    <th>ID</th>
+    <th>Title</th>
+    <th>Creator's First Name</th>
+    <th>Creator's Last Name</th>
+    <th>Categories</th>
+    <th>Start Date</th>
+    <th>Expiry Date</th>
+    <th>Contributions</th>
+    <th>Target</th>
+    <th>Status</th>
+    </tr>";
+
+    foreach($print as $row) {
       echo "<tr>";
       echo "<td><a href = \"project_admin.php?id=".$row[0]."\">".$row[0]."</a></td>"; #ID
       echo "<td><a href = \"project_admin.php?id=".$row[0]."\">".$row[1]."</a></td>"; #title
@@ -553,21 +560,11 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
       echo "</tr>";
     }
 
-    if ($first) {
-      echo "<br><br><p>No Results Found</p>";
-    } else {
-      echo "</table>";
-    }
-
     pg_free_result($result);
-  ?>
+  }
+  echo "</table>";
+?>
 
-</div>
-
-<!-- <p> nothing here</p> -->
-<!-- LOOK FOR SOME DATE PICKER -->
-
-<!-- endsearch -->
 
   </div><!-- end #content-sidebar-wrap -->
   </div><!-- end .wrap --></div><!-- end #inner --> 
