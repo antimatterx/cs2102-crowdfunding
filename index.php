@@ -8,8 +8,8 @@
 <title>Uptown Fund &raquo; Your One-Stop Crowdfunding Hub</title>
 <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.css">
-<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
 <script src="js/jquery-2.2.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/bootstrap.js"></script>
@@ -21,6 +21,7 @@
 <!--own css, js links-->
 <link rel = "stylesheet" type = "text/css" href = "css/bodypadding.css">
 <link rel = "stylesheet" type = "text/css" href = "css/style_JH.css">
+
 
 
 
@@ -124,7 +125,7 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
     <!--logo img starts here-->    
     <div class="navbar-header" >
      <!--  <a class="navbar-brand">Project name</a> -->
-     <a><img src="images/logo.png" height="40px" /></a> 
+     <a><img src="images/logo.png" height="40px" /></a>                                                                                                                       
     </div>
    <!--logo img ends here-->      
 
@@ -352,5 +353,8 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 </footer>
 <!--end of footer-->
 
+
+<!--script to load when document is ready-->
+<script src= "js/script_JH.js"></script>
 </body>
 </html>
