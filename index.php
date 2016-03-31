@@ -115,33 +115,34 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
 <body>
 <div id = "homelinkhere"></div>
-<div id="paddingstart">
+<div id="paddingstart"></div>
+
 <!--header strat here-->
 <nav class="navbar navbar-default navbar-fixed-top">
-<div class="container">
-    
-<!--logo img starts here-->    
-<div class="navbar-header" >
- <!--  <a class="navbar-brand">Project name</a> -->
-  <a><img src="images/logo.png" height="40px" /></a> 
-</div>
-<!--logo img ends here-->      
+  <div class="container">
 
-        <!--nav content strats here -->
-<div id="navbar" class="navbar-collapse collapse">
-<!--nav bar left side content starts here-->          
-    <ul class="nav navbar-nav">
-      <li class="page-nav-top-posts active"><a href="javascript:void(0)" id="feature-scroll" class="page-anchor-link">Home</a></li>
+    <!--logo img starts here-->    
+    <div class="navbar-header" >
+     <!--  <a class="navbar-brand">Project name</a> -->
+     <a><img src="images/logo.png" height="40px" /></a> 
+    </div>
+   <!--logo img ends here-->      
 
-      <li class="page-nav-popular-posts"><a href="javascript:void(0)" id="popular-scroll" class="page-anchor-link">Most Popular</a></li>
+   <!--nav content strats here -->
+    <div id="navbar" class="navbar-collapse collapse">
+    <!--nav bar left side content starts here-->          
+      <ul class="nav navbar-nav">
+        <li class="page-nav-top-posts active"><a href="javascript:void(0)" id="feature-scroll" class="page-anchor-link">Home</a></li>
 
-      <li class="page-nav-top-posts active"><a href="javascript:void(0)" id="category-scroll" class="page-anchor-link">Categories</a></li>
+        <li class="page-nav-popular-posts"><a href="javascript:void(0)" id="popular-scroll" class="page-anchor-link">Most Popular</a></li>
 
-      <li class="page-nav-popular-posts"><a href="javascript:void(0)" id="Countries-scroll" class="page-anchor-link">Countries</a></li>
+        <li class="page-nav-top-posts active"><a href="javascript:void(0)" id="category-scroll" class="page-anchor-link">Categories</a></li>
 
-      <li class="page-nav-top-posts active"><a href="search.php" id="feature-scroll" class="page-anchor-link">Search</a></li>
-    </ul>
-<!--nav bar left side content ends here-->
+        <li class="page-nav-popular-posts"><a href="javascript:void(0)" id="Countries-scroll" class="page-anchor-link">Countries</a></li>
+
+        <li class="page-nav-top-posts active"><a href="search.php" id="feature-scroll" class="page-anchor-link">Search</a></li>
+      </ul>
+    <!--nav bar left side content ends here-->
 
       <?php 
       if (!isset($_SESSION['email'])) {
@@ -159,8 +160,7 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
         <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="<?php echo $host_url ?>">Host Project</a></li>
         <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="<?php echo $host_url ?>">Admin</a></li>
       </ul>
-</div>
-
+    </div>
   </div>
 </nav>
 <!--header ends here-->
@@ -168,10 +168,6 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
 
 
-
-
-
-<div id="wrap">
 
 <!--start of middle content-->
 <div class = "container">
@@ -199,11 +195,11 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 <!-- start of Categories Section -->
 
 <div class = "row">
-<div class="categories">
-	<cap id="categories">Categories</cap>
-	<br>
-	<sub>Browse projects by categories</sub>
-</div>
+  <div class="categories">
+   <cap id="categories">Categories</cap>
+   <br>
+   <sub>Browse projects by categories</sub>
+ </div>
 </div>
 <!-- end of Categories Section -->
 
@@ -211,77 +207,78 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
 <!--start of Categories List -->
 <div class = "row">
-<div class="categories">
-	<a href="cat_result.php?varname=<?php echo "art" ?>"><span><img src="images/art.jpg" style="width: 100%" class="post-image">Art</span></a>
-	<a href="cat_result.php?varname=<?php echo "education" ?>"><span><img src="images/education.jpg" style="width: 100%" class="post-image">Education</span></a>
-	<a href="cat_result.php?varname=<?php echo "environment" ?>"><span><img src="images/environment.jpg" style="width: 100%" class="post-image">Environment</span></a>
-	<a href="cat_result.php?varname=<?php echo "gaming" ?>"><span><img src="images/game.jpg" style="width: 100%" class="post-image">Gaming</span></a>
+  <div class="categories">
+   <a href="cat_result.php?varname=<?php echo "art" ?>"><span><img src="images/art.jpg" style="width: 100%" class="post-image">Art</span></a>
+   <a href="cat_result.php?varname=<?php echo "education" ?>"><span><img src="images/education.jpg" style="width: 100%" class="post-image">Education</span></a>
+   <a href="cat_result.php?varname=<?php echo "environment" ?>"><span><img src="images/environment.jpg" style="width: 100%" class="post-image">Environment</span></a>
+   <a href="cat_result.php?varname=<?php echo "gaming" ?>"><span><img src="images/game.jpg" style="width: 100%" class="post-image">Gaming</span></a>
 
-	<a href="cat_result.php?varname=<?php echo "music" ?>"><span><img src="images/music.jpg" style="width: 100%" class="post-image">Music</span></a>
-	<a href="cat_result.php?varname=<?php echo "technology" ?>"><span><img src="images/technology.jpg" style="width: 100%" class="post-image">Technology</span></a>
-	<a href="cat_result.php?varname=<?php echo "video" ?>"><span><img src="images/video.jpg" style="width: 100%" class="post-image">Video</span></a>
-	<a href="cat_result.php?varname=<?php echo "others" ?>"><span><img src="images/other.jpg" style="width: 100%" class="post-image">Others</span></a>
-</div>
+   <a href="cat_result.php?varname=<?php echo "music" ?>"><span><img src="images/music.jpg" style="width: 100%" class="post-image">Music</span></a>
+   <a href="cat_result.php?varname=<?php echo "technology" ?>"><span><img src="images/technology.jpg" style="width: 100%" class="post-image">Technology</span></a>
+   <a href="cat_result.php?varname=<?php echo "video" ?>"><span><img src="images/video.jpg" style="width: 100%" class="post-image">Video</span></a>
+   <a href="cat_result.php?varname=<?php echo "others" ?>"><span><img src="images/other.jpg" style="width: 100%" class="post-image">Others</span></a>
+ </div>
 </div>
 <!--end of Categories List -->
 
 <div class = "row">
 <!-- start of Popular List -->
 <div class = "col-md-6">
-<div id="popular-upcoming">
+  <div id="popular-upcoming">
 
-<div>
-<h2>Popular</h2>
-<h4>The most popular crowdfunding projects</h4>
-</div>
+    <div>
+      <h2>Popular</h2>
+      <h4>The most popular crowdfunding projects</h4>
+    </div>
 
-<ul class="list-group">   
-    <?php
-    $query = "SELECT p.id, p.title FROM donation d, project p WHERE p.id=d.project AND p.status='ongoing' GROUP BY p.title, p.id  ORDER BY COUNT(d.project) DESC LIMIT 10";
+    <ul class="list-group">   
+      <?php
+      $query = "SELECT p.id, p.title FROM donation d, project p WHERE p.id=d.project AND p.status='ongoing' GROUP BY p.title, p.id  ORDER BY COUNT(d.project) DESC LIMIT 10";
 
-    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-    ?>
+      $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+      ?>
 
-    <?php while($line = pg_fetch_array($result, null, PGSQL_ASSOC)){ ?>
+      <?php while($line = pg_fetch_array($result, null, PGSQL_ASSOC)){ ?>
       <?php if(!$line['title']) { ?>
       <?php continue; ?>
       <?php } ?>
       <?php $id = $line['id'];?>
       <li class="list-group-item"><a href="project_detail.php?id=<?php echo $id ?>"><?php echo $line['title']; ?></a></li>
-     <?php } ?>
-    <?php pg_free_result($result); ?>
-</ul>
-</div>
+      <?php } ?>
+      <?php pg_free_result($result); ?>
+    </ul>
+  </div>
 </div>
 <!-- end of Popular List -->
 
 <!--start of Countries List -->
 <div class = "col-md-6">
-<div id="countries">
-<div >
-<h2 >Countries</h2>
-<h4 >Browse projects by countries</h4>
+  <div id="countries">
+    <div >
+      <h2 >Countries</h2>
+      <h4 >Browse projects by countries</h4>
+    </div>
+
+    <ul class="list-group"> 
+      <?php
+      $query = 'SELECT DISTINCT country FROM project ORDER BY country';
+      $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+      ?>
+
+      <?php while($line = pg_fetch_array($result, null, PGSQL_ASSOC)){ ?>
+      <?php foreach ($line as $col_value) { ?>
+      <li class="list-group-item"><a href="country_result.php?country=<?php echo $col_value ?>"><?php echo $col_value; ?></a></li>
+      <?php } ?>
+      <?php } ?>
+      <?php pg_free_result($result); ?>
+    </ul>
+
+  </div>
+ <!--end of Countries List -->
 </div>
 
-<ul class="list-group"> 
-  <?php
-  $query = 'SELECT DISTINCT country FROM project ORDER BY country';
-  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-  ?>
-
-  <?php while($line = pg_fetch_array($result, null, PGSQL_ASSOC)){ ?>
-  	<?php foreach ($line as $col_value) { ?>
-    	<li class="list-group-item"><a href="country_result.php?country=<?php echo $col_value ?>"><?php echo $col_value; ?></a></li>
-     <?php } ?>
-   <?php } ?>
-  <?php pg_free_result($result); ?>
-</ul>
-	
- </div>
- <!--end of Countries List -->
- </div>
-
-  </div><!-- end #inner --> 
+  </div>
+</div>
 
 <!--end of middle content-->
 

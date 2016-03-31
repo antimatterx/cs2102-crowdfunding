@@ -2,13 +2,25 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Uptown Fund &raquo; Your One-Stop Crowdfunding Hub</title>
-<link rel="stylesheet" id="child-theme-css" href="css/style.css" type="text/css" media="all" />
-<link rel="stylesheet" id="responsive-main-css-css" href="css/responsive-main.min.css" type="text/css" media="all" />
-<link rel="stylesheet" id="responsive-css-css" href="css/responsive.css" type="text/css" media="all" />
-<link rel="stylesheet" id="tb_styles-css" href="css/tb-styles.min.css" type="text/css" media="all" />
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css">
+<script src="js/jquery-2.2.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap.js"></script>
+
+<!--footer files-->
+<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+<link rel = "stylesheet" type = "text/css" href = "css/footer_JH.css">
+
+<!--own css, js links-->
+<link rel = "stylesheet" type = "text/css" href = "css/bodypadding.css">
+<link rel = "stylesheet" type = "text/css" href = "css/style_JH.css">
 
 <?php
 $host = "localhost"; 
@@ -23,42 +35,55 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 <?php session_start(); ?>
 
 <body class="home blog header-full-width full-width-content">
-  <div id="header">
-  <div class="site-header">
-    <h1 class="site-header-logo-container">
-    <a>Logo</span>
-    <img src="images/logo.png" width="100%" id="bigg-logo" alt="Bigg" /></a>
-    </h1>
-      
-            <ul id="page-nav" class="horizontal-list">
-<li class="page-nav-top-posts active"><a href="index.php" id="feature-scroll" class="page-anchor-link">Home</a></li>
 
-<li class="page-nav-popular-posts"><a href="index.php#popular-upcoming" id="popular-scroll" class="page-anchor-link">Most Popular</a></li>
+<!--header strat here-->
+<nav class="navbar navbar-default navbar-fixed-top">
+<div class="container">
+    
+<!--logo img starts here-->    
+<div class="navbar-header" >
+ <!--  <a class="navbar-brand">Project name</a> -->
+  <a><img src="images/logo.png" height="40px" /></a> 
+</div>
+<!--logo img ends here-->      
 
-<li class="page-nav-top-posts active"><a href="index.php#categories" id="feature-scroll" class="page-anchor-link">Categories</a></li>
+        <!--nav content strats here -->
+<div id="navbar" class="navbar-collapse collapse">
+<!--nav bar left side content starts here-->          
+    <ul class="nav navbar-nav">
+      <li class="page-nav-top-posts active"><a href="javascript:void(0)" id="feature-scroll" class="page-anchor-link">Home</a></li>
 
-<li class="page-nav-popular-posts"><a href="index.php#countries" id="popular-scroll" class="page-anchor-link">Countries</a></li>
+      <li class="page-nav-popular-posts"><a href="javascript:void(0)" id="popular-scroll" class="page-anchor-link">Most Popular</a></li>
 
-<li class="page-nav-top-posts active"><a href="index.php#categories" id="feature-scroll" class="page-anchor-link">Search</a></li>
-</ul>
+      <li class="page-nav-top-posts active"><a href="javascript:void(0)" id="category-scroll" class="page-anchor-link">Categories</a></li>
 
-<?php 
-if (!isset($_SESSION['email'])) {
-  $host_url = "login.php";
-  $admin_url = "login.php";
-} else {
-  $host_url = "new_project.php";
-  $admin_url = "admin.php";
-}
-?>
+      <li class="page-nav-popular-posts"><a href="javascript:void(0)" id="Countries-scroll" class="page-anchor-link">Countries</a></li>
 
-<div id="site-nav" class="horizontal-list"><div class="menu-main-menu-container">
-  <ul id="menu-main-menu" class="menu">
-    <li id="menu-item-144" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-144"><a href="register.php">Sign Up</a></li>
-    <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="login.php">Log In</a></li>
-    <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="<?php echo $host_url ?>">Host Project</a></li>
-    <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="<?php echo $host_url ?>">Admin</a></li>
-  </ul></div></div><!-- #site-nav -->
+      <li class="page-nav-top-posts active"><a href="search.php" id="feature-scroll" class="page-anchor-link">Search</a></li>
+    </ul>
+<!--nav bar left side content ends here-->
+
+      <?php 
+      if (!isset($_SESSION['email'])) {
+        $host_url = "login.php";
+        $admin_url = "login.php";
+      } else {
+        $host_url = "new_project.php";
+        $admin_url = "admin.php";
+      }
+      ?>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li id="menu-item-144" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-144"><a href="register.php">Sign Up</a></li>
+        <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="login.php">Log In</a></li>
+        <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="<?php echo $host_url ?>">Host Project</a></li>
+        <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="<?php echo $host_url ?>">Admin</a></li>
+      </ul>
+</div>
+
+  </div>
+</nav>
+<!--header ends here-->
 <div id="site-header">
 
      
@@ -141,56 +166,75 @@ makeDir("temp");
 
 	</div><!-- end #content-sidebar-wrap -->
 	</div><!-- end .wrap --></div><!-- end #inner --> 
-<div id="bigg-footer">
-<div class="wrap">
-        <div class="twocol">
-            <div id="text-2" class="widget widget_text"><div class="widget-wrap"><h4 class="widgettitle">Company</h4>			
-			<div class="textwidget"><ul class="plain-list">
-<li><a href="#">About</a></li>
-<li><a href="#">Jobs</a></li>
-<li><a href="#">Contact</a></li>
-<li><a href="#">Terms</a></li>
-<li><a href="#">Privacy</a></li>
-</ul>
-</div>
-		</div></div>
+
+
+<!--start of footer-->
+<footer>
+    <div class="footer" id="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3  col-md-3 col-sm-6 col-xs-6">
+                    <h3> Company </h3>
+                    <ul>
+                      <li><a href="#">About</a></li>
+                      <li><a href="#">Jobs</a></li>
+                      <li><a href="#">Contact</a></li>
+                      <li><a href="#">Terms</a></li>
+                      <li><a href="#">Privacy</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3  col-md-3 col-sm-6 col-xs-6">
+                    <h3> Community</h3>
+                    <ul>
+                      <li><a href="#">Blog</a></li>
+                      <li><a href="#">Twitter</a></li>
+                      <li><a href="#">Facebook</a></li>
+                      <li><a href="#">Help</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3  col-md-3 col-sm-6 col-xs-6">
+                  <h3> Career</h3>
+                  <ul>
+                    <li><a href="#">Why Join us</a></li>
+                    <li><a href="#">What do we offer</a></li>
+                    <li><a href="#">Internship</a></li>
+                    <li><a href="#">More information</a></li>
+                  </ul>
+                </div>
+
+                <div class=" col-lg-3  col-md-3 col-sm-6 col-xs-6 ">
+                    <h3> Subscribe </h3>
+                    <ul>
+                        <li>
+                          Get the latest news in your inbox
+                        </li>
+                        <li>
+                            <div class="input-append newsletter-box text-center">
+                                <input type="text" class="full text-center" placeholder="Email ">
+                                <button class="btn  bg-gray" type="button"> Subscribe to the newsletter </button>
+                            </div>
+                        </li>
+                        <li>
+                          Opt-out anytime with one click and we'll never share your information.
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+            <!--/.row--> 
         </div>
-        <div class="twocol">
-            <div id="text-3" class="widget widget_text"><div class="widget-wrap"><h4 class="widgettitle">Community</h4>			<div class="textwidget"><ul class="plain-list">
-<li><a href="#">Blog</a></li>
-<li><a href="#">Twitter</a></li>
-<li><a href="#">Facebook</a></li>
-<li><a href="#">Help</a></li>
-</ul>
-</div>
-
-		</div></div>
+        <!--/.container--> 
+    </div>
+    <!--/.footer-->
+    
+    <div class="footer-bottom">
+        <div class="container">
+            <p class="pull-left"> Copyright © Uptown Fund Pre Ltd. All right reserved. </p>
         </div>
-        <div class="fourcol">
-            <div id="text-4" class="widget widget_text"><div class="widget-wrap"><h4 class="widgettitle"></h4>			<div class="textwidget"><p></p>
-
-<div>
-
-</div>
-
-</div>
-		</div></div>
-        </div>
-        <div class="fourcol last">
-             <div id="text-4" class="widget widget_text"><div class="widget-wrap"><h4 class="widgettitle">Subscribe to the newsletter</h4>			<div class="textwidget"><p>Get news of the latest inventions in your inbox</p>
-
-<div>
-<input type="text" placeholder="Enter your email address" name="email" class="form-field" id="newsletter-email-input"> <input type="button" value="Submit" class="button" id="newsletter-email-submit-btn">
-</div>
-<p class="legalese">
-Opt-out anytime with one click and we'll never share your information.
-</p></div>
-        </div>
-</div>
- 
-</div><!-- end #wrap -->
-
-
-</div>
+    </div>
+    <!--/.footer-bottom--> 
+</footer>
+<!--end of footer-->
 </body>
 </html>
