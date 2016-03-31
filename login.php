@@ -27,8 +27,8 @@
                <form  action="" method="post"> 
                                 <h1>Log in</h1> 
                                 <p> 
-                                    <label for="username" class="uname" data-icon="u" > Your email </label>
-                                    <input id="username" name="username" required="required" type="text" placeholder="mymail@mail.com"/>
+                                    <label for="email" class="uname" data-icon="u" > Your email </label>
+                                    <input id="email" name="email" required="required" type="text" placeholder="mymail@mail.com"/>
                                 </p>
                                 <p> 
                                     <label for="password" class="youpasswd" data-icon="p"> Your password </label>
@@ -48,18 +48,19 @@
       session_start();
       if($_SERVER["REQUEST_METHOD"] == "POST") {
         // username and password sent from form 
-        $myusername = trim($_POST['username']);
+        $myemail = trim($_POST['email']);
         $mypassword = $_POST['password'];
 
-        $sql = "SELECT * FROM person WHERE email='$myusername' AND password = '$mypassword'";
+        $sql = "SELECT * FROM person WHERE email='$myemail' AND password = '$mypassword'";
         $result = pg_query($dbcon, $sql);
         $count = pg_num_rows($result);
         $row = pg_fetch_array($result);
         // If result matched $myusername and $mypassword, table row must be 1 row
 
         if($count == 1) {
-           $_SESSION['email'] = $myusername;
-           header("location: index.php");
+            $_SESSION['email'] = $myemail;
+            $_SESSION['username']=$row['name'];
+            header("location: index.php");
            //print "Login successfull";
         }else {
            $error = "Your Login Name or Password is invalid";
