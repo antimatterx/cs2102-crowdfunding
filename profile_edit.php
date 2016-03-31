@@ -21,8 +21,8 @@ $db = "test";
 $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     or die('Could not connect: ' . pg_last_error());
 
-	if(isset($_GET['id'])) {
-		$_SESSION['session-ID'] = $_GET['id'];
+	if(isset($_SESSION['email'])) {
+		$_SESSION['session-ID'] = $_SESSION['email'];
 	} 
 	// echo "<h3> B " . $_SESSION['session-ID'] . "</h3>";
 	$curr_id = $_SESSION['session-ID'];
