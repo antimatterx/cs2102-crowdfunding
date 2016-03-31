@@ -57,6 +57,8 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     })
       });
     </script>
+}
+</style>
 </head>
 
 <body class="home blog header-full-width full-width-content">
@@ -566,7 +568,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     }
   } else {
     $past = array();
-    echo "<br><br><h4 style = \"text-align:center;\"> Search Results</h4>";
+    echo "<br><br><h4 style = \"text-align:center; border-collapse:collapse;\"> Search Results</h4>";
     echo "<br><table border=\"1\" >
     <col width=\"20%\">
     <col width=\"15%\">

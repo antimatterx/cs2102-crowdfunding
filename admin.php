@@ -471,12 +471,20 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     }
 // echo "<b>ADV SQL:   </b>".$query."<br><br>";
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+
+    $print = array();
+
+    while ($row = pg_fetch_row($result)) {
+      array_push($print, $row);
+    }
+
+
   
     $first = true;
     while ($row = pg_fetch_row($result)){
       if ($first) {
         $first = false;
-        echo "<br><table border=\"1\">
+        echo "<br><table border=\"1\" style=\"border-collapse:collapse;\">
         <col width=\"5%\">
         <col width=\"20%\">
         <col width=\"15%\">
