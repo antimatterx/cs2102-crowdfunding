@@ -19,12 +19,19 @@
       // username and password sent from form
 
 
-       $myusername = trim($_POST['username']);
+       $myfirstname = trim($_POST['firstname']);
+       $mylastname = trim($_POST['lastname']);
        $myemail = trim($_POST['email']);
        $mypassword = $_POST['password'];
        $mypassword2 = $_POST['password_confirm'];
+       $mysex = $_POST['sex'];
+       $myaddress = $_POST['address'];
+       $myphone = $_POST['phone'];
+       $register_date = date("Y-m-d");
 
-      $sql = "INSERT INTO person(name, email, password) VALUES ('$myusername', '$myemail', '$mypassword')";
+      $sql = "INSERT INTO person(firstname, lastname, email, password, sex, address, register_date, phone, admin) 
+              VALUES ('$myfirstname', '$mylastname', '$myemail', '$mypassword', '$mysex', '$myaddress', 
+              '$register_date', '$myphone', 'N')";
       $result = pg_query($dbcon, $sql);
       if(!$result) {
         $error = "The email address is already used";
@@ -56,8 +63,12 @@
                <form  action="" method="post">
                                 <h1>Sign up</h1>
                                 <p> 
-                                    <label for="username" class="uname" data-icon="u">Your name</label>
-                                    <input id="username" name="username" required="required" type="text" placeholder="myusername" />
+                                    <label for="firstname" class="uname" data-icon="u">Your first name</label>
+                                    <input id="firstname" name="firstname" required="required" type="text" placeholder="First name" />
+                                </p>
+                                <p>
+                                    <label for="lastname" class="uname" data-icon="u">Your last name</label>
+                                    <input id="lastname" name="lastname" required="required" type="text" placeholder="Last name" />
                                 </p>
                                 <p> 
                                     <label for="email" class="youmail" data-icon="e" > Your email</label>
@@ -70,6 +81,20 @@
                                 <p> 
                                     <label for="password_confirm" class="youpasswd" data-icon="p">Please confirm your password </label>
                                     <input id="password_confirm" name="password_confirm" required="required" type="password" placeholder="Same as above"/>
+                                </p>
+                                <p>
+                                   <label for="address" class="addr" data-icon="u">Your address<br></label>
+                                   <input id="address" name="address" type="text" placeholder="Address" />
+                                </p>
+                                <p>
+                                    <label for="phone" class="phone" data-icon="u">Your phone number</label>
+                                    <input id="phone" name="phone" type="number" placeholder="phone" />
+                                </p>
+                                <p>
+                                    <label for="sex" class="sex" data-icon="s">You gender<br></label>
+                                    <input type="radio" name="sex" value="other" checked> Other<br>
+                                    <input type="radio" name="sex" value="male"> Male<br>
+                                    <input type="radio" name="sex" value="female"> Female<br>
                                 </p>
                                 <p class="signin button"> 
                            <input type="submit" value="Submit"/> 

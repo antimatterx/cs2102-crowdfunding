@@ -27,6 +27,9 @@ $curr_id = $_POST['id'];
         echo "Nothing found";
     }
     else {
+        $pic_sql = "SELECT data FROM image WHERE id='$curr_id'";
+        $pic_query = pg_query($dbcon, $pic_sql);
+        $image = pg_fetch_assoc($pic_query)['data'];
         $row = pg_fetch_assoc($result);
         $creator = $row['creator'];
         $title  = $row['title'];

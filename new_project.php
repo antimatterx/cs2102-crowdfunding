@@ -6,6 +6,11 @@ $user = "postgres";
 $pass = "password";
 $db = "test";
 $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass") or die('Could not connect: ' . pg_last_error());
+
+// for photo
+$target_dir = "your directory";
+$target_dir = $target_dir . basename( $_FILES['photo']['name']);
+
 $sql = "SELECT p.id FROM project p
         HAVING p.id >= ALL (
           SELECT id FROM project
@@ -22,16 +27,23 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $target = trim($_POST['target']);
     $status = $_POST['status'];
     $mail = $_SESSION['email'];
+    $photo = $FILES('photo','name');
     //$insertT = "INSERT INTO project (id, creator, title, description, start, expiry, country, target, status) VALUES (18, 'able_too@gmail.com', 'Food Maker', 'Cook twice the amount of food in half the time!', '2015/09/14', '2016/10/14', 'Japan', 2000, 'ongoing')";
 
     $insert = "INSERT INTO project(id, title, description, start, expiry, target, status) 
             VALUES ('$newid', '$mail'. '$title', '$description', '$start', '$expiry', '$target', '$status')";
     //$result = pg_query($dbcon, $insert);
-    $result = pg_query($dbcon, $insertT);
+    $result = pg_query($dbcon, $insert);
     if(!$result) {
         echo 'true';
     }else {
         echo 'false';
+    }
+    $upload_img = "INSERT INTO image VALUES ('$photo')";
+    $img_result = pg_query($dbcon, $upload_img);
+
+    if($img_result && move_uploaded_file($_FILES['photo']['tmp_name'], $target_dir)) {
+        echo "The file ". basename( $_FILES['uploadedfile']['name']). " has been uploaded, and your information has been added to the directory";
     }
 }
 ?>
@@ -83,7 +95,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 <p>
                     <input type="radio" name="status" value="ongoing" checked> Ongoing<br>
                     <input type="radio" name="status" value="closed"> Closed<br>
+                </p><p>
+                    You May Upload a Photo in gif or jpeg format. If the same file name is uploaded twice it will be overwritten! Maxium size of File is 35kb.
                 </p>
+                <p>
+                    Photo:
+                </p>
+                <input type="hidden" name="size" value="350000">
+                <input type="file" name="photo">
                 <p class="create button">
                     <input type="submit" value="Submit"/>
                 </p>

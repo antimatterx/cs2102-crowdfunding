@@ -37,8 +37,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 ?>
 
 <?php session_start(); ?>
-<?php $email = $_POST['email']; ?>
-
+<?php $email = $_SESSION['email']; ?>
 
 <!-- Change the status of expired projects to 'expired' -->
 <?php 
@@ -165,9 +164,18 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
   </div>
 </nav>
 <!--header ends here-->
-
-
-
+      
+<!-- Display Login name -->
+<?php if (isset($_SESSION['email'])) { ?>
+  <?php $login_query = "SELECT p.firstname, p.lastname FROM person p WHERE p.email='$email'"; ?>
+  <?php $name = pg_query($login_query) or die('Query failed: ' . pg_last_error()); ?>
+  <?php $firstname = pg_fetch_result($name, 0, 0); ?>
+  <?php $lastname = pg_fetch_result($name, 0, 1); ?>
+  <h2 id="login_display"><?php echo "You are logged in as " . $firstname . "."?></h2>
+  <?php pg_free_result($name); ?>
+<?php } else { ?>
+  <h2 id="login_display">You not logged in</h2>
+<?php } ?>
 
 
 <!--start of middle content-->
