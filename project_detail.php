@@ -10,7 +10,7 @@ $db = "test";
 $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     or die('Could not connect: ' . pg_last_error());
 
-$curr_id = $_POST['id'];
+$curr_id = $_GET['id'];
     $sql = "SELECT p.id AS ID, 
         p.title AS Title,
         c.name AS Creator,
@@ -27,7 +27,7 @@ $curr_id = $_POST['id'];
         ORDER BY p.id;";
     $result = pg_query($dbcon, $sql);
     if (!$result) {
-        echo "Nothing found";
+        echo "Nothing here but us chickens";
     }
     else {
         $pic_sql = "SELECT data FROM image WHERE id='$curr_id'";
