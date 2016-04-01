@@ -207,7 +207,7 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
   <div class="categories">
    <cap id="categories">Categories</cap>
    <br>
-   <sub>Browse projects by categories</sub>
+   <sub style="color:#808080">Browse projects by categories</sub>
  </div>
 </div>
 <!-- end of Categories Section -->
@@ -237,7 +237,7 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
     <div>
       <h2>Popular</h2>
-      <h4>The most popular crowdfunding projects</h4>
+      <h4 style="color:#808080">The most popular crowdfunding projects</h4>
     </div>
 
     <ul class="list-group">   
@@ -265,7 +265,7 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
   <div id="countries">
     <div >
       <h2 >Countries</h2>
-      <h4 >Browse projects by countries</h4>
+      <h4 style="color:#808080">Browse projects by countries</h4>
     </div>
 
     <ul class="list-group"> 
