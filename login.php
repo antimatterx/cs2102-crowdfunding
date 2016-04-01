@@ -62,7 +62,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass") or die('C
                         $_SESSION['email'] = $myusername;
                         header("location: index.php");
                         //print "Login successfull";
-                        $error = $_SESSION['email'];
+                        //$error = $_SESSION['email'];
                     }else {
                         $error = "Your Login Name or Password is invalid";
                     }
@@ -78,4 +78,3 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass") or die('C
 </body>
 </html>
 
-?>
