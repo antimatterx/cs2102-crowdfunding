@@ -67,6 +67,8 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     })
       });
     </script>
+}
+</style>
 </head>
 
 <body>
@@ -412,6 +414,8 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     if(isset($_GET['search-submit-btn']))  { #NORMAL SEARCH
       $result2 = array();
       $words = explode(" ", $_GET['search-query']);
+      $print = array();
+          
       foreach ($words as $word) {
         if ($word != "") {
           $query = 
@@ -458,7 +462,6 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
             GROUP BY p.id, p.title, c.firstname, c.lastname, p.start, p.expiry, p.target, p.status, p.creator)";
 
           #echo "<b>SQL:    </b>".$query."<br><br>";
-          $print = array();
           $temp = pg_query($query) or die('Query failed: ' . pg_last_error());
           while($row = pg_fetch_array($temp)) {
             array_push($print, $row);
@@ -591,7 +594,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     }
   } else {
     $past = array();
-    echo "<br><br><h4 style = \"text-align:center;\"> Search Results</h4>";
+    echo "<br><br><h4 style = \"text-align:center; border-collapse:collapse;\"> Search Results</h4>";
     echo "<br><table border=\"1\" >
     <col width=\"20%\">
     <col width=\"15%\">
@@ -623,7 +626,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 
       array_push($past, $row[0]);
       
-      if (!$isPast) {
+      if (true) { //!$isPast
         echo "<tr>";
         echo "<td><a href = \"project_detail.php?id=".$row[0]."\">".$row[1]."</a></td>"; #title
         echo "<td><a href = \"profile.php?id=".$row[8]."\">".$row[2]. " " . $row[3] . "</a></td>"; #creator
