@@ -112,6 +112,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 <!--user profile-->
 
 <h1 style = "text-align:center;"> User Profile </h1>
+<a href = "profile_edit.php" style = "text-align:right;">Edit Profile</a>
 <?php
 
 $email = $_SESSION['email'];
@@ -175,11 +176,13 @@ if (sizeof($array) > 0) {
 	foreach($array as $list) {
 		echo "<table align = 'center' style = 'width:60%'>";
 		echo "<tr><td><p>Project ID </p></td>";
-		echo "<td><p>" . $list["id"] . "</p></td></tr>";
+		echo "<td><a href='dlist.php?id=" . $list["id"] . "'>" . $list['id'] . "</a></td>";
+		// echo "<td><p>" . $list["id"] . "</p</td></tr>";
+		echo "<tr><td><p>Project Title</p></td>";
+		// echo "<td><p>" . $list["title"] . "</p></td></tr>";
+		echo "<td><a href='dlist.php?id=" . $list["id"] . "'>" . $list['title'] . "</a></td>";
 		echo "<tr><td><p>Project Creator</p></td>";
 		echo "<td><p>" . $list["creator"] . "</p></td></tr>";
-		echo "<tr><td><p>Project Title</p></td>";
-		echo "<td><p>" . $list["title"] . "</p></td></tr>";
 		echo "<tr><td><p>Project Description</p></td>";
 		echo "<td><p>" . $list["description"] . "</p></td></tr>";
 		echo "<tr><td><p> Starts Date</p></td>";
