@@ -68,7 +68,6 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
       });
     </script>
 }
-</style>
 </head>
 
 <body>
@@ -136,19 +135,27 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 <!-- START NORMAL SEARCH FORM-->
 <div style = "text-align:center;">
   <h1 id="Search" class="stories-section-header-hed" style = "text-align:center;font-size:150%;">Search</h1>
+  <div class = "row">
   <form>
-    <input type="text" placeholder="Enter Project Title" name="search-query" class="search-field" id="search-input"> 
-    <input type="submit" value="Search" class="button" name="search-submit-btn"> 
-  </form>
-  <input style = "background-color:#BEBEBE"type="button" value="Advanced Search" class="button" id="search-type-btn"> <!-- FOR HIDE/SHOW-->
-  <div id="content" class="hfeed"></div>
+
+      <div class = "form-group col-md-offset-3 col-md-5 col-xs-12">
+        <input type="text" placeholder="Enter Project Title" name="search-query" class="search-field form-control" id="search-input"> 
+      </div>
+      <div class = "col-md-1 col-xs-6">
+        <input type="submit" value="Search" class="button btn btn-default" name="search-submit-btn"> 
+      </div>
+
+    </form>
+    <div class="col-md-2">
+      <input type="button" value="Advanced Search" class="button  btn btn-default" id="search-type-btn"> <!-- FOR HIDE/SHOW-->
+    </div>
+  </div>
+</div>
 </div>
 
+
+<div class = "container">
 <div id = "advancedSearch_JH">
-<div style = "text-align:center;">
-<p id = "closs_button_JH" type = "button" style="text-align: right;">&times;</p>
-<br><br><br><br>
-</div>
 <!-- END NORMAL SEARCH FORM-->
 
 <!-- advanced search below  -->
@@ -156,9 +163,11 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 
 
 <!-- START ADV SEARCH FORM-->
-<div class = "col-md-offset-4 col-md-4">
-<div class="stories-section-header"><h1 id="Advanced Search" class="stories-section-header-hed" style = "text-align:center;font-size:180%;">Advanced Search</h1>
-<br>
+<div class = "row">
+<div class = "col-md-offset-4 col-md-4 col-xs-10">
+<h1 id="Advanced Search" class="stories-section-header-hed" style = "text-align:center;font-size:180%;">Advanced Search</h1>
+</div>
+
 </div>
 <!--
 
@@ -579,10 +588,9 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
   ?>
 </div>
 
-<!-- <p> nothing here</p> -->
 <!-- LOOK FOR SOME DATE PICKER -->
 
-</div>
+
 </div> <!-- END CONTAINER-->
 <!-- END SEARCH QUERIES-->
 
