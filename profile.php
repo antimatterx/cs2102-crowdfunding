@@ -31,6 +31,9 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     or die('Could not connect: ' . pg_last_error());
 ?>
 
+<?php session_start(); ?>
+<?php $email = $_SESSION['email']; ?>
+
 <script type="text/javascript" src="js/jquery.js"></script>
 
 <script type="text/javascript">
@@ -114,9 +117,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 <h1 style = "text-align:center;"> User Profile </h1>
 <a href = "profile_edit.php" style = "text-align:right;">Edit Profile</a>
 <?php
-
-$email = $_SESSION['email'];
-$query = "SELECT p.firstname, p.lastname, p.email, p.address, p.register_date, p.phone, p.admin FROM person p WHERE p.email = '" .$email."'";
+$query = "SELECT p.firstname, p.lastname, p.email, p.address, p.register_date, p.phone, p.admin FROM person p WHERE p.email = '$email'";
 // echo "<p>".$query ."</p>";
 $result = pg_query($query) or die ("query failed:" . pg_last_error());
 $array = array();
