@@ -1,4 +1,5 @@
-﻿<html>
+﻿<?php session_start(); ?>
+<html>
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
 <head>
@@ -112,9 +113,10 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 
 <h1 style = "text-align:center;"> User Profile </h1>
 <?php
-$email = $_GET['id'];
-$query = "SELECT p.firstname, p.lastname, p.email, p.address, p.register_date, p.phone FROM person p WHERE p.email = '" .$email."'";
-// echo "<p>".$query ."</p>";
+
+$email = $_SESSION['email'];
+$query = "SELECT p.firstname, p.lastname, p.password, p.email, p.address, p.register_date, p.phone, p.admin FROM person p WHERE p.email = '" .$email."'";
+echo "<p>".$query ."</p>";
 $result = pg_query($query) or die ("query failed:" . pg_last_error());
 $array = array();
 while($row = pg_fetch_array($result,NULL, PGSQL_ASSOC)) {
@@ -135,6 +137,8 @@ if (sizeof($array) > 0) {
 		echo "<td><p>" . $list["firstname"] . "</p></td></tr>";
 		echo "<tr><td><p>Last Name</p></td>";
 		echo "<td><p>" . $list["lastname"] . "</p></td></tr>";
+		echo "<tr><td><p>Password</p></td>";
+		echo "<td><p>" . $list["password"] . "</p></td></tr>";
 		echo "<tr><td><p>Email</p></td>";
 		echo "<td><p>" . $list["email"] . "</p></td></tr>";
 		echo "<tr><td><p>Address</p></td>";
@@ -142,7 +146,9 @@ if (sizeof($array) > 0) {
 		echo "<tr><td><p>Register Date</p></td>";
 		echo "<td><p>" . $list["register_date"] . "</p></td></tr>";
 		echo "<tr><td><p>Contact Number</p></td>";
-		echo "<td><p>" . $list["phone"] . "</p></td></tr>";	
+		echo "<td><p>" . $list["phone"] . "</p></td></tr>";
+		echo "<tr><td><p>Admin</p></td>";
+		echo "<td><p>" . $list["admin"] . "</p></td></tr>";	
 	}
 	echo "<tr><td><p> Total Donation </p></td>";
 	echo "<td><p>". $total. "</p></td></tr>";
@@ -157,9 +163,8 @@ if (sizeof($array) > 0) {
 
 <h1 style = "text-align:center;"> Projects Proposed </h1>
 <?php
-$email = $_GET['id'];
 $query = "SELECT p.id, p.creator, p.title, p.description, p.start, p.expiry,p.country,p.target,p.status FROM project p WHERE p.creator = '" .$email."'";
-// echo "<p>".$query ."</p>";
+echo "<p>".$query ."</p>";
 $result = pg_query($query) or die ("query failed:" . pg_last_error());
 $array = array();
 while($row = pg_fetch_array($result,NULL, PGSQL_ASSOC)) {
@@ -198,9 +203,8 @@ if (sizeof($array) > 0) {
 
 <h1 style = "text-align:center;"> Donated Projects </h1>
 <?php
-$email = $_GET['id'];
 $query = "SELECT d.project, d.time, d.donor, d.amount FROM donation d WHERE d.donor = '" .$email."'";
-// echo "<p>".$query ."</p>";
+echo "<p>".$query ."</p>";
 $result = pg_query($query) or die ("query failed:" . pg_last_error());
 $array = array();
 while($row = pg_fetch_array($result,NULL, PGSQL_ASSOC)) {
