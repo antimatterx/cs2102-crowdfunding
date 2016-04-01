@@ -97,7 +97,7 @@
                                     <input type="radio" name="sex" value="female"> Female<br>
                                 </p>
                                 <p class="signin button"> 
-                           <input type="submit" value="Submit"/> 
+                           <input type="submit" value="Register"/>
                         </p>
                                 <p class="change_link">  
                            Already a member ?

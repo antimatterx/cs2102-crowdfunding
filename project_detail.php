@@ -1,3 +1,6 @@
+<html>
+<title></title>
+
 <?php
 $host = "localhost"; 
 $user = "postgres"; 
@@ -38,13 +41,11 @@ $curr_id = $_POST['id'];
         $expiry = $row['expiry'];
         $country = $row['country'];
         $target = $row['target'];
-    }
-?>
-
-<html>
-<title><?php echo $title; ?></title>
-<body>
+    ?>
+    <body>
     <div align="center">
+        <p>Title</p>
+        <?php echo $title; ?>
     <p>Creators</p>
     <p><?php echo $creator; ?></p>
     <p>Description</p>
@@ -57,8 +58,8 @@ $curr_id = $_POST['id'];
     <p><?php echo $target; ?></p>
     </div>
 
-    <?php if (isset($_SESSION['email'])) /* the user is logged in, show donation bar*/ {?>
-        <div align="center">
+    <?php  if (isset($_SESSION['email'])) /* the user is logged in, show donation bar*/ {?>
+        <div>
         <p>Interested?</p>
         <form action="" method="POST">
             <h4>I wish to donate $</h4>
@@ -86,7 +87,7 @@ $curr_id = $_POST['id'];
     <?php } else /*tell user to login*/{ ?>
         <p>You have to <a href="login.php">log in</a> before making a donation! </p>
 
-    <?php }; ?>
+    <?php }}; ?>
 
 </body>
 </html>
