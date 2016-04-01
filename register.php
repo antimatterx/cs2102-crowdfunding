@@ -37,7 +37,9 @@
       if(!$result) {
         $error = "The email address is already used";
       }else {
-        $success = "You have successfully registered, please go to login page";
+        $success = "You have successfully registered";
+        $_SESSION['email'] = $myemail;
+          header( "refresh:3;url=index.php" );
       }
    }
 ?>
