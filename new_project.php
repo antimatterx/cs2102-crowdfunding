@@ -1,5 +1,4 @@
 <?php
-session_start();
 //include_once 'dbconfig.php';
 $host = "localhost";
 $user = "postgres";
@@ -7,44 +6,43 @@ $pass = "password";
 $db = "test";
 $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass") or die('Could not connect: ' . pg_last_error());
 
-// for photo
-$target_dir = "your directory";
-$target_dir = $target_dir . basename( $_FILES['photo']['name']);
-
 $sql = "SELECT p.id FROM project p
+        GROUP BY p.id
         HAVING p.id >= ALL (
           SELECT id FROM project
         );";
 $result = pg_query($dbcon, $sql);
 $row = pg_fetch_assoc($result);
 $newid = $row['id'] + 1;
-if($_SERVER["REQUEST_METHOD"] == "POST") {
+
+session_start();
+$_SESSION['email'] = "april_foo@hotmail.com";
+if($_SERVER["REQUEST_METHOD"] == "GET") {
     // username and password sent from form
-    $title = trim($_POST['title']);
-    $description = $_POST['description'];
-    $start = trim($_POST['start']);
-    $expiry = trim($_POST['expiry']);
-    $target = trim($_POST['target']);
-    $status = $_POST['status'];
+    $title = trim($_GET['title']);
+    $description = trim($_GET['description']);
+    $start = trim($_GET['start']);
+    $expiry = trim($_GET['expiry']);
+    $target = trim($_GET['target']);
     $mail = $_SESSION['email'];
-    $photo = $FILES('photo','name');
+    //$photo = $FILES('photo','name');
     //$insertT = "INSERT INTO project (id, creator, title, description, start, expiry, country, target, status) VALUES (18, 'able_too@gmail.com', 'Food Maker', 'Cook twice the amount of food in half the time!', '2015/09/14', '2016/10/14', 'Japan', 2000, 'ongoing')";
 
-    $insert = "INSERT INTO project(id, title, description, start, expiry, target, status) 
-            VALUES ('$newid', '$mail'. '$title', '$description', '$start', '$expiry', '$target', '$status')";
+    $insert = "INSERT INTO project(id, creator, title, description, start, expiry, target, status) 
+            VALUES ('$newid', '$mail', '$title', '$description', '$start', '$expiry', '$target', 'ongoing');";
     //$result = pg_query($dbcon, $insert);
     $result = pg_query($dbcon, $insert);
-    if(!$result) {
-        echo 'true';
+    if($result) {
+        $success = "Successfully created new project";
     }else {
-        echo 'false';
+        $error = "Something wrong happens, please try again";
     }
-    $upload_img = "INSERT INTO image VALUES ('$photo')";
-    $img_result = pg_query($dbcon, $upload_img);
-
-    if($img_result && move_uploaded_file($_FILES['photo']['tmp_name'], $target_dir)) {
-        echo "The file ". basename( $_FILES['uploadedfile']['name']). " has been uploaded, and your information has been added to the directory";
-    }
+//    $upload_img = "INSERT INTO image VALUES ('$newid', '$photo')";
+//    $img_result = pg_query($dbcon, $upload_img);
+//
+//    if($img_result && move_uploaded_file($_FILES['photo']['tmp_name'], $target_dir)) {
+//        echo "The file ". basename( $_FILES['uploadedfile']['name']). " has been uploaded, and your information has been added to the directory";
+//    }
 }
 ?>
 
@@ -69,7 +67,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                <label>Password  :</label><input type = "password" name = "password" class = "box" /><br/><br />
                <input type = "submit" value = " Submit "/><br />
             </form>-->
-            <form  action="" method="post">
+            <form  action="" method="GET">
                 <h1> Sign up </h1>
                 <p>
                     <label for="title" class="title" data-icon="u">Title</label>
@@ -81,7 +79,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 </p>
                 <p>
                     <label for="start" class="date" data-icon="p">Start date </label>
-                    <input id="start" name="passwordsignup" required="required" type="date" placeholder="2001-12-31"/>
+                    <input id="start" name="start" required="required" type="date" placeholder="2001-12-31"/>
                 </p>
                 <p>
                     <label for="expiry" class="expiry" data-icon="p">End date</label>
@@ -91,18 +89,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label for="target" class="expiry" data-icon="p">Target amount</label>
                     <input id="target" name="target" required="required" type="number" placeholder="In US$"/>
                 </p>
-
-                <p>
-                    <input type="radio" name="status" value="ongoing" checked> Ongoing<br>
-                    <input type="radio" name="status" value="closed"> Closed<br>
-                </p><p>
+                <!--<p>
                     You May Upload a Photo in gif or jpeg format. If the same file name is uploaded twice it will be overwritten! Maxium size of File is 35kb.
                 </p>
                 <p>
                     Photo:
                 </p>
                 <input type="hidden" name="size" value="350000">
-                <input type="file" name="photo">
+                <input type="file" name="photo">-->
                 <p class="create button">
                     <input type="submit" value="Submit"/>
                 </p>

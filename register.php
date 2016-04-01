@@ -15,24 +15,25 @@
 //      print "T";
 //   }
 
-   if($_SERVER["REQUEST_METHOD"] == "POST") {
+   if($_SERVER["REQUEST_METHOD"] == "GET") {
       // username and password sent from form
 
 
-       $myfirstname = trim($_POST['firstname']);
-       $mylastname = trim($_POST['lastname']);
-       $myemail = trim($_POST['email']);
-       $mypassword = $_POST['password'];
-       $mypassword2 = $_POST['password_confirm'];
-       $mysex = $_POST['sex'];
-       $myaddress = $_POST['address'];
-       $myphone = $_POST['phone'];
+       $myfirstname = trim($_GET['firstname']);
+       $mylastname = trim($_GET['lastname']);
+       $myemail = trim($_GET['email']);
+       $mypassword = $_GET['password'];
+       $mypassword2 = $_GET['password_confirm'];
+       $mysex = $_GET['sex'];
+       $myaddress = $_GET['address'];
+       $myphone = $_GET['phone'];
        $register_date = date("Y-m-d");
 
-      $sql = "INSERT INTO person(firstname, lastname, email, password, sex, address, register_date, phone, admin) 
-              VALUES ('$myfirstname', '$mylastname', '$myemail', '$mypassword', '$mysex', '$myaddress', 
+      $sql = "INSERT INTO person(firstname, lastname, email, password, sex, address, register_date, phone, admin)
+              VALUES ('$myfirstname', '$mylastname', '$myemail', '$mypassword', '$mysex', '$myaddress',
               '$register_date', '$myphone', 'N')";
       $result = pg_query($dbcon, $sql);
+
       if(!$result) {
         $error = "The email address is already used";
       }else {
@@ -60,7 +61,7 @@
                   <label>Password  :</label><input type = "password" name = "password" class = "box" /><br/><br />
                   <input type = "submit" value = " Submit "/><br />
                </form>-->
-               <form  action="" method="post">
+               <form  action="" method="GET">
                                 <h1>Sign up</h1>
                                 <p> 
                                     <label for="firstname" class="uname" data-icon="u">Your first name</label>
@@ -92,12 +93,12 @@
                                 </p>
                                 <p>
                                     <label for="sex" class="sex" data-icon="s">You gender<br></label>
-                                    <input type="radio" name="sex" value="other" checked> Other<br>
-                                    <input type="radio" name="sex" value="male"> Male<br>
-                                    <input type="radio" name="sex" value="female"> Female<br>
+                                    <input type="radio" name="sex" value="O" checked/> Other<br>
+                                    <input type="radio" name="sex" value="M"/> Male<br>
+                                    <input type="radio" name="sex" value="F"/> Female<br>
                                 </p>
                                 <p class="signin button"> 
-                           <input type="submit" value="Submit"/> 
+                           <input type="submit" value="Register"/>
                         </p>
                                 <p class="change_link">  
                            Already a member ?

@@ -1,3 +1,6 @@
+<html>
+<title></title>
+
 <?php
 $host = "localhost"; 
 $user = "postgres"; 
@@ -7,10 +10,11 @@ $db = "test";
 $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     or die('Could not connect: ' . pg_last_error());
 
-$curr_id = $_POST['id'];
+    $curr_id = $_GET['id'];
+    //$curr_id = 2;
     $sql = "SELECT p.id AS ID, 
         p.title AS Title,
-        c.name AS Creator,
+        c.firstname AS Creator,
         to_char(p.start, 'DD/MM/YYYY') AS Start,
         to_char(p.expiry, 'DD/MM/YYYY') AS Expiry,
         p.target AS Target,
@@ -19,14 +23,16 @@ $curr_id = $_POST['id'];
         WHERE d.project = p.id 
         AND h.id = p.id
         AND c.email = p.creator
-        AND p.id = ".$curr_id."
-        GROUP BY p.id, p.title, c.name, p.start, p.expiry, p.target, p.status
+        AND p.id = $curr_id
+        GROUP BY p.id, p.title, c.firstname, p.start, p.expiry, p.target, p.status
         ORDER BY p.id;";
     $result = pg_query($dbcon, $sql);
     if (!$result) {
-        echo "Nothing found";
+        echo "Nothing here but us chickens";
     }
     else {
+        $received_query = "SELECT SUM(amount) FROM donation WHERE project=$curr_id;";
+        $donated = pg_fetch_assoc(pg_query($dbcon,$received_query))['sum'];
         $pic_sql = "SELECT data FROM image WHERE id='$curr_id'";
         $pic_query = pg_query($dbcon, $pic_sql);
         $image = pg_fetch_assoc($pic_query)['data'];
@@ -38,36 +44,37 @@ $curr_id = $_POST['id'];
         $expiry = $row['expiry'];
         $country = $row['country'];
         $target = $row['target'];
-    }
 ?>
-
-<html>
-<title><?php echo $title; ?></title>
-<body>
+    <body>
     <div align="center">
-    <p>Creators</p>
-    <p><?php echo $creator; ?></p>
-    <p>Description</p>
-    <p><?php echo $description; ?></p>
-    <p>Starting From: </p>
-    <p><?php echo $start; ?></p>
-    <p>Ending at:</p>
-    <p><?php echo $expiry; ?></p>
-    <p>Target amount:</p>
-    <p><?php echo $target; ?></p>
-    </div>
+        <p><img src=""</p> <!-- should be an image from database query-->
+        <p>Title</p>
+        <?php echo $title; ?>
+        <p>Creators</p>
+        <p><?php echo $creator; ?></p>
+        <p>Description</p>
+        <p><?php echo $description; ?></p>
+        <p>Starting From: </p>
+        <p><?php echo $start; ?></p>
+        <p>Ending at:</p>
+        <p><?php echo $expiry; ?></p>
+        <p>Target amount:</p>
+        <p><?php echo $target; ?></p>
+        <p>Currently received<br></p>
+        <p><?php echo $donated; ?></p>
+        </div>
 
-    <?php if (isset($_SESSION['email'])) /* the user is logged in, show donation bar*/ {?>
-        <div align="center">
+    <?php  if (isset($_SESSION['email'])) /* the user is logged in, show donation bar*/ {?>
+        <div>
         <p>Interested?</p>
-        <form action="" method="POST">
+        <form action="" method="GET">
             <h4>I wish to donate $</h4>
             <input id="donation" name="donation" required="required" type="number"/>
             <h4>to this project</h4>
 
             <?php
-                if($_SERVER["REQUEST_METHOD"] == "POST") {
-                    $amount = $_POST['donation'];
+                if($_SERVER["REQUEST_METHOD"] == "GET") {
+                    $amount = $_GET['donation'];
                     $donor = $_SESSION['email'];
                     $donate_date = date("Y-m-d");
                     $donate_sql = "INSERT INTO donation (time, donor, amount, project)
@@ -81,12 +88,12 @@ $curr_id = $_POST['id'];
                 }
             ?>
         </form>
-            <div style = "font-size:11px; color:#cc0000; margin-top:10px"><?php echo $donor_result?></div>
+            <div style = "font-size:11px; color:#cc0000; margin-top:10px"><?php echo $donate_result?></div>
         </div>
     <?php } else /*tell user to login*/{ ?>
         <p>You have to <a href="login.php">log in</a> before making a donation! </p>
 
-    <?php }; ?>
+    <?php }}; ?>
 
 </body>
 </html>

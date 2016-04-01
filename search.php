@@ -140,7 +140,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     <input type="text" placeholder="Enter Project Title" name="search-query" class="search-field" id="search-input"> 
     <input type="submit" value="Search" class="button" name="search-submit-btn"> 
   </form>
-  <input style = "background-color:#5F5F5F"type="button" value="Advanced Search" class="button" id="search-type-btn"> <!-- FOR HIDE/SHOW-->
+  <input style = "background-color:#BEBEBE"type="button" value="Advanced Search" class="button" id="search-type-btn"> <!-- FOR HIDE/SHOW-->
   <div id="content" class="hfeed"></div>
 </div>
 

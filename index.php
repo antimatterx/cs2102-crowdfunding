@@ -154,28 +154,37 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
       }
       ?>
 
+      <!-- Display Login name -->
+    <?php if (isset($_SESSION['email'])) { ?>
+      <?php $log_button = "Log Out"; ?>
+      <?php $log_url = "logout.php"; ?>
+      <?php $login_query = "SELECT p.firstname, p.lastname FROM person p WHERE p.email='$email'"; ?>
+      <?php $name = pg_query($login_query) or die('Query failed: ' . pg_last_error()); ?>
+      <?php $firstname = pg_fetch_result($name, 0, 0); ?>
+      <?php $lastname = pg_fetch_result($name, 0, 1); ?>
+      <?php $log_status_string = "You are logged in as " . $firstname . "."; ?>
+      <?php pg_free_result($name); ?> 
+    <?php } else { ?>
+      <?php $log_button = "Log In"; ?>
+      <?php $log_url = "login.php" ?>
+      <?php $log_status_string = "You are not logged in" ?>
+    <?php } ?>
+
       <ul class="nav navbar-nav navbar-right">
         <li id="menu-item-144" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-144"><a href="register.php">Sign Up</a></li>
-        <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="login.php">Log In</a></li>
+        <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142">
+          <a href="<?php echo $log_url ?>"><?php echo $log_button ?></a></li>
         <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="<?php echo $host_url ?>">Host Project</a></li>
-        <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="<?php echo $host_url ?>">Admin</a></li>
+        <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="<?php echo $admin_url ?>">Admin</a></li>
       </ul>
     </div>
   </div>
 </nav>
 <!--header ends here-->
       
-<!-- Display Login name -->
-<?php if (isset($_SESSION['email'])) { ?>
-  <?php $login_query = "SELECT p.firstname, p.lastname FROM person p WHERE p.email='$email'"; ?>
-  <?php $name = pg_query($login_query) or die('Query failed: ' . pg_last_error()); ?>
-  <?php $firstname = pg_fetch_result($name, 0, 0); ?>
-  <?php $lastname = pg_fetch_result($name, 0, 1); ?>
-  <h2 id="login_display"><?php echo "You are logged in as " . $firstname . "."?></h2>
-  <?php pg_free_result($name); ?>
-<?php } else { ?>
-  <h2 id="login_display">You not logged in</h2>
-<?php } ?>
+<!-- display whether the user is logged in -->
+<h2 id="login_display"><?php echo $log_status_string ?></h2>
+
 
 
 <!--start of middle content-->
@@ -207,7 +216,7 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
   <div class="categories">
    <cap id="categories">Categories</cap>
    <br>
-   <sub>Browse projects by categories</sub>
+   <sub style="color:#808080">Browse projects by categories</sub>
  </div>
 </div>
 <!-- end of Categories Section -->
@@ -237,7 +246,7 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
     <div>
       <h2>Popular</h2>
-      <h4>The most popular crowdfunding projects</h4>
+      <h4 style="color:#808080">The most popular crowdfunding projects</h4>
     </div>
 
     <ul class="list-group">   
@@ -265,7 +274,7 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
   <div id="countries">
     <div >
       <h2 >Countries</h2>
-      <h4 >Browse projects by countries</h4>
+      <h4 style="color:#808080">Browse projects by countries</h4>
     </div>
 
     <ul class="list-group"> 
