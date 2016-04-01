@@ -14,7 +14,7 @@
    <body bgcolor = "#FFFFFF">
 	
       <div align = "center">
-         <div style = "width:300px; border: solid 1px #333333; " align = "left">
+         <div style = "width:400px; border: solid 1px #333333; " align = "left">
             <div style = "background-color:#333333; color:#FFFFFF; padding:3px;"><b>Login</b></div>
 				
                <div style = "margin:30px">
@@ -27,11 +27,11 @@
                <form  action="" method="post"> 
                                 <h1>Log in</h1> 
                                 <p> 
-                                    <label for="email" class="uname" data-icon="u" > Your email </label>
+                                    <label for="email" class="uname" data-icon="u" > Your email<br> </label>
                                     <input id="email" name="email" required="required" type="text" placeholder="mymail@mail.com"/>
                                 </p>
                                 <p> 
-                                    <label for="password" class="youpasswd" data-icon="p"> Your password </label>
+                                    <label for="password" class="youpasswd" data-icon="p"> Your password<br> </label>
                                     <input id="password" name="password" required="required" type="password" placeholder="eg. X8df!90EO" /> 
                                 </p>
                                 <p class="keeplogin"> 
@@ -76,5 +76,3 @@
 
    </body>
 </html>
-
-?>

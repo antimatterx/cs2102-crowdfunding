@@ -44,6 +44,7 @@ $curr_id = $_POST['id'];
 <html>
 <title><?php echo $title; ?></title>
 <body>
+    <div align="center">
     <p>Creators</p>
     <p><?php echo $creator; ?></p>
     <p>Description</p>
@@ -54,5 +55,38 @@ $curr_id = $_POST['id'];
     <p><?php echo $expiry; ?></p>
     <p>Target amount:</p>
     <p><?php echo $target; ?></p>
+    </div>
+
+    <?php if (isset($_SESSION['email'])) /* the user is logged in, show donation bar*/ {?>
+        <div align="center">
+        <p>Interested?</p>
+        <form action="" method="POST">
+            <h4>I wish to donate $</h4>
+            <input id="donation" name="donation" required="required" type="number"/>
+            <h4>to this project</h4>
+
+            <?php
+                if($_SERVER["REQUEST_METHOD"] == "POST") {
+                    $amount = $_POST['donation'];
+                    $donor = $_SESSION['email'];
+                    $donate_date = date("Y-m-d");
+                    $donate_sql = "INSERT INTO donation (time, donor, amount, project)
+                                   VALUES ('$donate_date', '$donor', '$amount', '$curr_id');";
+                    $donate_query = pg_query($dbcon, $donate_sql);
+                }
+                if(!$donate_query) {
+                    $donate_result = "You have successfully donated $amount to project";
+                } else {
+                    $donate_result = "Something wrong happend. Please try again";
+                }
+            ?>
+        </form>
+            <div style = "font-size:11px; color:#cc0000; margin-top:10px"><?php echo $donor_result?></div>
+        </div>
+    <?php } else /*tell user to login*/{ ?>
+        <p>You have to <a href="login.php">log in</a> before making a donation! </p>
+
+    <?php }; ?>
+
 </body>
 </html>
