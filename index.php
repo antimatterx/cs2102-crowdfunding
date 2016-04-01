@@ -144,13 +144,14 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
       </ul>
     <!--nav bar left side content ends here-->
 
+      <!-- Check if Logged in -->
       <?php 
       if (!isset($_SESSION['email'])) {
         $host_url = "login.php";
         $admin_url = "login.php";
       } else {
         $host_url = "new_project.php";
-        $admin_url = "admin.php";
+        $admin_url = "profile.php";
       }
       ?>
 
@@ -158,24 +159,37 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
     <?php if (isset($_SESSION['email'])) { ?>
       <?php $log_button = "Log Out"; ?>
       <?php $log_url = "logout.php"; ?>
-      <?php $login_query = "SELECT p.firstname, p.lastname FROM person p WHERE p.email='$email'"; ?>
+      <?php $login_query = "SELECT p.firstname, p.lastname, p.admin FROM person p WHERE p.email='$email'"; ?>
       <?php $name = pg_query($login_query) or die('Query failed: ' . pg_last_error()); ?>
       <?php $firstname = pg_fetch_result($name, 0, 0); ?>
       <?php $lastname = pg_fetch_result($name, 0, 1); ?>
+      <?php $is_admin = pg_fetch_result($name, 0, 2); ?>
       <?php $log_status_string = "You are logged in as " . $firstname . "."; ?>
+
+      <!-- Set Admin/Profile Button and URL -->
+      <?php if($is_admin=='Y') { ?>
+        <?php $profile_button = "Admin"; ?>
+        <?php $profile_url = "admin.php"; ?>
+      <?php } else { ?>
+        <?php $profile_button = "Profile Page"; ?>
+      <?php } ?>
       <?php pg_free_result($name); ?> 
+      <!-- End Set Admin/Profile Button and URL -->
     <?php } else { ?>
       <?php $log_button = "Log In"; ?>
       <?php $log_url = "login.php" ?>
       <?php $log_status_string = "You are not logged in" ?>
     <?php } ?>
 
+
       <ul class="nav navbar-nav navbar-right">
         <li id="menu-item-144" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-144"><a href="register.php">Sign Up</a></li>
         <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142">
           <a href="<?php echo $log_url ?>"><?php echo $log_button ?></a></li>
-        <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="<?php echo $host_url ?>">Host Project</a></li>
-        <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="<?php echo $admin_url ?>">Admin</a></li>
+        <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142">
+          <a href="<?php echo $host_url ?>">Host Project</a></li>
+        <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142">
+          <a href="<?php echo $admin_url ?>"><?php echo $profile_button ?></a></li>
       </ul>
     </div>
   </div>
