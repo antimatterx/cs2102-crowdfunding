@@ -109,117 +109,122 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 				
 <br><br><br><br>
 <!--user profile-->
-<h1> User Profile </h1>
-<p title="User Profile"></p>
-<table style="width:60%">
-  <tr>
-    <td>Name:</td>
-    <td>CS2102 </td>
- </tr>
-<tr>
-    <td>Email:</td>
-    <td>CS2102@nus.edu.sg </td>
- </tr>
-<tr>
-    <td>Phone:</td>
-    <td>999-999-999</td>
- </tr>
-<tr>
-    <td>DOB:</td>
-    <td>20-9-2000 </td>
- </tr>
-<tr>
-    <td>Register Date</td>
-    <td>16-7-2000 </td>
- </tr>
-<tr>
-    <td>Address:</td>
-    <td>NUS SOC CS2102 LT19 </td>
- </tr>
-<tr>
-    <td>Total Donation(US $):</td>
-    <td>$1500 </td>
- </tr>
-<tr>
-    <td>Total Collection(US $):</td>
-    <td>$2500 </td>
- </tr>
-</table>
-<br>
+
+<h1 style = "text-align:center;"> User Profile </h1>
+<?php
+$email = $_GET['id'];
+$query = "SELECT p.firstname, p.lastname, p.email, p.address, p.register_date, p.phone FROM person p WHERE p.email = '" .$email."'";
+// echo "<p>".$query ."</p>";
+$result = pg_query($query) or die ("query failed:" . pg_last_error());
+$array = array();
+while($row = pg_fetch_array($result,NULL, PGSQL_ASSOC)) {
+	array_push($array, $row);
+}
+
+$query = "SELECT SUM(d.amount) AS total FROM donation d WHERE d.donor = '" .$email ."'";
+
+$result = pg_query($query) or die ("query failed:" . pg_last_error());
+$total = pg_fetch_array($result);
+$total = $total['total'];
+
+if (sizeof($array) > 0) {
+	echo "<table align = 'center' style = 'width:60%'>";
+
+	foreach($array as $list) {
+		echo "<tr><td><p>First Name</p></td>";
+		echo "<td><p>" . $list["firstname"] . "</p></td></tr>";
+		echo "<tr><td><p>Last Name</p></td>";
+		echo "<td><p>" . $list["lastname"] . "</p></td></tr>";
+		echo "<tr><td><p>Email</p></td>";
+		echo "<td><p>" . $list["email"] . "</p></td></tr>";
+		echo "<tr><td><p>Address</p></td>";
+		echo "<td><p>" . $list["address"] . "</p></td></tr>";
+		echo "<tr><td><p>Register Date</p></td>";
+		echo "<td><p>" . $list["register_date"] . "</p></td></tr>";
+		echo "<tr><td><p>Contact Number</p></td>";
+		echo "<td><p>" . $list["phone"] . "</p></td></tr>";	
+	}
+	echo "<tr><td><p> Total Donation </p></td>";
+	echo "<td><p>". $total. "</p></td></tr>";
+	echo "</table>";
+} else {
+	echo "<p> There is no such user! </p>";
+}
+?>
+
+
+<!--proposed project profile-->
+
+<h1 style = "text-align:center;"> Projects Proposed </h1>
+<?php
+$email = $_GET['id'];
+$query = "SELECT p.id, p.creator, p.title, p.description, p.start, p.expiry,p.country,p.target,p.status FROM project p WHERE p.creator = '" .$email."'";
+// echo "<p>".$query ."</p>";
+$result = pg_query($query) or die ("query failed:" . pg_last_error());
+$array = array();
+while($row = pg_fetch_array($result,NULL, PGSQL_ASSOC)) {
+	array_push($array, $row);
+}
+if (sizeof($array) > 0) {
+	
+	foreach($array as $list) {
+		echo "<table align = 'center' style = 'width:60%'>";
+		echo "<tr><td><p>Project ID </p></td>";
+		echo "<td><p>" . $list["id"] . "</p></td></tr>";
+		echo "<tr><td><p>Project Creator</p></td>";
+		echo "<td><p>" . $list["creator"] . "</p></td></tr>";
+		echo "<tr><td><p>Project Title</p></td>";
+		echo "<td><p>" . $list["title"] . "</p></td></tr>";
+		echo "<tr><td><p>Project Description</p></td>";
+		echo "<td><p>" . $list["description"] . "</p></td></tr>";
+		echo "<tr><td><p> Starts Date</p></td>";
+		echo "<td><p>" . $list["start"] . "</p></td></tr>";
+		echo "<tr><td><p>expiry Date</p></td>";
+		echo "<td><p>" . $list["expiry"] . "</p></td></tr>";	
+		echo "<tr><td><p> Country </p></td>";
+		echo "<td><p>" . $list["country"] . "</p></td></tr>";
+		echo "<tr><td><p>Target Amount</p></td>";
+		echo "<td><p>" . $list["target"] . "</p></td></tr>";	
+		echo "<tr><td><p> Project Status</p></td>";
+		echo "<td><p>" . $list["status"] . "</p></td></tr>";
+		echo "</table><br>";
+	}
+} else { 
+	echo "<p> There are no projects proposed </p> ";
+	}
+?>
 
 <!--donated project profile-->
-<h1> Projects Donated To: </h1>
-<p title="Donated Projects"></p>
-<table style="width:60%">
-  <tr>
-    <td>Project Name:</td>
-    <td>CS2102 Project </td>
- </tr>
-<tr>
-    <td>Project ID:</td>
-    <td>112113114 </td>
- </tr>
-<tr>
-    <td>Project Start Date:</td>
-    <td>9-7-2015</td>
- </tr>
-<tr>
-    <td>Project End Date:</td>
-    <td>20-9-2015 </td>
- </tr>
-<tr>
-    <td>Donated Date:</td>
-    <td>11-9-2015 </td>
- </tr>
-<tr>
-    <td>Donated Amount:</td>
-    <td>$19.00</td>
- </tr>
-<tr>
-    <td>Project Status:</td>
-    <td>closed</td>
- </tr>
-</table>
-<!--proposed project profile-->
-<br>
-<h1> Projects Proposed: </h1>
-<p title="Proposed Projects"></p>
-<table style="width:60%">
-  <tr>
-    <td>Project Name:</td>
-    <td>2102Project</td>
- </tr>
-<tr>
-    <td>Project ID:</td>
-    <td>12341234</td>
- </tr>
-<tr>
-    <td>Starts Date:</td>
-    <td>9-7-2015</td>
- </tr>
-<tr>
-    <td>Ends Date:</td>
-    <td>20-9-2015</td>
- </tr>
-<tr>
-    <td>Target Amount:</td>
-    <td>$100.00 </td>
- </tr>
-   
-<tr>
-    <td> Current Amount:</td>
-    <td>$19.00</td>
- </tr>
-   <tr>
-    <td>Contributor ID:</td>
-    <td>45646789</td>
- </tr>
- <tr>
-    <td>Project Status:</td>
-    <td>ongoing</td>
- </tr>
-    
-</table>
+
+<h1 style = "text-align:center;"> Donated Projects </h1>
+<?php
+$email = $_GET['id'];
+$query = "SELECT d.project, d.time, d.donor, d.amount FROM donation d WHERE d.donor = '" .$email."'";
+// echo "<p>".$query ."</p>";
+$result = pg_query($query) or die ("query failed:" . pg_last_error());
+$array = array();
+while($row = pg_fetch_array($result,NULL, PGSQL_ASSOC)) {
+	array_push($array, $row);
+}
+if (sizeof($array) > 0) {
+
+	foreach($array as $list) {
+		echo "<table align = 'center' style = 'width:60%'>";
+        echo "<tr><td><p>Project ID </p></td>";
+		echo "<td><p>" . $list["project"] . "</p></td></tr>";
+		echo "<tr><td><p>Donation Time </p></td>";
+		echo "<td><p>" . $list["time"] . "</p></td></tr>";
+		echo "<tr><td><p>Donor</p></td>";
+		echo "<td><p>" . $list["donor"] . "</p></td></tr>";
+		echo "<tr><td><p>Amount of Donation </p></td>";
+		echo "<td><p>" . $list["amount"] . "</p></td></tr>";
+		echo "</table><br>";
+	}
+		
+} else { 
+	echo "<p> There is no donation!</p> ";
+	}
+?>
 
 	</div><!-- end #content-sidebar-wrap -->
 	</div><!-- end .wrap --></div><!-- end #inner --> 
