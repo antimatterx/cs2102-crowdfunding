@@ -9,7 +9,7 @@ $db = "test";
 
 $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     or die('Could not connect: ' . pg_last_error());
-    session_start();
+
     $curr_id = $_GET['id'];
     //$curr_id = 2;
     $sql = "SELECT p.id AS ID, 
@@ -44,7 +44,6 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
         $expiry = $row['expiry'];
         $country = $row['country'];
         $target = $row['target'];
-        $status = $row['status'];
 ?>
     <body>
     <div align="center">
@@ -63,11 +62,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
         <p><?php echo $target; ?></p>
         <p>Currently received<br></p>
         <p><?php echo $donated; ?></p>
-        <p>Current status<br></p>
-        <p><?php echo $status; ?></p>
         </div>
-        <br><br>
-        <p><a href="logout.php" Sign Out</p>
 
     <?php  if (isset($_SESSION['email'])) /* the user is logged in, show donation bar*/ {?>
         <div>
@@ -93,7 +88,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
                 }
             ?>
         </form>
-            <div style = "font-size:11px; color:#cc0000; margin-top:10px"><?php if ($donate_query) echo $donate_result;?></div>
+            <div style = "font-size:11px; color:#cc0000; margin-top:10px"><?php echo $donate_result?></div>
         </div>
     <?php } else /*tell user to login*/{ ?>
         <p>You have to <a href="login.php">log in</a> before making a donation! </p>
