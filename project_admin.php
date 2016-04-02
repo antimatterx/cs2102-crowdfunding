@@ -407,6 +407,11 @@ $sql = "SELECT p.id AS ID,
 		<!--image above-->
 
 			<div class = "col-md-offset-1 col-md-6"> 
+			<?php
+				if ($ID == "" and !isset($_GET['delete-project-submit'])) {
+					echo "<h3> Project does not exist!</h3>";
+				}
+			?>
 			<form>
 				<table class="table">
 					<col width="30%">
@@ -703,12 +708,8 @@ $sql = "SELECT p.id AS ID,
 					</tr>
 				</table>
 				<?php
-					if ($ID == "") {
-						if(isset($_GET['delete-project-submit'])) {
-							echo "<h3> Project has been successfully deleted!</h3>";
-						} else {
-							echo "<h3> Project does not exist!</h3>";
-						}
+					if ($ID == "" and isset($_GET['delete-project-submit'])) {
+						echo "<h3> Project has been successfully deleted!</h3>";
 					} else {
 						if(isset($_GET['edit-project-submit'])) {
 							if ($_SESSION['success']) {

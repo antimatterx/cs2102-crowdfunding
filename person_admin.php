@@ -316,22 +316,13 @@ $sql = "SELECT p.email AS EMAIL,
 </nav>
 <!--nav bar ends here-->
 <div class = "container">
-	<?php
-	if ($email == "") {
-		echo "<h3> Account does not exist!</h3>";
-	} else { 
-		if(isset($_GET['edit-account-submit'])) {
-			if ($_SESSION['success']) {
-				echo "<h3> Changes successful!</h3>";
-			} else {
-				echo "<h3> No Changes Made!</h3>";
-			}
-		}
-	}
-	?>
-
-
 	<div class = "row"> 
+		<?php
+			if ($email == "") {
+				echo "<h3> Account does not exist!</h3>";
+			}
+		?>
+					
 		<form>
 			<table class = "table">
 			<colgroup>
@@ -432,6 +423,17 @@ $sql = "SELECT p.email AS EMAIL,
 				<input type="submit" value="Apply Changes" class="button btn btn-default" name="edit-account-submit">
 			</div>
 			</form>
+			<?php
+				if ($email != "") {}
+					if(isset($_GET['edit-account-submit'])) {
+						if ($_SESSION['success']) {
+							echo "<h3> Changes successful!</h3>";
+						} else {
+							echo "<h3> No Changes Made!</h3>";
+						}
+					}
+				}
+			?>
 		</div> <!-- end of row-->
 </div><!--end of container-->
 
