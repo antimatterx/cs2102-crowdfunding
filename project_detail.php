@@ -49,7 +49,7 @@ $cat_sql = "SELECT tag FROM has_category WHERE id=$curr_id;";
 $cat_result = pg_query($dbcon, $cat_sql);
 $category = "";
 while ($cat_row = pg_fetch_array($cat_result)) {
-    $category = $category . " " . $cat_row['tag'];
+    $category = $category . ", " . $cat_row['tag'];
 }
 ?>
 <body>
@@ -75,16 +75,34 @@ while ($cat_row = pg_fetch_array($cat_result)) {
     <p>Current status<br></p>
     <p><?php echo $status; ?></p>
 <?php
-    $res = pg_query("SELECT encode(data, 'base64') AS data FROM image WHERE id=2;");
-    $raw = pg_fetch_result($res, 'data');
+// Fetch the image
+$sqlImg = "SELECT data
+    FROM image
+    WHERE id = '$curr_id'";
 
-    // Convert to binary and send to the browser
-    //header('Content-type: image/jpeg');
-    //echo '<img src="data:image/jpeg;base64,'.base64_encode($raw).'">';
-    //echo base64_decode($raw);
+$resImg = pg_query($dbcon, $sqlImg) or die("Query Failed: " . pg_last_error());
+
+if(pg_num_rows($resImg) > 0) {
+    $dataImg = pg_fetch_result($resImg, 'data');
+    $unes_image = pg_unescape_bytea($dataImg);
+
+    // save image to file
+    $file_name = "temp/" . $curr_id . ".jpg";
+    $img = fopen($file_name, 'wb') or die("cannot open image\n");
+    fwrite($img, $unes_image) or die("cannot write image data\n");
+    fclose($img);
+} else {
+    $file_name = "images/blank.jpg";
+}
 ?>
 </div>
+<?php
+$query = "SELECT i.data FROM image i WHERE i.id = $curr_id;";
 
+$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+
+echo "<img style=\"text-align:center;\" width=\"330\" height=\"175\" src=$file_name class=\"alignleft post-image\" alt=\"Image Not Found\" />";
+?>
 <?php  if (isset($_SESSION['email'])) /* the user is logged in, show donation bar*/ {?>
     <div>
         <h3>Interested?</h3>
