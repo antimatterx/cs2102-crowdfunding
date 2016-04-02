@@ -33,6 +33,25 @@ $db = "test";
 $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     or die('Could not connect: ' . pg_last_error());
 
+$isAdmin = $_SESSION['email'];
+
+$sql = "SELECT p.admin FROM person p WHERE p.email = '" . $isAdmin . "';";
+
+// echo "<br><br><br><br><h1>" . $sql . "</h1>";
+$result = pg_query($sql) or die("Query failed: " . pg_last_error());
+
+$isAdmin = pg_fetch_array($result);
+$isAdmin = $isAdmin['admin'];
+$isAdmin = ($isAdmin == "Y");
+
+if (!$isAdmin) {
+	echo "<script type='text/javascript'>";
+	echo " $(function(){
+	window.location.href='index.php';
+	});";
+echo "</script>";      
+}
+
 if(isset($_GET['id'])) {
 	$_SESSION['session-ID'] = $_GET['id'];
 }

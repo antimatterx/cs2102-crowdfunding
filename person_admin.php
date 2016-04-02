@@ -1,3 +1,4 @@
+<?php session_start() ?>
 <html>
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
@@ -31,11 +32,33 @@ $db = "test";
 $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     or die('Could not connect: ' . pg_last_error());
 
-	if(isset($_GET['id'])) {
-		$_SESSION['session-ID'] = $_GET['id'];
-	} 
-	// echo "<h3> B " . $_SESSION['session-ID'] . "</h3>";
-	$curr_id = $_SESSION['session-ID'];
+if(isset($_GET['id'])) {
+	$_SESSION['session-ID'] = $_GET['id'];
+} 
+// echo "<h3> B " . $_SESSION['session-ID'] . "</h3>";
+
+$isAdmin = $_SESSION['email'];
+
+$sql = "SELECT p.admin FROM person p WHERE p.email = '" . $isAdmin . "';";
+
+// echo "<br><br><br><br><h1>" . $sql . "</h1>";
+$result = pg_query($sql) or die("Query failed: " . pg_last_error());
+
+$isAdmin = pg_fetch_array($result);
+$isAdmin = $isAdmin['admin'];
+$isAdmin = ($isAdmin == "Y");
+
+
+// echo "<br><br><br><br><h1>" . $isAdmin . "<h1>";
+if (!$isAdmin) {
+	echo "<script type='text/javascript'>";
+	echo " $(function(){
+	window.location.href='index.php';
+	});";
+echo "</script>";      
+}
+
+$curr_id = $_SESSION['session-ID'];
 
 if (isset($_GET['edit-account-submit'])) { #ACCOUNT EDIT
 	$emailSuccess = ($_GET['person-email'] != $_SESSION['session-email']);
@@ -133,6 +156,7 @@ if (isset($_GET['edit-account-submit'])) { #ACCOUNT EDIT
 	WHERE email = '" . $curr_id .  "';";
 
 	$_SESSION['session-ID'] = $email;
+	$_SESSION['email'] = $email;
 	$curr_id = $email;
 
 	// echo "<br><br><h1>" . $sql . "</h1><br><h2>" . $_SESSION['session-ID'] . "</h2>";

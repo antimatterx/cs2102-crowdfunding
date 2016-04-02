@@ -207,10 +207,17 @@ if (sizeof($array) > 0) {
 		echo "<tr><th><p>Contact Number</p></th>";
 		echo "<td><p>" . $list["phone"] . "</p></td></tr>";
 		echo "<tr><th><p>Admin</p></th>";
-		echo "<td><p>" . $list["admin"] . "</p></td></tr>";	
+    if ($list["admin"] == "Y") {
+		  echo "<td><p> Yes </p></td></tr>";	
+    } else {
+      echo "<td><p> No </p></td></tr>"; 
+    }
 	}
 	echo "<tr><th><p> Total Donation </p></th>";
-	echo "<td><p>". $total. "</p></td></tr>";
+  if (!is_numeric($total)) {
+    $total = 0;
+  } 
+	echo "<td><p> US$". $total. ".00</p></td></tr>";
 	echo "</table>";
 } else {
 	echo "<p> There is no such user! </p>";
@@ -225,7 +232,7 @@ if (sizeof($array) > 0) {
 <div class = "row">
 <div class = "col-md-offset-3 col-md-6">
 <?php
-$query = "SELECT p.id, p.creator, p.title, p.description, p.start, p.expiry,p.country,p.target,p.status FROM project p WHERE p.creator = '" .$email."'";
+$query = "SELECT p.id, p.title, p.description, p.start, p.expiry,p.country,p.target,p.status FROM project p WHERE p.creator = '" .$email."'";
 // echo "<p>".$query ."</p>";
 $result = pg_query($query) or die ("query failed:" . pg_last_error());
 $array = array();
@@ -249,8 +256,8 @@ if (sizeof($array) > 0) {
 		echo "<tr><th><p>Project Title</p></th>";
 		// echo "<td><p>" . $list["title"] . "</p></td></tr>";
 		echo "<td><a href='dlist.php?id=" . $list["id"] . "'>" . $list['title'] . "</a></td>";
-		echo "<tr><th><p>Project Creator</p></th>";
-		echo "<td><p>" . $list["creator"] . "</p></td></tr>";
+		// echo "<tr><th><p>Project Creator</p></th>";
+		// echo "<td><p>" . $list["creator"] . "</p></td></tr>";
 		echo "<tr><th><p>Project Description</p></th>";
 		echo "<td><p>" . $list["description"] . "</p></td></tr>";
 		echo "<tr><th><p> Starts Date</p></th>";

@@ -38,7 +38,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 
   $sql = "SELECT p.admin FROM person p WHERE p.email = '" . $isAdmin . "';";
 
-  echo "<br><br><br><br><h1>" . $sql . "</h1>";
+  // echo "<br><br><br><br><h1>" . $sql . "</h1>";
   $result = pg_query($sql) or die("Query failed: " . pg_last_error());
 
   $isAdmin = pg_fetch_array($result);
@@ -46,7 +46,11 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
   $isAdmin = ($isAdmin == "Y");
 
   if (!$isAdmin) {
-    echo "<meta http-equiv='refresh' content='0; login.php'/>";      
+    echo "<script type='text/javascript'>";
+    echo " $(function(){
+    window.location.href='index.php';
+    });";
+    echo "</script>";      
   }
 ?>
 

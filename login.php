@@ -186,10 +186,10 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
                     if($count == 1) {
                         session_start();
                         $_SESSION['email'] = $row['email'];
-                        echo "<p>hahha</p>";
-                         echo "<script type='text/javascript'>";
+                        // echo "<p>hahha</p>";
+                        echo "<script type='text/javascript'>";
                         echo " $(function(){
-                          window.location.href='index.php';
+                        window.location.href='index.php';
                         });";
                         echo "</script>";
                     }else {

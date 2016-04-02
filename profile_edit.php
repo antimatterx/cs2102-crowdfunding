@@ -125,6 +125,7 @@ if (isset($_GET['edit-account-submit'])) { #ACCOUNT EDIT
 	WHERE email = '" . $curr_id .  "';";
 
 	$_SESSION['session-ID'] = $email;
+	$_SESSION['email'] = $email;
 	$curr_id = $email;
 
 	// echo "<br><br><h1>" . $sql . "</h1><br><h2>" . $_SESSION['session-ID'] . "</h2>";
