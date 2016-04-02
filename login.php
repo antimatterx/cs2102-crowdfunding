@@ -179,12 +179,7 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
                     if($count == 1) {
                         session_start();
                         $_SESSION['email'] = $row['email'];
-<<<<<<< HEAD
-                        // echo "<p>hahha</p>";
                         echo "<script type='text/javascript'>";
-=======
-                         echo "<script type='text/javascript'>";
->>>>>>> 2e2177d8be86f061d6350a7d6bb6412d57d708f7
                         echo " $(function(){
                         window.location.href='index.php';
                         });";
