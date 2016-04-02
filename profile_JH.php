@@ -159,9 +159,14 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
 
 <!--user profile-->
+<div class = "container">
 
-<h1 style = "text-align:center;"> User Profile </h1>
-<a href = "profile_edit.php" style = "text-align:right;">Edit Profile</a>
+<h1 style = "text-align:center;"> User Profile 
+<span style="font-size: 50%;"><a href = "profile_edit.php" style = "text-align:center;">Edit Profile</a></span>
+</h1>
+
+<div class = "row">
+<div class = "col-md-offset-3 col-md-6">
 <?php
 $query = "SELECT p.firstname, p.lastname, p.email, p.address, p.register_date, p.phone, p.admin FROM person p WHERE p.email = '$email'";
 // echo "<p>".$query ."</p>";
@@ -178,34 +183,41 @@ $total = pg_fetch_array($result);
 $total = $total['total'];
 
 if (sizeof($array) > 0) {
-	echo "<table align = 'center' style = 'width:60%'>";
+	echo "<table class=\"table table-striped\">
+    <colgroup>
+        <col width=40%>
+        <col width=60%>
+    </colgroup>
+
+	";
 
 	foreach($array as $list) {
-		echo "<tr><td><p>First Name</p></td>";
+		echo "<tr><th><p>First Name</p></td>";
 		echo "<td><p>" . $list["firstname"] . "</p></td></tr>";
-		echo "<tr><td><p>Last Name</p></td>";
+		echo "<tr><th><p>Last Name</p></td>";
 		echo "<td><p>" . $list["lastname"] . "</p></td></tr>";
 		// echo "<tr><td><p>Password</p></td>";
 		// echo "<td><p>" . $list["password"] . "</p></td></tr>";
-		echo "<tr><td><p>Email</p></td>";
+		echo "<tr><th><p>Email</p></td>";
 		echo "<td><p>" . $list["email"] . "</p></td></tr>";
-		echo "<tr><td><p>Address</p></td>";
+		echo "<tr><th><p>Address</p></td>";
 		echo "<td><p>" . $list["address"] . "</p></td></tr>";
-		echo "<tr><td><p>Register Date</p></td>";
+		echo "<tr><th><p>Register Date</p></td>";
 		echo "<td><p>" . $list["register_date"] . "</p></td></tr>";
-		echo "<tr><td><p>Contact Number</p></td>";
+		echo "<tr><th><p>Contact Number</p></td>";
 		echo "<td><p>" . $list["phone"] . "</p></td></tr>";
-		echo "<tr><td><p>Admin</p></td>";
+		echo "<tr><th><p>Admin</p></td>";
 		echo "<td><p>" . $list["admin"] . "</p></td></tr>";	
 	}
-	echo "<tr><td><p> Total Donation </p></td>";
+	echo "<tr><th><p> Total Donation </p></td>";
 	echo "<td><p>". $total. "</p></td></tr>";
 	echo "</table>";
 } else {
 	echo "<p> There is no such user! </p>";
 }
 ?>
-
+</div>
+</div>
 
 <!--proposed project profile-->
 
@@ -281,8 +293,6 @@ if (sizeof($array) > 0) {
 ?>
 
 	</div><!-- end #content-sidebar-wrap -->
-	</div><!-- end .wrap --></div><!-- end #inner --> 
-
 
 <!--start of footer-->
 <footer>
