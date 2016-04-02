@@ -87,7 +87,7 @@ while ($cat_row = pg_fetch_array($cat_result)) {
 
 <?php  if (isset($_SESSION['email'])) /* the user is logged in, show donation bar*/ {?>
     <div>
-        <p>Interested?</p>
+        <h3>Interested?</h3>
         <form action="donate.php" method="GET">
             <h4>I wish to donate $
             <input id="donation" name="donation" required="required" type="number"/>

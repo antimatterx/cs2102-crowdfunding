@@ -24,5 +24,5 @@ if($donate_query) {
     $donate_result = "Something wrong happend. Please try again";
 }
 echo $donate_result."<br>";
-header("refresh:3; index.php");
+header("refresh:3; project_detail.php?id=".urldecode($id));
 ?>
