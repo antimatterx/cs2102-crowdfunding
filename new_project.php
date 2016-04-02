@@ -16,11 +16,12 @@ $row = pg_fetch_assoc($result);
 $newid = $row['id'] + 1;
 
 session_start();
-$_SESSION['email'] = "april_foo@hotmail.com";
+//$_SESSION['email'] = "april_foo@hotmail.com";
 if($_SERVER["REQUEST_METHOD"] == "GET") {
     // username and password sent from form
     $title = trim($_GET['title']);
     $description = trim($_GET['description']);
+    $country = trim($_GET['country']);
     $start = trim($_GET['start']);
     $expiry = trim($_GET['expiry']);
     $target = trim($_GET['target']);
@@ -28,14 +29,23 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
     //$photo = $FILES('photo','name');
     //$insertT = "INSERT INTO project (id, creator, title, description, start, expiry, country, target, status) VALUES (18, 'able_too@gmail.com', 'Food Maker', 'Cook twice the amount of food in half the time!', '2015/09/14', '2016/10/14', 'Japan', 2000, 'ongoing')";
 
-    $insert = "INSERT INTO project(id, creator, title, description, start, expiry, target, status) 
-            VALUES ('$newid', '$mail', '$title', '$description', '$start', '$expiry', '$target', 'ongoing');";
+    $insert = "INSERT INTO project(id, creator, title, description, country, start, expiry, target, status) 
+            VALUES ('$newid', '$mail', '$title', '$description', '$country', '$start', '$expiry', '$target', 'ongoing');";
     //$result = pg_query($dbcon, $insert);
     $result = pg_query($dbcon, $insert);
     if($result) {
         $success = "Successfully created new project";
     }else {
         $error = "Something wrong happens, please try again";
+    }
+
+    $list = $_GET['category'];
+
+    if (sizeof($list) > 0) {
+        foreach($list as $elem) {
+            $sql = "INSERT INTO has_category (id, tag) VALUES (" . $newid . ", '" . $elem . "');";
+            pg_query($sql) or die('Query failed: ' . pg_last_error());
+        }
     }
 //    $upload_img = "INSERT INTO image VALUES ('$newid', '$photo')";
 //    $img_result = pg_query($dbcon, $upload_img);
@@ -222,16 +232,37 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
                     <input class="form-control" id="description" name="description" required="required" type="text" placeholder="Description"/>
                 </p>
                 <p>
+                    <label for="category" class="category"  > Category<br/></label>
+                </p>
+                <p>
+                    <?php
+                        $q = "SELECT c.name
+							  FROM category c 
+				    	      ORDER BY c.name ASC;";
+
+                        $res2 = pg_query($q) or die('Query Failed: ' . pg_last_error());
+
+                        // the category checkbox
+                        while($cats = pg_fetch_array($res2, null, PGSQL_ASSOC)) {
+                            echo "<input type = \"checkbox\" name = \"category[]\" value = \"".$cats['name']."\">".$cats['name']."<br>";
+                        }
+                    ?>
+                </p>
+                <p>
+                    <label for="country" class="country" data-icon="p">Country </label>
+                    <input class="form-control" id="country" name="country" required="required" type="text"/>
+                </p>
+                <p>
                     <label for="start" class="date" data-icon="p">Start date </label>
-                    <input class="form-control" id="start" name="start" required="required" type="date" placeholder="2001-12-31"/>
+                    <input class="form-control" id="start" name="start" required="required" type="date" placeholder="YYYY-MM-DD"/>
                 </p>
                 <p>
                     <label for="expiry" class="expiry" data-icon="p">End date</label>
-                    <input class="form-control" id="expiry" name="expiry" required="required" type="date" placeholder="2002-12-31"/>
+                    <input class="form-control" id="expiry" name="expiry" required="required" type="date" placeholder="YYYY-MM-DD"/>
                 </p>
                 <p>
                     <label for="target" class="expiry" data-icon="p">Target amount</label>
-                    <input class="form-control" id="target" name="target" required="required" type="number" placeholder="In US$"/>
+                    <input class="form-control" id="target" name="target" required="required" type="number" placeholder="Amount XXX to raise"/>
                 </p>
                 <!--<p>
                     You May Upload a Photo in gif or jpeg format. If the same file name is uploaded twice it will be overwritten! Maxium size of File is 35kb.
