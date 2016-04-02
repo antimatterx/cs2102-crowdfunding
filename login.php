@@ -33,7 +33,8 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 ?>
 
 <?php session_start(); ?>
-<?php $email = $_SESSION['email']; ?>
+<?php if (isset($_SESSION['email'])) { $email = $_SESSION['email'];  ?>
+<?php header("location: index.php");} ?>
 
 <!-- Change the status of expired projects to 'expired' -->
 <?php 
@@ -202,10 +203,8 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
                     if($count == 1) {
                         session_start();
-                        $_SESSION['email'] = $myusername;
+                        $_SESSION['email'] = $row['email'];
                         header("location: index.php");
-                        //print "Login successfull";
-                        //$error = $_SESSION['email'];
                     }else {
                         $error = "Your Login Name or Password is invalid";
                     }
