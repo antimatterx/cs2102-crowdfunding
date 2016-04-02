@@ -1,4 +1,3 @@
-<?php session_start(); ?>
 <html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
 <head>
@@ -306,7 +305,7 @@ if (sizeof($array) > 0) {
 	}
 		
 } else { 
-	echo "<p> There is no donation!</p> ";
+	echo "<p> There are no donations!</p> ";
 	}
 ?>
 
