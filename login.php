@@ -193,6 +193,7 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
                         });";
                         echo "</script>";
                     }else {
+                       if (isset($_GET))
                         $error = "Your Login Name or Password is invalid";
                     }
                 }
