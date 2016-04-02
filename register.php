@@ -35,7 +35,8 @@
       $result = pg_query($dbcon, $sql);
 
       if(!$result) {
-        $error = "The email address is already used";
+          if (!empty($_GET))
+              $error = "The email address is already used";
       }else {
         $success = "You have successfully registered";
         $_SESSION['email'] = $myemail;

@@ -16,8 +16,14 @@ $row = pg_fetch_assoc($result);
 $newid = $row['id'] + 1;
 
 session_start();
+if (!isset($_SESSION['email'])) {
+    echo "<p>You need to <a href='login.php'>log in</a> before creating new project</p>";
+    die();
+}
+else {
 //$_SESSION['email'] = "april_foo@hotmail.com";
 if($_SERVER["REQUEST_METHOD"] == "GET") {
+    $file_name = trim($_GET['file']);
     // username and password sent from form
     $title = trim($_GET['title']);
     $description = trim($_GET['description']);
@@ -33,12 +39,6 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
             VALUES ('$newid', '$mail', '$title', '$description', '$country', '$start', '$expiry', '$target', 'ongoing');";
     //$result = pg_query($dbcon, $insert);
     $result = pg_query($dbcon, $insert);
-    if($result) {
-        $success = "Successfully created new project";
-        header("refresh:3; project_detail.php?id=".urldecode($newid));
-    }else {
-        $error = "Something wrong happens, please try again";
-    }
 
     $list = $_GET['category'];
 
@@ -48,13 +48,26 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
             pg_query($sql) or die('Query failed: ' . pg_last_error());
         }
     }
-//    $upload_img = "INSERT INTO image VALUES ('$newid', '$photo')";
-//    $img_result = pg_query($dbcon, $upload_img);
-//
-//    if($img_result && move_uploaded_file($_FILES['photo']['tmp_name'], $target_dir)) {
-//        echo "The file ". basename( $_FILES['uploadedfile']['name']). " has been uploaded, and your information has been added to the directory";
-//    }
-}
+
+    // image
+    $file_name = $file_name.".jpg";
+    $img = fopen($file_name, 'r');
+    $data = fread($img, filesize($file_name));
+
+    $es_data = pg_escape_bytea($data);
+    fclose($img);
+
+    $query = "INSERT INTO image(id, data) Values($newid, '$es_data')";
+    pg_query($dbcon, $query);
+
+    if($result) {
+        $success = "Successfully created new project";
+        header("refresh:3; project_detail.php?id=".urldecode($newid));
+    }else {
+        if (!empty($_GET))
+            $error = "Something wrong happens, please try again";
+    }
+}}
 ?>
 
 
@@ -265,14 +278,10 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
                     <label for="target" class="expiry" data-icon="p">Target amount</label>
                     <input class="form-control" id="target" name="target" required="required" type="number" placeholder="Amount XXX to raise"/>
                 </p>
-                <!--<p>
-                    You May Upload a Photo in gif or jpeg format. If the same file name is uploaded twice it will be overwritten! Maxium size of File is 35kb.
-                </p>
                 <p>
-                    Photo:
+                    <label for="file" class="file" data-icon="p">Name of image file that you wish to upload</label>
+                    <input class="form-control" id="file" name="file" required="required" type="text" placeholder="name only, without extension"/>
                 </p>
-                <input type="hidden" name="size" value="350000">
-                <input type="file" name="photo">-->
                 <p class="create button" style="text-align:center;">
                     <input class = "btn btn-default" type="submit" value="Submit"/>
                 </p>

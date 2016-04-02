@@ -54,3 +54,10 @@
   left: 16px;
   z-index: 1;
 }
+
+/*move the logo
+------------------------------------------------------------ */
+body nav div div.navbar-header{
+	margin-top: 7px; 
+	margin-bottom: auto;
+}

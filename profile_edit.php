@@ -250,10 +250,8 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
       <?php 
       if (!isset($_SESSION['email'])) {
         $host_url = "login.php";
-        $admin_url = "login.php";
       } else {
         $host_url = "new_project.php";
-        $admin_url = "profile.php";
       }
       ?>
 
@@ -291,7 +289,7 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
         <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142">
           <a href="<?php echo $host_url ?>">Host Project</a></li>
         <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142">
-          <a href="<?php echo $admin_url ?>"><?php echo $profile_button ?></a></li>
+          <a href="<?php echo $profile_url ?>"><?php echo $profile_button ?></a></li>
       </ul>
     </div>
   </div>
