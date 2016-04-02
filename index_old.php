@@ -1,14 +1,29 @@
-<!DOCTYPE html>
+<html>
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Uptown Fund &raquo; Your One-Stop Crowdfunding Hub</title>
-<link rel="stylesheet" id="child-theme-css" href="css/style.css" type="text/css" media="all" />
-<link rel="stylesheet" id="responsive-main-css-css" href="css/responsive-main.min.css" type="text/css" media="all" />
-<link rel="stylesheet" id="responsive-css-css" href="css/responsive.css" type="text/css" media="all" />
-<link rel="stylesheet" id="tb_styles-css" href="css/tb-styles.min.css" type="text/css" media="all" />
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+<script src="js/jquery-2.2.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap.js"></script>
+
+<!--footer files-->
+<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+<link rel = "stylesheet" type = "text/css" href = "css/footer_JH.css">
+
+<!--own css, js links-->
+<link rel = "stylesheet" type = "text/css" href = "css/bodypadding.css">
+<link rel = "stylesheet" type = "text/css" href = "css/style_JH.css">
+
+
+
 
 <?php
 $host = "localhost"; 
@@ -22,8 +37,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 ?>
 
 <?php session_start(); ?>
-<?php $email = $_POST['email']; ?>
-
+<?php $email = $_SESSION['email']; ?>
 
 <!-- Change the status of expired projects to 'expired' -->
 <?php 
@@ -38,9 +52,6 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
    <?php } ?>
  <?php } ?>
 <?php pg_free_result($result); ?>
-
-
-<script type="text/javascript" src="js/jquery.js"></script>
 
 <script type="text/javascript">
   jQuery(window).scroll(function (event) {
@@ -74,7 +85,7 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 		jQuery('#feature-scroll').click(function (){
             //jQuery(this).animate(function(){
                 jQuery('html, body').animate({
-                    scrollTop: jQuery('#inner').offset().top
+                    scrollTop: jQuery('#homelinkhere').offset().top
                      }, 1000);
             //});
         });
@@ -102,189 +113,279 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 	  </script>
 </head>
 
-<body class="home blog header-full-width full-width-content">
-  <div id="header">
-  <div class="site-header">
-    <h1 class="site-header-logo-container">
-    <a>Logo</span>
-    <img src="images/logo.png" width="100%" id="bigg-logo" alt="Bigg" /></a>
-    </h1>
-      
-            <ul id="page-nav" class="horizontal-list">
-<li class="page-nav-top-posts active"><a href="javascript:void(0)" id="feature-scroll" class="page-anchor-link">Home</a></li>
+<body>
+<div id = "homelinkhere"></div>
+<div id="paddingstart"></div>
 
-<li class="page-nav-popular-posts"><a href="javascript:void(0)" id="popular-scroll" class="page-anchor-link">Most Popular</a></li>
+<!--header strat here-->
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
 
-<li class="page-nav-top-posts active"><a href="javascript:void(0)" id="category-scroll" class="page-anchor-link">Categories</a></li>
+    <!--logo img starts here-->    
+    <div class="navbar-header" >
+     <!--  <a class="navbar-brand">Project name</a> -->
+     <a><img src="images/logo.png" height="40px" /></a>                                                                                                                       
+    </div>
+   <!--logo img ends here-->      
 
-<li class="page-nav-popular-posts"><a href="javascript:void(0)" id="Countries-scroll" class="page-anchor-link">Countries</a></li>
+   <!--nav content strats here -->
+    <div id="navbar" class="navbar-collapse collapse">
+    <!--nav bar left side content starts here-->          
+      <ul class="nav navbar-nav">
+        <li class="page-nav-top-posts active"><a href="javascript:void(0)" id="feature-scroll" class="page-anchor-link">Home</a></li>
 
-<li class="page-nav-top-posts active"><a href="search.php" id="feature-scroll" class="page-anchor-link">Search</a></li>
-</ul>
+        <li class="page-nav-popular-posts"><a href="javascript:void(0)" id="popular-scroll" class="page-anchor-link">Most Popular</a></li>
 
-<?php 
-if (!isset($_SESSION['email'])) {
-  $host_url = "login.php";
-  $admin_url = "login.php";
-} else {
-  $host_url = "new_project.php";
-  $admin_url = "admin.php";
-}
-?>
+        <li class="page-nav-top-posts active"><a href="javascript:void(0)" id="category-scroll" class="page-anchor-link">Categories</a></li>
 
-<div id="site-nav" class="horizontal-list"><div class="menu-main-menu-container">
-	<ul id="menu-main-menu" class="menu">
-		<li id="menu-item-144" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-144"><a href="register.php">Sign Up</a></li>
-		<li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="login.php">Log In</a></li>
-		<li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="<?php echo $host_url ?>">Host Project</a></li>
-	  <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="<?php echo $host_url ?>">Admin</a></li>
-  </ul></div></div><!-- #site-nav -->
-<div id="site-header">
-    
-    </div>  
+        <li class="page-nav-popular-posts"><a href="javascript:void(0)" id="Countries-scroll" class="page-anchor-link">Countries</a></li>
+
+        <li class="page-nav-top-posts active"><a href="search.php" id="feature-scroll" class="page-anchor-link">Search</a></li>
+      </ul>
+    <!--nav bar left side content ends here-->
+
+      <!-- Check if Logged in -->
+      <?php 
+      if (!isset($_SESSION['email'])) {
+        $host_url = "login.php";
+        $admin_url = "login.php";
+      } else {
+        $host_url = "new_project.php";
+        $admin_url = "profile.php";
+      }
+      ?>
+
+      <!-- Display Login name -->
+    <?php if (isset($_SESSION['email'])) { ?>
+      <?php $log_button = "Log Out"; ?>
+      <?php $log_url = "logout.php"; ?>
+      <?php $login_query = "SELECT p.firstname, p.lastname, p.admin FROM person p WHERE p.email='$email'"; ?>
+      <?php $name = pg_query($login_query) or die('Query failed: ' . pg_last_error()); ?>
+      <?php $firstname = pg_fetch_result($name, 0, 0); ?>
+      <?php $lastname = pg_fetch_result($name, 0, 1); ?>
+      <?php $is_admin = pg_fetch_result($name, 0, 2); ?>
+      <?php $log_status_string = "You are logged in as " . $firstname . "."; ?>
+
+      <!-- Set Admin/Profile Button and URL -->
+      <?php if($is_admin=='Y') { ?>
+        <?php $profile_button = "Admin"; ?>
+        <?php $profile_url = "admin.php"; ?>
+      <?php } else { ?>
+        <?php $profile_button = "Profile Page"; ?>
+      <?php } ?>
+      <?php pg_free_result($name); ?> 
+      <!-- End Set Admin/Profile Button and URL -->
+    <?php } else { ?>
+      <?php $log_button = "Log In"; ?>
+      <?php $log_url = "login.php" ?>
+      <?php $log_status_string = "You are not logged in" ?>
+    <?php } ?>
+
+
+      <ul class="nav navbar-nav navbar-right">
+        <li id="menu-item-144" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-144"><a href="register.php">Sign Up</a></li>
+        <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142">
+          <a href="<?php echo $log_url ?>"><?php echo $log_button ?></a></li>
+        <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142">
+          <a href="<?php echo $host_url ?>">Host Project</a></li>
+        <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142">
+          <a href="<?php echo $admin_url ?>"><?php echo $profile_button ?></a></li>
+      </ul>
     </div>
   </div>
-  <div id="wrap">
-<div id="inner">
-<div class="wrap">
-<div id="content-sidebar-wrap">
+</nav>
+<!--header ends here-->
+      
+<!-- display whether the user is logged in -->
+<h2 id="login_display"><?php echo $log_status_string ?></h2>
+
+
+
+<!--start of middle content-->
+<div class = "container">
 				
-				<div id="content" class="hfeed">
-				<div class="post-5 post type-post status-publish format-standard hentry category-featured category-parent-category-i entry feature feature">
-    <br><br>
-		<a href="#" title="Welcome to Uptown Fund"><img width="660" height="370" src="images/1.jpg" class="alignleft post-image" alt="1" /></a>		<h2 class="entry-title"><a href="#" title="Welcome to Uptown Fund" rel="bookmark">Welcome to Uptown Fund</a></h2> 
+  <!--start of top big picture and intro-->
+  <div = class = "row">      
 
-				<div class="entry-content">
-			<p>Uptown Fund is the one-stop hub to turn ideas into successful inventions.  Here, you can reach out to potential investors by hosting your projects and ideas.  Alternatively, you can browse through and contribute to thousands of new inventions from all around the world. </p>
+    
+		<div class = "col-md-7">
+      <a href="#" title="Welcome to Uptown Fund"><img width="660" height="370" src="images/1.jpg" class="alignleft post-image" alt="1" /></a>	
+    </div>
 
-			<a href="index.php#categories" class="bigg-read-more">Browse</a>		</div><!-- end .entry-content -->
+    <div class = "col-md-5">
+      <h1 class="entry-title"><a href="#" title="Welcome to Uptown Fund" rel="bookmark">Welcome to Uptown Fund</a></h1> 
 
-	</div><!-- end .postclass -->
-	</div><!-- end #content -->
+  		
+  		<p id = "main_page_top_para">Uptown Fund is the one-stop hub to turn ideas into successful inventions.  Here, you can reach out to potential investors by hosting your projects and ideas.  Alternatively, you can browse through and contribute to thousands of new inventions from all around the world. </p>
+      <p><a class="btn btn-primary btn-lg" href="#categories" role="button">Browse</a></p>	
+    </div>
 
-<!-- Categories Section -->
-<div class="categories">
-	<cap id="categories">Categories</cap>
-	<br>
-	<sub>Browse projects by categories</sub>
+
+  </div>
+  <!--end of top big picture and intro-->
+
+<!-- start of Categories Section -->
+
+<div class = "row">
+  <div class="categories">
+   <cap id="categories">Categories</cap>
+   <br>
+   <sub style="color:#808080">Browse projects by categories</sub>
+ </div>
 </div>
+<!-- end of Categories Section -->
+
 <br>
 
-<!-- Categories List -->
-<div class="categories">
-	<a href="cat_result.php?varname=<?php echo "art" ?>"><span><img src="images/art.jpg" style="width: 100%" class="post-image">Art</span></a>
-	<a href="cat_result.php?varname=<?php echo "education" ?>"><span><img src="images/education.jpg" style="width: 100%" class="post-image">Education</span></a>
-	<a href="cat_result.php?varname=<?php echo "environment" ?>"><span><img src="images/environment.jpg" style="width: 100%" class="post-image">Environment</span></a>
-	<a href="cat_result.php?varname=<?php echo "gaming" ?>"><span><img src="images/game.jpg" style="width: 100%" class="post-image">Gaming</span></a>
+<!--start of Categories List -->
+<div class = "row">
+  <div class="categories">
+   <a href="cat_result.php?varname=<?php echo "art" ?>"><span><img src="images/art.jpg" style="width: 100%" class="post-image">Art</span></a>
+   <a href="cat_result.php?varname=<?php echo "education" ?>"><span><img src="images/education.jpg" style="width: 100%" class="post-image">Education</span></a>
+   <a href="cat_result.php?varname=<?php echo "environment" ?>"><span><img src="images/environment.jpg" style="width: 100%" class="post-image">Environment</span></a>
+   <a href="cat_result.php?varname=<?php echo "gaming" ?>"><span><img src="images/game.jpg" style="width: 100%" class="post-image">Gaming</span></a>
 
-	<a href="cat_result.php?varname=<?php echo "music" ?>"><span><img src="images/music.jpg" style="width: 100%" class="post-image">Music</span></a>
-	<a href="cat_result.php?varname=<?php echo "technology" ?>"><span><img src="images/technology.jpg" style="width: 100%" class="post-image">Technology</span></a>
-	<a href="cat_result.php?varname=<?php echo "video" ?>"><span><img src="images/video.jpg" style="width: 100%" class="post-image">Video</span></a>
-	<a href="cat_result.php?varname=<?php echo "others" ?>"><span><img src="images/other.jpg" style="width: 100%" class="post-image">Others</span></a>
+   <a href="cat_result.php?varname=<?php echo "music" ?>"><span><img src="images/music.jpg" style="width: 100%" class="post-image">Music</span></a>
+   <a href="cat_result.php?varname=<?php echo "technology" ?>"><span><img src="images/technology.jpg" style="width: 100%" class="post-image">Technology</span></a>
+   <a href="cat_result.php?varname=<?php echo "video" ?>"><span><img src="images/video.jpg" style="width: 100%" class="post-image">Video</span></a>
+   <a href="cat_result.php?varname=<?php echo "others" ?>"><span><img src="images/other.jpg" style="width: 100%" class="post-image">Others</span></a>
+ </div>
+</div>
+<!--end of Categories List -->
+
+<div class = "row">
+<!-- start of Popular List -->
+<div class = "col-md-6">
+  <div id="popular-upcoming">
+
+    <div>
+      <h2>Popular</h2>
+      <h4 style="color:#808080">The most popular crowdfunding projects</h4>
+    </div>
+
+    <ul class="list-group">   
+      <?php
+      $query = "SELECT p.id, p.title FROM donation d, project p WHERE p.id=d.project AND p.status='ongoing' GROUP BY p.title, p.id  ORDER BY COUNT(d.project) DESC LIMIT 10";
+
+      $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+      ?>
+
+      <?php while($line = pg_fetch_array($result, null, PGSQL_ASSOC)){ ?>
+      <?php if(!$line['title']) { ?>
+      <?php continue; ?>
+      <?php } ?>
+      <?php $id = $line['id'];?>
+      <li class="list-group-item"><a href="project_detail.php?id=<?php echo $id ?>"><?php echo $line['title']; ?></a></li>
+      <?php } ?>
+      <?php pg_free_result($result); ?>
+    </ul>
+  </div>
+</div>
+<!-- end of Popular List -->
+
+<!--start of Countries List -->
+<div class = "col-md-6">
+  <div id="countries">
+    <div >
+      <h2 >Countries</h2>
+      <h4 style="color:#808080">Browse projects by countries</h4>
+    </div>
+
+    <ul class="list-group"> 
+      <?php
+      $query = 'SELECT DISTINCT country FROM project ORDER BY country';
+      $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+      ?>
+
+      <?php while($line = pg_fetch_array($result, null, PGSQL_ASSOC)){ ?>
+      <?php foreach ($line as $col_value) { ?>
+      <li class="list-group-item"><a href="country_result.php?country=<?php echo $col_value ?>"><?php echo $col_value; ?></a></li>
+      <?php } ?>
+      <?php } ?>
+      <?php pg_free_result($result); ?>
+    </ul>
+
+  </div>
+ <!--end of Countries List -->
 </div>
 
-<!-- Popular List -->
-<div id="popular-upcoming" class="stories-container sixcol">
-
-<div class="stories-section-header">
-<h2 id="popular" class="stories-section-header-hed">Popular</h2>
-<h3 class="stories-section-header-subhed">The most popular crowdfunding projects</h3>
+  </div>
 </div>
 
-<ul class="plain-list stories-table">    
-<?php
-$query = "SELECT p.id, p.title FROM donation d, project p WHERE p.id=d.project AND p.status='ongoing' GROUP BY p.title, p.id  ORDER BY COUNT(d.project) DESC LIMIT 10";
-
-$result = pg_query($query) or die('Query failed: ' . pg_last_error());
-?>
-
-<?php while($line = pg_fetch_array($result, null, PGSQL_ASSOC)){ ?>
-  <?php if(!$line['title']) { ?>
-  <?php continue; ?>
-  <?php } ?>
-  <?php $id = $line['id'];?>
-  <li><a href="project_detail.php?id=<?php echo $id ?>"><?php echo $line['title']; ?></a></li>
- <?php } ?>
-<?php pg_free_result($result); ?>
-</ul>
-</div>
-
-<!-- Countries List -->
-<div id="countries" class="stories-container sixcol last">
-<div class="stories-section-header">
-<h2 class="stories-section-header-hed">Countries</h2>
-<h3 class="stories-section-header-subhed">Browse projects by countries</h3>
-</div>
-
-<ul class="plain-list stories-table">    
-<?php
-$query = 'SELECT DISTINCT country FROM project ORDER BY country';
-$result = pg_query($query) or die('Query failed: ' . pg_last_error());
-?>
-
-<?php while($line = pg_fetch_array($result, null, PGSQL_ASSOC)){ ?>
-	<?php foreach ($line as $col_value) { ?>
-  	<li><a href="country_result.php?country=<?php echo $col_value ?>"><?php echo $col_value; ?></a></li>
-   <?php } ?>
- <?php } ?>
-<?php pg_free_result($result); ?>
-</ul>
+<!--end of middle content-->
 
 
-	</div><!-- end #content-sidebar-wrap -->
-	</div><!-- end .wrap --></div><!-- end #inner --> 
-<div id="bigg-footer">
-<div class="wrap">
-        <div class="twocol">
-            <div id="text-2" class="widget widget_text"><div class="widget-wrap"><h4 class="widgettitle">Company</h4>			
-			<div class="textwidget"><ul class="plain-list">
-<li><a href="#">About</a></li>
-<li><a href="#">Jobs</a></li>
-<li><a href="#">Contact</a></li>
-<li><a href="#">Terms</a></li>
-<li><a href="#">Privacy</a></li>
-</ul>
-</div>
-		</div></div>
+<!--start of footer-->
+<footer>
+    <div class="footer" id="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3  col-md-3 col-sm-6 col-xs-6">
+                    <h3> Company </h3>
+                    <ul>
+                      <li><a href="#">About</a></li>
+                      <li><a href="#">Jobs</a></li>
+                      <li><a href="#">Contact</a></li>
+                      <li><a href="#">Terms</a></li>
+                      <li><a href="#">Privacy</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3  col-md-3 col-sm-6 col-xs-6">
+                    <h3> Community</h3>
+                    <ul>
+                      <li><a href="#">Blog</a></li>
+                      <li><a href="#">Twitter</a></li>
+                      <li><a href="#">Facebook</a></li>
+                      <li><a href="#">Help</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3  col-md-3 col-sm-6 col-xs-6">
+                  <h3> Career</h3>
+                  <ul>
+                    <li><a href="#">Why Join us</a></li>
+                    <li><a href="#">What do we offer</a></li>
+                    <li><a href="#">Internship</a></li>
+                    <li><a href="#">More information</a></li>
+                  </ul>
+                </div>
+
+                <div class=" col-lg-3  col-md-3 col-sm-6 col-xs-6 ">
+                    <h3> Subscribe </h3>
+                    <ul>
+                        <li>
+                          Get the latest news in your inbox
+                        </li>
+                        <li>
+                            <div class="input-append newsletter-box text-center">
+                                <input type="text" class="full text-center" placeholder="Email ">
+                                <button class="btn  bg-gray" type="button"> Subscribe to the newsletter </button>
+                            </div>
+                        </li>
+                        <li>
+                          Opt-out anytime with one click and we'll never share your information.
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+            <!--/.row--> 
         </div>
-        <div class="twocol">
-            <div id="text-3" class="widget widget_text"><div class="widget-wrap"><h4 class="widgettitle">Community</h4>			<div class="textwidget"><ul class="plain-list">
-<li><a href="#">Blog</a></li>
-<li><a href="#">Twitter</a></li>
-<li><a href="#">Facebook</a></li>
-<li><a href="#">Help</a></li>
-</ul>
-</div>
-
-		</div></div>
+        <!--/.container--> 
+    </div>
+    <!--/.footer-->
+    
+    <div class="footer-bottom">
+        <div class="container">
+            <p class="pull-left"> Copyright © Uptown Fund Pre Ltd. All right reserved. </p>
         </div>
-        <div class="fourcol">
-            <div id="text-4" class="widget widget_text"><div class="widget-wrap"><h4 class="widgettitle"></h4>			<div class="textwidget"><p></p>
-
-<div>
-
-</div>
-
-</div>
-		</div></div>
-        </div>
-        <div class="fourcol last">
-             <div id="text-4" class="widget widget_text"><div class="widget-wrap"><h4 class="widgettitle">Subscribe to the newsletter</h4>			<div class="textwidget"><p>Get news of the latest inventions in your inbox</p>
-
-<div>
-<input type="text" placeholder="Enter your email address" name="email" class="form-field" id="newsletter-email-input"> <input type="button" value="Submit" class="button" id="newsletter-email-submit-btn">
-</div>
-<p class="legalese">
-Opt-out anytime with one click and we'll never share your information.
-</p></div>
-        </div>
-</div>
- 
-</div><!-- end #wrap -->
+    </div>
+    <!--/.footer-bottom--> 
+</footer>
+<!--end of footer-->
 
 
-</div>
+<!--script to load when document is ready-->
+<script src= "js/script_JH.js"></script>
 </body>
-
-
 </html>

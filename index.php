@@ -55,20 +55,20 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
 <script type="text/javascript">
   jQuery(window).scroll(function (event) {
-	  	
-		var top = jQuery('#popular-upcoming').offset().top - jQuery(document).scrollTop();;
-		// what the y position of the scroll is
-		var y = jQuery(this).scrollTop();
-		// whether that's below the form
-		if (y >= top)  {
-		// if so, add the active class to popular-upcoming and remove from content
-		jQuery('.page-nav-popular-posts').addClass('active');
-		jQuery('.page-nav-top-posts').removeClass('active');
-		} else {
-		// otherwise remove it
-		jQuery('.page-nav-popular-posts').removeClass('active');
-		jQuery('.page-nav-top-posts').addClass('active');
-	   }
+      
+    var top = jQuery('#popular-upcoming').offset().top - jQuery(document).scrollTop();;
+    // what the y position of the scroll is
+    var y = jQuery(this).scrollTop();
+    // whether that's below the form
+    if (y >= top)  {
+    // if so, add the active class to popular-upcoming and remove from content
+    jQuery('.page-nav-popular-posts').addClass('active');
+    jQuery('.page-nav-top-posts').removeClass('active');
+    } else {
+    // otherwise remove it
+    jQuery('.page-nav-popular-posts').removeClass('active');
+    jQuery('.page-nav-top-posts').addClass('active');
+     }
   });
   
   jQuery(document).ready(function (){
@@ -82,7 +82,7 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
         });
 
 //scroll the home button
-		jQuery('#feature-scroll').click(function (){
+    jQuery('#feature-scroll').click(function (){
             //jQuery(this).animate(function(){
                 jQuery('html, body').animate({
                     scrollTop: jQuery('#homelinkhere').offset().top
@@ -91,7 +91,7 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
         });
 
 //scroll the category button
-				jQuery('#category-scroll').click(function (){
+        jQuery('#category-scroll').click(function (){
             //jQuery(this).animate(function(){
                 jQuery('html, body').animate({
                     scrollTop: jQuery('#categories').offset().top
@@ -100,7 +100,7 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
         });
 
 //scroll the country button
-				jQuery('#Countries-scroll').click(function (){
+        jQuery('#Countries-scroll').click(function (){
             //jQuery(this).animate(function(){
                 jQuery('html, body').animate({
                     scrollTop: jQuery('#countries').offset().top
@@ -109,15 +109,16 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
         });
 
 
-		  });
-	  </script>
+      });
+    </script>
 </head>
 
 <body>
 <div id = "homelinkhere"></div>
+
 <div id="paddingstart"></div>
 
-<!--header strat here-->
+<!--nav bar strat here-->
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
 
@@ -194,30 +195,28 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
     </div>
   </div>
 </nav>
-<!--header ends here-->
-      
-<!-- display whether the user is logged in -->
-<h2 id="login_display"><?php echo $log_status_string ?></h2>
-
+<!--nav bar ends here-->
 
 
 <!--start of middle content-->
 <div class = "container">
-				
+      <!-- display whether the user is logged in -->
+    <p style = "text-align: right; " id="login_display"><?php echo $log_status_string ?></p>
+
   <!--start of top big picture and intro-->
   <div = class = "row">      
 
     
-		<div class = "col-md-7">
-      <a href="#" title="Welcome to Uptown Fund"><img width="660" height="370" src="images/1.jpg" class="alignleft post-image" alt="1" /></a>	
+    <div class = "col-md-7">
+      <a href="#" title="Welcome to Uptown Fund"><img width="660" height="370" src="images/1.jpg" class="alignleft post-image" alt="1" /></a> 
     </div>
 
     <div class = "col-md-5">
       <h1 class="entry-title"><a href="#" title="Welcome to Uptown Fund" rel="bookmark">Welcome to Uptown Fund</a></h1> 
 
-  		
-  		<p id = "main_page_top_para">Uptown Fund is the one-stop hub to turn ideas into successful inventions.  Here, you can reach out to potential investors by hosting your projects and ideas.  Alternatively, you can browse through and contribute to thousands of new inventions from all around the world. </p>
-      <p><a class="btn btn-primary btn-lg" href="#categories" role="button">Browse</a></p>	
+      
+      <p id = "main_page_top_para">Uptown Fund is the one-stop hub to turn ideas into successful inventions.  Here, you can reach out to potential investors by hosting your projects and ideas.  Alternatively, you can browse through and contribute to thousands of new inventions from all around the world. </p>
+      <p><a class="btn btn-primary btn-lg" href="#categories" role="button">Browse</a></p>  
     </div>
 
 
