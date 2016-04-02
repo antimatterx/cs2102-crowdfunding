@@ -286,5 +286,73 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 
     <?php }}; ?>
 
+<!--start of footer-->
+<footer>
+    <div class="footer" id="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3  col-md-3 col-sm-6 col-xs-6">
+                    <h3> Company </h3>
+                    <ul>
+                      <li><a href="#">About</a></li>
+                      <li><a href="#">Jobs</a></li>
+                      <li><a href="#">Contact</a></li>
+                      <li><a href="#">Terms</a></li>
+                      <li><a href="#">Privacy</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3  col-md-3 col-sm-6 col-xs-6">
+                    <h3> Community</h3>
+                    <ul>
+                      <li><a href="#">Blog</a></li>
+                      <li><a href="#">Twitter</a></li>
+                      <li><a href="#">Facebook</a></li>
+                      <li><a href="#">Help</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3  col-md-3 col-sm-6 col-xs-6">
+                  <h3> Career</h3>
+                  <ul>
+                    <li><a href="#">Why Join us</a></li>
+                    <li><a href="#">What do we offer</a></li>
+                    <li><a href="#">Internship</a></li>
+                    <li><a href="#">More information</a></li>
+                  </ul>
+                </div>
+
+                <div class=" col-lg-3  col-md-3 col-sm-6 col-xs-6 ">
+                    <h3> Subscribe </h3>
+                    <ul>
+                        <li>
+                          Get the latest news in your inbox
+                        </li>
+                        <li>
+                            <div class="input-append newsletter-box text-center">
+                                <input type="text" class="full text-center" placeholder="Email ">
+                                <button class="btn  bg-gray" type="button"> Subscribe to the newsletter </button>
+                            </div>
+                        </li>
+                        <li>
+                          Opt-out anytime with one click and we'll never share your information.
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+            <!--/.row--> 
+        </div>
+        <!--/.container--> 
+    </div>
+    <!--/.footer-->
+    
+    <div class="footer-bottom">
+        <div class="container">
+            <p class="pull-left"> Copyright © Uptown Fund Pre Ltd. All right reserved. </p>
+        </div>
+    </div>
+    <!--/.footer-bottom--> 
+</footer>
+<!--end of footer-->
 </body>
 </html>
