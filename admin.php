@@ -41,17 +41,17 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
   // echo "<br><br><br><br><h1>" . $sql . "</h1>";
   $result = pg_query($sql) or die("Query failed: " . pg_last_error());
 
-  $isAdmin = pg_fetch_array($result);
+  $isAdmin = pg_fetch_array($result, NULL, PGSQL_ASSOC);
   $isAdmin = $isAdmin['admin'];
   $isAdmin = ($isAdmin == "Y");
 
-  if (!$isAdmin) {
-    echo "<script type='text/javascript'>";
-    echo " $(function(){
-    window.location.href='index.php';
-    });";
-    echo "</script>";      
-  }
+  // if (!$isAdmin) {
+  //   echo "<script type='text/javascript'>";
+  //   echo " $(function(){
+  //   window.location.href='index.php';
+  //   });";
+  //   echo "</script>";      
+  // }
 ?>
 
 
@@ -420,7 +420,9 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 <!--   <h1>test35</h1><br> -->
   <?php
     
-    $query1 = "SELECT p.email, p.firstname, p.lastname
+    $query1 = "SELECT p.email AS Email,
+    p.firstname AS Firstname,
+    p.lastname AS Lastname
     FROM person p
     ORDER BY p.firstname ASC, p.lastname";
 
@@ -490,17 +492,36 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
       }
 
       if ($_GET['project-ID'] == "") {
-        $query = 
-          "SELECT p.id AS ID,
-          p.title AS Title,
+        $query1 = #get people with projects that fit with the project filters
+          "SELECT 
           c.firstname AS Firstname,
           c.lastname AS Lastname,
+          c.email AS Email 
+          FROM project p, person c, has_category h 
+          WHERE 
+          LOWER(c.firstname) LIKE LOWER('%".$_GET['project-firstname']."%')
+          AND LOWER(c.lastname) LIKE LOWER('%".$_GET['project-lastname']."%')
+          AND ((h.id = p.id"
+          . $category .
+          " AND c.email = p.creator
+          AND LOWER(p.title) LIKE LOWER('%".$_GET['project-title']."%')
+          AND LOWER(p.country) LIKE LOWER('%".$_GET['project-country']."%')
+          AND p.start >= '".$startYear."-".$startMonth."-".$startDay."'
+          AND p.expiry <= '".$expiryYear."-".$expiryMonth."-".$expiryDay."')
+          OR NOT EXISTS(SELECT * FROM project p1 WHERE p1.creator = c.email))
+          GROUP BY c.firstname, c.lastname, c.email
+          ORDER BY c.firstname, c.lastname";
+
+          // echo "<h1>". $query1 ."</h1>";
+          $query2 = #get people with projects that fit with the project filters
+          "SELECT p.id AS ID,
+          p.title AS Title,
           to_char(p.start, 'DD/MM/YYYY') AS Start,
           to_char(p.expiry, 'DD/MM/YYYY') AS Expiry,
           p.target AS Target,
           p.status AS Status,
           p.creator AS Email 
-          FROM project p, donation d, person c, has_category h 
+          FROM project p, person c, has_category h 
           WHERE h.id = p.id"
           . $category .
           " AND c.email = p.creator
@@ -510,14 +531,35 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
           AND LOWER(p.country) LIKE LOWER('%".$_GET['project-country']."%')
           AND p.start >= '".$startYear."-".$startMonth."-".$startDay."'
           AND p.expiry <= '".$expiryYear."-".$expiryMonth."-".$expiryDay."'
-          GROUP BY p.id, p.title, c.firstname, c.lastname, p.start, p.expiry, p.target, p.status, p.creator
-          ORDER BY p.id;";
+          GROUP BY p.id, p.title, p.start, p.expiry, p.target, p.status, p.creator
+          ORDER BY p.creator";
       } else {
-        $query = 
-        "SELECT p.id AS ID, 
-        p.title AS Title,
+        #get people with projects that fit with the project filters
+        $query1 = 
+        "SELECT 
         c.firstname AS Firstname,
         c.lastname AS Lastname,
+        c.email AS Email
+        FROM project p, donation d, person c, has_category h 
+        WHERE 
+        LOWER(c.firstname) LIKE LOWER('%".$_GET['project-firstname']."%')
+        AND LOWER(c.lastname) LIKE LOWER('%".$_GET['project-lastname']."%')
+        AND ((h.id = p.id"
+        . $category .
+        " AND c.email = p.creator
+        AND LOWER(p.title) LIKE LOWER('%".$_GET['project-title']."%')
+        AND LOWER(p.country) LIKE LOWER('%".$_GET['project-country']."%')
+        AND p.start >= '".$startYear."-".$startMonth."-".$startDay."'
+        AND p.expiry <= '".$expiryYear."-".$expiryMonth."-".$expiryDay."'
+        AND p.id = " . $_GET['project-ID'] . ")
+        OR NOT EXISTS(SELECT * FROM project p1 WHERE p1.creator = c.email))
+        GROUP BY c.firstname, c.lastname, c.email
+        ORDER BY c.firstname, c.lastname";
+
+        #get people with projects that fit with the project filters
+        $query2 = 
+        "SELECT p.id AS ID, 
+        p.title AS Title,
         to_char(p.start, 'DD/MM/YYYY') AS Start,
         to_char(p.expiry, 'DD/MM/YYYY') AS Expiry,
         p.target AS Target,
@@ -535,8 +577,23 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
         AND p.id = ".$_GET['project-ID']."
         AND p.start >= '".$startYear."-".$startMonth."-".$startDay."'
         AND p.expiry <= '".$expiryYear."-".$expiryMonth."-".$expiryDay."'
-        GROUP BY p.id, p.title, c.firstname, c.lastname, p.start, p.expiry, p.target, p.status, p.creator
-        ORDER BY p.id;";
+        GROUP BY p.id, p.title, p.start, p.expiry, p.target, p.status, p.creator
+        ORDER BY p.creator";
+      }
+
+      if ($_GET['project-firstname'] != "" OR $_GET['project-lastname'] != "") {
+        #get people with no projects that fit with the person filters
+        $query3 = "SELECT 
+          p.firstname AS Firstname,
+          p.lastname AS Lastname,
+          p.email AS Email
+          FROM person p
+          WHERE LOWER(p.firstname) LIKE LOWER('%".$_GET['project-firstname']."%')
+          AND LOWER(p.lastname) LIKE LOWER('%".$_GET['project-lastname']."%')
+          ORDER BY p.firstname ASC, p.lastname";
+
+          // $query1  = "(" . $query1 . ") UNION (" . $query3. ")";
+          // echo "<h1>" . $query1 . "</h1>";
       }
       
       #echo "<b>ADV SQL:   </b>".$query."<br><br>";
@@ -546,17 +603,24 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 
     $nameList = array();
     $projList = array();
-    while ($name = pg_fetch_array($result)) { #populate name table, and create new items in proj tree
-      $temp = $name['Email'];
+    while ($name = pg_fetch_array($result, NULL, PGSQL_ASSOC)) { #populate name table, and create new items in proj tree
+      $temp = $name['email'];
       if (!array_key_exists($temp, $projList)) {
         $projList[$temp] = array();
       }
       array_push($nameList, $name);
     }
 
-    $result = pg_query($query1) or die('Query failed: ' . pg_last_error());
+    $result = pg_query($query2) or die('Query failed: ' . pg_last_error());
 
-
+    while ($proj = pg_fetch_array($result, NULL, PGSQL_ASSOC)) {
+      $temp = $proj['email'];
+      if (!array_key_exists($temp, $projList)) {
+        $projList[$temp] = array();
+      }
+      array_push($projList[$temp], $proj);
+      // print_r($projList[$temp]);
+    }
   ?>
 
 
@@ -566,17 +630,17 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 <div class = "row">
 <!--START PRINT -->
 <?php
-  if (sizeof($print) == 0) {
+  if (sizeof($nameList) == 0) {
     echo "<br><br><p>No Results Found</p>";
   } else {
   echo "<table class=\"table table-striped\">
     <colgroup>
-        <col width=40%>
-        <col width=60%>
+        <col width=25%>
+        <col width=1%>
     </colgroup>
+    <col width=\"15%\">
     <col width=\"5%\">
     <col width=\"20%\">
-    <col width=\"15%\">
     <col width=\"15%\">
     <col width=\"10%\">
     <col width=\"10%\">
@@ -584,10 +648,9 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     <col width=\"10%\">
     <col width=\"10%\">
     <tr>
-    <th>ID</th>
+    <th>Full Name</th>
+    <th>Project ID</th>
     <th>Title</th>
-    <th>Creator's First Name</th>
-    <th>Creator's Last Name</th>
     <th>Categories</th>
     <th>Start Date</th>
     <th>Expiry Date</th>
@@ -596,51 +659,78 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     <th>Status</th>
     </tr>";
 
-    foreach($print as $row) {
+    foreach($nameList as $name) {
+      $temp = $name['email'];
+      if (sizeof($projList[$temp]) <= 0) {
+        $size = 1;
+      } else {
+        $size = sizeof($projList[$temp]);
+      }
       echo "<tr>";
-      echo "<td><a href = \"project_admin.php?id=".$row[0]."\">".$row[0]."</a></td>"; #ID
-      echo "<td><a href = \"project_admin.php?id=".$row[0]."\">".$row[1]."</a></td>"; #title
-      echo "<td><a href = \"person_admin.php?id=".$row[8]."\">".$row[2]."</a></td>"; #creator fname
-      echo "<td><a href = \"person_admin.php?id=".$row[8]."\">".$row[3]."</a></td>"; #creator lname
-      #categories
-      $q = "SELECT h.tag FROM has_category h WHERE h.id = ".$row[0]." ORDER BY h.tag ASC;";
-      $res = pg_query($q) or die('Query Failed: ' . pg_last_error());
-      
-      echo "<td>";
-      while($line = pg_fetch_array($res, null, PGSQL_ASSOC)){
-        foreach ($line as $col_value) { 
-          echo"<a href = \"cat_result.php?varname=".$col_value."\">".$col_value."</a><br>";
-        }
+      echo "<td rowspan = '" . $size . "'><a href = \"person_admin.php?id=".$name['email']."\">".$name['firstname']." ".$name['lastname']."</a></td>"; #creator
+
+      if (sizeof($projList[$temp]) <= 0) {
+        echo "<td>-</td>";
+        echo "<td>No projects to display</td>";
+        echo "<td>-</td>";
+        echo "<td>-</td>";
+        echo "<td>-</td>";
+        echo "<td>-</td>";
+        echo "<td>-</td>";
+        echo "<td>-</td>";
+        echo "</tr>";
       }
-      pg_free_result($res);
-      echo "</td>";
 
-      $temp = str_replace("/0", "/", $row[4]);
-      $temp = ltrim($temp, '0');
-      echo "<td>" . $temp . "</td>"; #start
-      
-      $temp = str_replace("/0", "/", $row[5]);
-      $temp = ltrim($temp, '0');
-      echo "<td>" . $temp . "</td>"; #expiry
-
-      #contributions
-      $q = "SELECT SUM(d.amount) FROM donation d WHERE d.project = ".$row[0].";";
-      $res = pg_query($q) or die('Query Failed: ' . pg_last_error());
-      
-      echo "<td>";
-      while($line = pg_fetch_array($res, null, PGSQL_ASSOC)){
-        foreach ($line as $col_value) {
-          if ($col_value == "") {
-            $col_value = "0";
-          } 
-          echo"$".$col_value.".00";
+      $projArray = $projList[$temp];
+      $first = true;
+      foreach($projArray as $proj) {
+        if ($first) {
+          $first = false;
+        } else {
+          echo "<tr>";
         }
-      }
-      pg_free_result($res);
+        echo "<td><a href = \"project_admin.php?id=".$proj['id']."\">".$proj['id']."</a></td>"; #ID
+        echo "<td><a href = \"project_admin.php?id=".$proj['id']."\">".$proj['title']."</a></td>"; #title
+        #categories
+        $q = "SELECT h.tag FROM has_category h WHERE h.id = ".$proj['id']." ORDER BY h.tag ASC;";
+        $res = pg_query($q) or die('Query Failed: ' . pg_last_error());
+        
+        echo "<td>";
+        while($line = pg_fetch_array($res, null, PGSQL_ASSOC)){
+          foreach ($line as $col_value) { 
+            echo"<a href = \"cat_result.php?varname=".$col_value."\">".$col_value."</a><br>";
+          }
+        }
+        pg_free_result($res);
+        echo "</td>";
 
-      echo "<td>$" . $row[6] . ".00</td>"; #target
-      echo "<td>" . $row[7] . "</td>"; #status
-      echo "</tr>";
+        $temp = str_replace("/0", "/", $proj['start']);
+        $temp = ltrim($temp, '0');
+        echo "<td>" . $temp . "</td>"; #start
+        
+        $temp = str_replace("/0", "/", $proj['expiry']);
+        $temp = ltrim($temp, '0');
+        echo "<td>" . $temp . "</td>"; #expiry
+
+        #contributions
+        $q = "SELECT SUM(d.amount) FROM donation d WHERE d.project = ".$proj['id'];
+        $res = pg_query($q) or die('Query Failed: ' . pg_last_error());
+        
+        echo "<td>";
+        while($line = pg_fetch_array($res, null, PGSQL_ASSOC)){
+          foreach ($line as $col_value) {
+            if ($col_value == "") {
+              $col_value = "0";
+            } 
+            echo"$".$col_value.".00";
+          }
+        }
+        pg_free_result($res);
+
+        echo "<td>$" . $proj['target'] . ".00</td>"; #target
+        echo "<td>" . $proj['status'] . "</td>"; #status
+        echo "</tr>";
+      }
     }
 
     pg_free_result($result);
