@@ -394,7 +394,7 @@ $sql = "SELECT p.id AS ID,
 
 				$result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
-				echo "<img src=$file_name class=\"alignleft post-image\" alt=\"Image Not Found\" />";
+				echo "<img src=$file_name class=\"alignleft post-image\" alt=\"Image Not Found\" style='max-width: 370px;'/>";
 			}
 			?>
 		</div>

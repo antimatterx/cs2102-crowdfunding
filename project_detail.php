@@ -200,7 +200,7 @@ if(pg_num_rows($resImg) > 0) {
 }
 ?>
 
-<div class = "col-md-3">
+<div class = "col-md-3" >
 <?php
 $query = "SELECT i.data FROM image i WHERE i.id = $curr_id;";
 
