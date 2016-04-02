@@ -212,7 +212,7 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
                <input type = "submit" value = " Submit "/><br />
             </form>-->
             <form  action="" method="GET">
-                <h1> Sign up </h1>
+                <h1> Create New Project </h1>
                 <p>
                     <label for="title" class="title" data-icon="u">Title</label>
                     <input class="form-control" id="title" name="title" required="required" type="text" placeholder="Title" />

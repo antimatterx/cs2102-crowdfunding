@@ -74,41 +74,28 @@ while ($cat_row = pg_fetch_array($cat_result)) {
     <p><?php echo $donated; ?></p>
     <p>Current status<br></p>
     <p><?php echo $status; ?></p>
-    <?php
-    $res = pg_query("SELECT encode(data, 'base64') AS data FROM image WHERE id=$curr_id;");
+<?php
+    $res = pg_query("SELECT encode(data, 'base64') AS data FROM image WHERE id=2;");
     $raw = pg_fetch_result($res, 'data');
 
     // Convert to binary and send to the browser
-//    header('Content-type: image/jpeg');
-//    echo base64_decode($raw);
-    ?>
+    //header('Content-type: image/jpeg');
+    //echo '<img src="data:image/jpeg;base64,'.base64_encode($raw).'">';
+    //echo base64_decode($raw);
+?>
 </div>
 
 <?php  if (isset($_SESSION['email'])) /* the user is logged in, show donation bar*/ {?>
     <div>
-        <p>Interested?</p>
-        <form action="" method="GET">
-            <h4>I wish to donate $</h4>
+        <h3>Interested?</h3>
+        <form action="donate.php" method="GET">
+            <h4>I wish to donate $
             <input id="donation" name="donation" required="required" type="number"/>
-            <h4>to this project</h4>
+            to this project
+            <input id="id" name="id" type="hidden" value="<?php echo $curr_id;?>" ></h4>
             <p class="donate button">
                 <input type="submit" name="donate" value="Donate" />
             </p>
-            <?php
-            if(isset($_GET["donate"])) {
-                $amount = $_GET['donation'];
-                $donor = $_SESSION['email'];
-                $donate_date = date("Y-m-d");
-                $donate_sql = "INSERT INTO donation (time, donor, amount, project)
-                                   VALUES ('$donate_date', '$donor', '$amount', '$curr_id');";
-                $donate_query = pg_query($dbcon, $donate_sql);
-            }
-            if(!$donate_query) {
-                $donate_result = "You have successfully donated $amount to project";
-            } else {
-                $donate_result = "Something wrong happend. Please try again";
-            }
-            ?>
         </form>
         <div style = "font-size:11px; color:#cc0000; margin-top:10px"><?php if ($donate_query) echo $donate_result;?></div>
     </div>
