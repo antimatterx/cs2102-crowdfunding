@@ -144,6 +144,8 @@ if (isset($_GET['edit-account-submit'])) { #ACCOUNT EDIT
 	// "g" . $adminSuccess . "</h1><br>";
 
 
+	$email = trim($email);
+	$password = trim($password);
 	$sql = "UPDATE person 
 	SET email = '" . $email . "',
 	firstname = '" . $firstname . "', 
@@ -424,7 +426,7 @@ $sql = "SELECT p.email AS EMAIL,
 			</div>
 			</form>
 			<?php
-				if ($email != "") {}
+				if ($email != "") {
 					if(isset($_GET['edit-account-submit'])) {
 						if ($_SESSION['success']) {
 							echo "<h3> Changes successful!</h3>";

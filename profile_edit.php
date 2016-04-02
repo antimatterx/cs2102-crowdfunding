@@ -114,6 +114,8 @@ if (isset($_GET['edit-account-submit'])) { #ACCOUNT EDIT
 	// "f" . $phoneSuccess . "</h1><br>";
 
 
+	$email = trim($email);
+	$password = trim($password);
 	$sql = "UPDATE person 
 	SET email = '" . $email . "',
 	firstname = '" . $firstname . "', 
