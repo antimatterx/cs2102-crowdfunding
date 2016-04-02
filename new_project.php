@@ -50,7 +50,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
     }
 
     // image
-    //$file_name = "163.jpg";
+    $file_name = $file_name.".jpg";
     $img = fopen($file_name, 'r');
     $data = fread($img, filesize($file_name));
 
@@ -58,7 +58,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
     fclose($img);
 
     $query = "INSERT INTO image(id, data) Values($newid, '$es_data')";
-    pg_query($con, $query);
+    pg_query($dbcon, $query);
 
     if($result) {
         $success = "Successfully created new project";
@@ -279,7 +279,8 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
                     <input class="form-control" id="target" name="target" required="required" type="number" placeholder="Amount XXX to raise"/>
                 </p>
                 <p>
-                    <input class="form-control" id="file" name="file" required="required" type="text" placeholder="image.name"/>
+                    <label for="file" class="file" data-icon="p">Name of image file that you wish to upload</label>
+                    <input class="form-control" id="file" name="file" required="required" type="text" placeholder="name only, without extension"/>
                 </p>
                 <p class="create button" style="text-align:center;">
                     <input class = "btn btn-default" type="submit" value="Submit"/>
