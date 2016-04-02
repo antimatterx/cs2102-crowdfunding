@@ -45,13 +45,13 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
   $isAdmin = $isAdmin['admin'];
   $isAdmin = ($isAdmin == "Y");
 
-  // if (!$isAdmin) {
-  //   echo "<script type='text/javascript'>";
-  //   echo " $(function(){
-  //   window.location.href='index.php';
-  //   });";
-  //   echo "</script>";      
-  // }
+  if (!$isAdmin) {
+    echo "<script type='text/javascript'>";
+    echo " $(function(){
+    window.location.href='index.php';
+    });";
+    echo "</script>";      
+  }
 ?>
 
 
@@ -492,7 +492,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
       }
 
       if ($_GET['project-ID'] == "") {
-        $query1 = #get people with projects that fit with the project filters
+        $query1 = 
           "SELECT 
           c.firstname AS Firstname,
           c.lastname AS Lastname,
@@ -501,19 +501,18 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
           WHERE 
           LOWER(c.firstname) LIKE LOWER('%".$_GET['project-firstname']."%')
           AND LOWER(c.lastname) LIKE LOWER('%".$_GET['project-lastname']."%')
-          AND ((h.id = p.id"
+          AND h.id = p.id"
           . $category .
           " AND c.email = p.creator
           AND LOWER(p.title) LIKE LOWER('%".$_GET['project-title']."%')
           AND LOWER(p.country) LIKE LOWER('%".$_GET['project-country']."%')
           AND p.start >= '".$startYear."-".$startMonth."-".$startDay."'
-          AND p.expiry <= '".$expiryYear."-".$expiryMonth."-".$expiryDay."')
-          OR NOT EXISTS(SELECT * FROM project p1 WHERE p1.creator = c.email))
+          AND p.expiry <= '".$expiryYear."-".$expiryMonth."-".$expiryDay."'
           GROUP BY c.firstname, c.lastname, c.email
           ORDER BY c.firstname, c.lastname";
 
-          // echo "<h1>". $query1 ."</h1>";
-          $query2 = #get people with projects that fit with the project filters
+          
+          $query2 = 
           "SELECT p.id AS ID,
           p.title AS Title,
           to_char(p.start, 'DD/MM/YYYY') AS Start,
@@ -536,52 +535,51 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
       } else {
         #get people with projects that fit with the project filters
         $query1 = 
-        "SELECT 
-        c.firstname AS Firstname,
-        c.lastname AS Lastname,
-        c.email AS Email
-        FROM project p, donation d, person c, has_category h 
-        WHERE 
-        LOWER(c.firstname) LIKE LOWER('%".$_GET['project-firstname']."%')
-        AND LOWER(c.lastname) LIKE LOWER('%".$_GET['project-lastname']."%')
-        AND ((h.id = p.id"
-        . $category .
-        " AND c.email = p.creator
-        AND LOWER(p.title) LIKE LOWER('%".$_GET['project-title']."%')
-        AND LOWER(p.country) LIKE LOWER('%".$_GET['project-country']."%')
-        AND p.start >= '".$startYear."-".$startMonth."-".$startDay."'
-        AND p.expiry <= '".$expiryYear."-".$expiryMonth."-".$expiryDay."'
-        AND p.id = " . $_GET['project-ID'] . ")
-        OR NOT EXISTS(SELECT * FROM project p1 WHERE p1.creator = c.email))
-        GROUP BY c.firstname, c.lastname, c.email
-        ORDER BY c.firstname, c.lastname";
+          "SELECT 
+          c.firstname AS Firstname,
+          c.lastname AS Lastname,
+          c.email AS Email 
+          FROM project p, person c, has_category h 
+          WHERE 
+          p.id = " . $_GET['project-ID'] . " 
+          AND LOWER(c.firstname) LIKE LOWER('%".$_GET['project-firstname']."%')
+          AND LOWER(c.lastname) LIKE LOWER('%".$_GET['project-lastname']."%')
+          AND h.id = p.id"
+          . $category .
+          " AND c.email = p.creator
+          AND LOWER(p.title) LIKE LOWER('%".$_GET['project-title']."%')
+          AND LOWER(p.country) LIKE LOWER('%".$_GET['project-country']."%')
+          AND p.start >= '".$startYear."-".$startMonth."-".$startDay."'
+          AND p.expiry <= '".$expiryYear."-".$expiryMonth."-".$expiryDay."'
+          GROUP BY c.firstname, c.lastname, c.email
+          ORDER BY c.firstname, c.lastname";
 
-        #get people with projects that fit with the project filters
-        $query2 = 
-        "SELECT p.id AS ID, 
-        p.title AS Title,
-        to_char(p.start, 'DD/MM/YYYY') AS Start,
-        to_char(p.expiry, 'DD/MM/YYYY') AS Expiry,
-        p.target AS Target,
-        p.status AS Status,
-        p.creator AS Email
-        FROM project p, donation d, person c, has_category h 
-        WHERE d.project = p.id "
-        . $category .
-        " AND h.id = p.id
-        AND c.email = p.creator
-        AND LOWER(p.title) LIKE LOWER('%".$_GET['project-title']."%')
-        AND LOWER(c.firstname) LIKE LOWER('%".$_GET['project-firstname']."%')
-        AND LOWER(c.lastname) LIKE LOWER('%".$_GET['project-lastname']."%')
-        AND LOWER(p.country) LIKE LOWER('%".$_GET['project-country']."%')
-        AND p.id = ".$_GET['project-ID']."
-        AND p.start >= '".$startYear."-".$startMonth."-".$startDay."'
-        AND p.expiry <= '".$expiryYear."-".$expiryMonth."-".$expiryDay."'
-        GROUP BY p.id, p.title, p.start, p.expiry, p.target, p.status, p.creator
-        ORDER BY p.creator";
+          // echo "<h1>". $query1 ."</h1>";
+          $query2 = 
+          "SELECT p.id AS ID,
+          p.title AS Title,
+          to_char(p.start, 'DD/MM/YYYY') AS Start,
+          to_char(p.expiry, 'DD/MM/YYYY') AS Expiry,
+          p.target AS Target,
+          p.status AS Status,
+          p.creator AS Email 
+          FROM project p, person c, has_category h 
+          WHERE 
+          p.id = " . $_GET['project-ID'] . "  
+          AND h.id = p.id"
+          . $category .
+          " AND c.email = p.creator
+          AND LOWER(p.title) LIKE LOWER('%".$_GET['project-title']."%')
+          AND LOWER(c.firstname) LIKE LOWER('%".$_GET['project-firstname']."%')
+          AND LOWER(c.lastname) LIKE LOWER('%".$_GET['project-lastname']."%')
+          AND LOWER(p.country) LIKE LOWER('%".$_GET['project-country']."%')
+          AND p.start >= '".$startYear."-".$startMonth."-".$startDay."'
+          AND p.expiry <= '".$expiryYear."-".$expiryMonth."-".$expiryDay."'
+          GROUP BY p.id, p.title, p.start, p.expiry, p.target, p.status, p.creator
+          ORDER BY p.creator";
       }
 
-      if ($_GET['project-firstname'] != "" OR $_GET['project-lastname'] != "") {
+      if ($_GET['project-title'] == "" AND $_GET['project-ID'] == "" AND $_GET['project-country'] == "" AND $_GET['project-start-D'] == "-1" AND $_GET['project-start-M'] == "-1" AND $_GET['project-start-Y'] == "" AND $_GET['project-expiry-D'] == "-1" AND $_GET['project-expiry-M'] == "-1" AND $_GET['project-expiry-Y'] == "" AND sizeof($_GET['project-category']) == 0) {
         #get people with no projects that fit with the person filters
         $query3 = "SELECT 
           p.firstname AS Firstname,
@@ -592,14 +590,14 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
           AND LOWER(p.lastname) LIKE LOWER('%".$_GET['project-lastname']."%')
           ORDER BY p.firstname ASC, p.lastname";
 
-          // $query1  = "(" . $query1 . ") UNION (" . $query3. ")";
+          $query1  = "(" . $query1 . ") UNION (" . $query3. ")";
           // echo "<h1>" . $query1 . "</h1>";
       }
       
       #echo "<b>ADV SQL:   </b>".$query."<br><br>";
     }
-// echo "<b>ADV SQL:   </b>".$query."<br><br>";
-    $result = pg_query($query1) or die('Query failed: ' . pg_last_error());
+    // echo "<h1>". $query1 ."</h1>";
+    $result = pg_query($query1) or die('Query 1 failed: ' . pg_last_error());
 
     $nameList = array();
     $projList = array();
@@ -611,7 +609,8 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
       array_push($nameList, $name);
     }
 
-    $result = pg_query($query2) or die('Query failed: ' . pg_last_error());
+    // echo "<h1>". $query2 ."</h1>";
+    $result = pg_query($query2) or die('Query 2 failed: ' . pg_last_error());
 
     while ($proj = pg_fetch_array($result, NULL, PGSQL_ASSOC)) {
       $temp = $proj['email'];
