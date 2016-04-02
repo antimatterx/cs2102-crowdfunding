@@ -58,7 +58,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
     fclose($img);
 
     $query = "INSERT INTO image(id, data) Values($newid, '$es_data')";
-    pg_query($con, $query);
+    pg_query($dbcon, $query);
 
     if($result) {
         $success = "Successfully created new project";
