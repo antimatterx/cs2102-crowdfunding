@@ -179,7 +179,7 @@ makeDir("temp");
     <div class = "col-md-3">
     <a href="project_detail.php?id=<?php echo $id ?>">
     <img src="<?php echo $file_name; ?>" style="width: 100%" class="post-image">
-    <?php echo "<h4>".$line['title']."<h4>"; ?>
+    <?php echo "<h4>".$line['title']."</h4>"; ?>
     <?php if($status=='closed') { ?>
       <img src="images/expired.png" class="overlay" />
     <?php } ?>
