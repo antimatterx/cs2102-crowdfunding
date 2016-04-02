@@ -163,7 +163,7 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
                 <p class="keeplogin">
                 </p>
                 <p class="login button">
-                    <input class = "btn btn-default" type="submit" value="Submit" />
+                    <input class = "btn btn-default" type="submit" value="Submit" id = "submit_btn"/>
                 </p>
                 <p class="change_link">
                     Not a member yet ?
@@ -186,7 +186,12 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
                     if($count == 1) {
                         session_start();
                         $_SESSION['email'] = $row['email'];
-                        header("location: index.php");
+                        echo "<p>hahha</p>";
+                         echo "<script type='text/javascript'>";
+                        echo " $(function(){
+                          window.location.href='index.php';
+                        });";
+                        echo "</script>";
                     }else {
                         $error = "Your Login Name or Password is invalid";
                     }
