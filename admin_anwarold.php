@@ -420,20 +420,20 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 <!--   <h1>test35</h1><br> -->
   <?php
     
-    $query1 = "SELECT p.email, p.firstname, p.lastname
-    FROM person p
-    ORDER BY p.firstname ASC, p.lastname";
-
-    $query2 = "SELECT p.id AS ID,
+    $query = "SELECT p.id AS ID,
           p.title AS Title,
+          c.firstname AS Firstname,
+          c.lastname AS Lastname,
           to_char(p.start, 'DD/MM/YYYY') AS Start,
           to_char(p.expiry, 'DD/MM/YYYY') AS Expiry,
           p.target AS Target,
           p.status AS Status,
           p.creator AS Email 
-          FROM project p
-          GROUP BY p.creator, p.id, p.title, p.start, p.expiry, p.target, p.status
-          ORDER BY p.id";
+          FROM project p, donation d, person c, has_category h 
+          WHERE h.id = p.id
+          AND c.email = p.creator
+          GROUP BY p.id, p.title, c.firstname, c.lastname, p.start, p.expiry, p.target, p.status, p.creator
+          ORDER BY p.id;";
 
     if(isset($_GET['adv-search-submit-btn']))  { #ADVANCED SEARCH
       $startDay = $_GET['project-start-D'];
@@ -542,21 +542,13 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
       #echo "<b>ADV SQL:   </b>".$query."<br><br>";
     }
 // echo "<b>ADV SQL:   </b>".$query."<br><br>";
-    $result = pg_query($query1) or die('Query failed: ' . pg_last_error());
+    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
-    $nameList = array();
-    $projList = array();
-    while ($name = pg_fetch_array($result)) { #populate name table, and create new items in proj tree
-      $temp = $name['Email'];
-      if (!array_key_exists($temp, $projList)) {
-        $projList[$temp] = array();
-      }
-      array_push($nameList, $name);
+    $print = array();
+
+    while ($row = pg_fetch_row($result)) {
+      array_push($print, $row);
     }
-
-    $result = pg_query($query1) or die('Query failed: ' . pg_last_error());
-
-
   ?>
 
 

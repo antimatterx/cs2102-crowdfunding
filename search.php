@@ -560,7 +560,6 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
       
       $query = "";
       if ($_GET['project-ID'] == "") {
-        $query = 
           "SELECT p.id AS ID,
           p.title AS Title,
           c.firstname AS FirstName, 
@@ -611,6 +610,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
       while ($row = pg_fetch_row($result)) {
         array_push($print, $row);
       }
+
     }
   ?>
 </div>
@@ -664,7 +664,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
       if (true) { //!$isPast
         echo "<tr>";
         echo "<td><a href = \"project_detail.php?id=".$row[0]."\">".$row[1]."</a></td>"; #title
-        echo "<td><a href = \"profile.php?id=".$row[8]."\">".$row[2]. " " . $row[3] . "</a></td>"; #creator
+        echo "<td><p>".$row[2]. " " . $row[3] . "</p></td>"; #creator
         
         #categories
         $q = "SELECT h.tag FROM has_category h WHERE h.id = ".$row[0]." ORDER BY h.tag ASC;";
