@@ -198,6 +198,26 @@ $sql = "SELECT p.id AS ID,
     GROUP BY p.id, p.title, c.firstname, c.lastname, p.start, p.expiry, p.target, p.status
     ORDER BY p.id;";
 
+    // Fetch the image
+    $sqlImg = "SELECT data
+    FROM image
+    WHERE id = '$curr_id'";
+
+    $resImg = pg_query($dbcon, $sqlImg) or die("Query Failed: " . pg_last_error());
+
+    if(pg_num_rows($resImg) > 0) {
+      $dataImg = pg_fetch_result($resImg, 'data');
+      $unes_image = pg_unescape_bytea($dataImg);
+
+      // save image to file
+      $file_name = "temp/" . $curr_id . ".jpg";
+      $img = fopen($file_name, 'wb') or die("cannot open image\n");
+      fwrite($img, $unes_image) or die("cannot write image data\n");
+      fclose($img);
+    } else {
+      $file_name = "images/blank.jpg";
+    }
+
 	echo"<br><br><br><br><br>";
 
 
@@ -350,7 +370,7 @@ $sql = "SELECT p.id AS ID,
 
 							$result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
-							echo "<img style=\"text-align:center;\" width=\"330\" height=\"175\" src=\"images/".$data.".jpg\" class=\"alignleft post-image\" alt=\"Image Not Found\" />";
+							echo "<img style=\"text-align:center;\" width=\"330\" height=\"175\" src=$file_name class=\"alignleft post-image\" alt=\"Image Not Found\" />";
 						}
 					?>
 
