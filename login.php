@@ -49,24 +49,6 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
    <?php } ?>
  <?php } ?>
 <?php pg_free_result($result); ?>
-
-<script type="text/javascript">
-  jQuery(window).scroll(function (event) {
-      
-    var top = jQuery('#popular-upcoming').offset().top - jQuery(document).scrollTop();;
-    // what the y position of the scroll is
-    var y = jQuery(this).scrollTop();
-    // whether that's below the form
-    if (y >= top)  {
-    // if so, add the active class to popular-upcoming and remove from content
-    jQuery('.page-nav-popular-posts').addClass('active');
-    jQuery('.page-nav-top-posts').removeClass('active');
-    } else {
-    // otherwise remove it
-    jQuery('.page-nav-popular-posts').removeClass('active');
-    jQuery('.page-nav-top-posts').addClass('active');
-     }
-  });
   
     </script>
 </head>
