@@ -143,13 +143,6 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
     <div class = "col-md-offset-4 col-md-4">
         <div style= "text-align:center">
-        
-
-            <!--<form action = "" method = "post">
-               <label>UserName  :</label><input type = "text" name = "username" class = "box"/><br /><br />
-               <label>Password  :</label><input type = "password" name = "password" class = "box" /><br/><br />
-               <input type = "submit" value = " Submit "/><br />
-            </form>-->
             <form  class="form-signin" action="" method="GET">
                 <h1 class="form-signin-heading">Please log in</h1>
                     
@@ -186,14 +179,13 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
                     if($count == 1) {
                         session_start();
                         $_SESSION['email'] = $row['email'];
-                        echo "<p>hahha</p>";
                          echo "<script type='text/javascript'>";
                         echo " $(function(){
                           window.location.href='index.php';
                         });";
                         echo "</script>";
                     }else {
-                       if (isset($_GET))
+                        if (!empty($_GET))
                         $error = "Your Login Name or Password is invalid";
                     }
                 }
