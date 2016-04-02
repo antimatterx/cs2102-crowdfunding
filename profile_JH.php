@@ -192,24 +192,24 @@ if (sizeof($array) > 0) {
 	";
 
 	foreach($array as $list) {
-		echo "<tr><th><p>First Name</p></td>";
+		echo "<tr><th><p>First Name</p></th>";
 		echo "<td><p>" . $list["firstname"] . "</p></td></tr>";
-		echo "<tr><th><p>Last Name</p></td>";
+		echo "<tr><th><p>Last Name</p></th>";
 		echo "<td><p>" . $list["lastname"] . "</p></td></tr>";
 		// echo "<tr><td><p>Password</p></td>";
 		// echo "<td><p>" . $list["password"] . "</p></td></tr>";
-		echo "<tr><th><p>Email</p></td>";
+		echo "<tr><th><p>Email</p></th>";
 		echo "<td><p>" . $list["email"] . "</p></td></tr>";
-		echo "<tr><th><p>Address</p></td>";
+		echo "<tr><th><p>Address</p></th>";
 		echo "<td><p>" . $list["address"] . "</p></td></tr>";
-		echo "<tr><th><p>Register Date</p></td>";
+		echo "<tr><th><p>Register Date</p></th>";
 		echo "<td><p>" . $list["register_date"] . "</p></td></tr>";
-		echo "<tr><th><p>Contact Number</p></td>";
+		echo "<tr><th><p>Contact Number</p></th>";
 		echo "<td><p>" . $list["phone"] . "</p></td></tr>";
-		echo "<tr><th><p>Admin</p></td>";
+		echo "<tr><th><p>Admin</p></th>";
 		echo "<td><p>" . $list["admin"] . "</p></td></tr>";	
 	}
-	echo "<tr><th><p> Total Donation </p></td>";
+	echo "<tr><th><p> Total Donation </p></th>";
 	echo "<td><p>". $total. "</p></td></tr>";
 	echo "</table>";
 } else {
@@ -222,6 +222,8 @@ if (sizeof($array) > 0) {
 <!--proposed project profile-->
 
 <h1 style = "text-align:center;"> Projects Proposed </h1>
+<div class = "row">
+<div class = "col-md-offset-3 col-md-6">
 <?php
 $query = "SELECT p.id, p.creator, p.title, p.description, p.start, p.expiry,p.country,p.target,p.status FROM project p WHERE p.creator = '" .$email."'";
 // echo "<p>".$query ."</p>";
@@ -233,26 +235,33 @@ while($row = pg_fetch_array($result,NULL, PGSQL_ASSOC)) {
 if (sizeof($array) > 0) {
 	
 	foreach($array as $list) {
-		echo "<table align = 'center' style = 'width:60%'>";
-		echo "<tr><td><p>Project ID </p></td>";
+	echo "<table class=\"table table-striped\">
+    <colgroup>
+        <col width=40%>
+        <col width=60%>
+    </colgroup>
+
+	";
+
+		echo "<tr><th><p>Project ID </p></th>";
 		echo "<td><a href='dlist.php?id=" . $list["id"] . "'>" . $list['id'] . "</a></td>";
 		// echo "<td><p>" . $list["id"] . "</p</td></tr>";
-		echo "<tr><td><p>Project Title</p></td>";
+		echo "<tr><th><p>Project Title</p></th>";
 		// echo "<td><p>" . $list["title"] . "</p></td></tr>";
 		echo "<td><a href='dlist.php?id=" . $list["id"] . "'>" . $list['title'] . "</a></td>";
-		echo "<tr><td><p>Project Creator</p></td>";
+		echo "<tr><th><p>Project Creator</p></th>";
 		echo "<td><p>" . $list["creator"] . "</p></td></tr>";
-		echo "<tr><td><p>Project Description</p></td>";
+		echo "<tr><th><p>Project Description</p></th>";
 		echo "<td><p>" . $list["description"] . "</p></td></tr>";
-		echo "<tr><td><p> Starts Date</p></td>";
+		echo "<tr><th><p> Starts Date</p></th>";
 		echo "<td><p>" . $list["start"] . "</p></td></tr>";
-		echo "<tr><td><p>expiry Date</p></td>";
+		echo "<tr><th><p>expiry Date</p></th>";
 		echo "<td><p>" . $list["expiry"] . "</p></td></tr>";	
-		echo "<tr><td><p> Country </p></td>";
+		echo "<tr><th><p> Country </p></th>";
 		echo "<td><p>" . $list["country"] . "</p></td></tr>";
-		echo "<tr><td><p>Target Amount</p></td>";
+		echo "<tr><th><p>Target Amount</p></th>";
 		echo "<td><p>" . $list["target"] . "</p></td></tr>";	
-		echo "<tr><td><p> Project Status</p></td>";
+		echo "<tr><th><p> Project Status</p></th>";
 		echo "<td><p>" . $list["status"] . "</p></td></tr>";
 		echo "</table><br>";
 	}
@@ -260,10 +269,15 @@ if (sizeof($array) > 0) {
 	echo "<p> There are no projects proposed </p> ";
 	}
 ?>
+</div>
+</div>
 
 <!--donated project profile-->
 
 <h1 style = "text-align:center;"> Donated Projects </h1>
+
+<div class = "row">
+<div class = "col-md-offset-3 col-md-6">
 <?php
 $query = "SELECT d.project, d.time, d.donor, d.amount FROM donation d WHERE d.donor = '" .$email."'";
 // echo "<p>".$query ."</p>";
@@ -275,14 +289,20 @@ while($row = pg_fetch_array($result,NULL, PGSQL_ASSOC)) {
 if (sizeof($array) > 0) {
 
 	foreach($array as $list) {
-		echo "<table align = 'center' style = 'width:60%'>";
-        echo "<tr><td><p>Project ID </p></td>";
+	echo "<table class=\"table table-striped\">
+    <colgroup>
+        <col width=40%>
+        <col width=60%>
+    </colgroup>
+
+	";
+        echo "<tr><th><p>Project ID </p></th>";
 		echo "<td><p>" . $list["project"] . "</p></td></tr>";
-		echo "<tr><td><p>Donation Time </p></td>";
+		echo "<tr><th><p>Donation Time </p></th>";
 		echo "<td><p>" . $list["time"] . "</p></td></tr>";
-		echo "<tr><td><p>Donor</p></td>";
+		echo "<tr><th><p>Donor</p></th>";
 		echo "<td><p>" . $list["donor"] . "</p></td></tr>";
-		echo "<tr><td><p>Amount of Donation </p></td>";
+		echo "<tr><th><p>Amount of Donation </p></th>";
 		echo "<td><p>" . $list["amount"] . "</p></td></tr>";
 		echo "</table><br>";
 	}
@@ -292,7 +312,10 @@ if (sizeof($array) > 0) {
 	}
 ?>
 
-	</div><!-- end #content-sidebar-wrap -->
+</div>
+</div>
+
+	</div><!-- end container-->
 
 <!--start of footer-->
 <footer>
