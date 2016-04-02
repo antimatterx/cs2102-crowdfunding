@@ -35,6 +35,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
     $result = pg_query($dbcon, $insert);
     if($result) {
         $success = "Successfully created new project";
+        header("refresh:3; project_detail.php?id=".urldecode($newid));
     }else {
         $error = "Something wrong happens, please try again";
     }

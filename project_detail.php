@@ -28,7 +28,7 @@ $sql = "SELECT p.id AS ID,
         GROUP BY p.id, p.title, c.firstname, p.start, p.expiry, p.target, p.status
         ORDER BY p.id;";
 $result = pg_query($dbcon, $sql);
-if (!$result) {
+if (!$result || pg_num_rows($result) == 0) {
     echo "Nothing here but us chickens";
 }
 else {
@@ -51,6 +51,7 @@ $category = "";
 while ($cat_row = pg_fetch_array($cat_result)) {
     $category = $category . ", " . $cat_row['tag'];
 }
+$category = ltrim($category, ",");
 ?>
 <body>
 <div>
