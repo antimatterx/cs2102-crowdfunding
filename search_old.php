@@ -128,285 +128,295 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 <br><br><br><br>
 </div><!-- end #top--> 
 
-  <!-- START NORMAL SEARCH FORM-->
+<!-- bootstrap start here-->
 <div class = "container">
-  <div style = "text-align:center;">
-    <h1 id="Search" class="stories-section-header-hed" style = "text-align:center;font-size:150%;">Search</h1>
-    <div class = "row">
-      <form>
+<!-- startsearch -->
 
-        <div class = "form-group col-md-offset-3 col-md-5 col-xs-12">
-          <input type="text" placeholder="Enter Project Title" name="search-query" class="search-field form-control" id="search-input"> 
-        </div>
-        <div class = "col-md-1 col-xs-6">
-          <input type="submit" value="Search" class="button btn btn-default" name="search-submit-btn"> 
-        </div>
+<!-- START NORMAL SEARCH FORM-->
+<div style = "text-align:center;">
+  <h1 id="Search" class="stories-section-header-hed" style = "text-align:center;font-size:150%;">Search</h1>
+  <div class = "row">
+  <form>
 
-      </form>
-      <div class="col-md-2">
-        <input type="button" value="Advanced Search" class="button  btn btn-default" id="search-type-btn"> <!-- FOR HIDE/SHOW-->
+      <div class = "form-group col-md-offset-3 col-md-5 col-xs-12">
+        <input type="text" placeholder="Enter Project Title" name="search-query" class="search-field form-control" id="search-input"> 
       </div>
+      <div class = "col-md-1 col-xs-6">
+        <input type="submit" value="Search" class="button btn btn-default" name="search-submit-btn"> 
+      </div>
+
+    </form>
+    <div class="col-md-2">
+      <input type="button" value="Advanced Search" class="button  btn btn-default" id="search-type-btn"> <!-- FOR HIDE/SHOW-->
     </div>
   </div>
 </div>
+</div>
+
+
+<div class = "container">
+<div id = "advancedSearch_JH">
 <!-- END NORMAL SEARCH FORM-->
+
+<!-- advanced search below  -->
+
 
 
 <!-- START ADV SEARCH FORM-->
-<div class = "container">
-<div id = "advancedSearch_JH">
+<div class = "row">
+<div class = "col-md-offset-4 col-md-4 col-xs-10">
+<h1 id="Advanced Search" class="stories-section-header-hed" style = "text-align:center;font-size:180%;">Advanced Search</h1>
+</div>
 
-  <div class = "row">
-    <div class = "col-md-offset-4 col-md-4 col-xs-10">
-      <h1 id="Advanced Search" class="stories-section-header-hed" style = "text-align:center;font-size:180%;">Advanced Search</h1>
-    </div>
-  </div>
+</div>
+<!--
 
-  <div class = "row">
-    <form>
-      <table class = "table">
-        <col width=\"70%\">
-        <col width=\"30%\">
-        <tr>
-          <td><b>Project Title </b></td>
-          <td><input class = "form-control" type = "text" name = "project-title" id = "project-title" value = <?php if (isset($_GET['project-title'])) echo $_GET['project-title']; ?>></td>
-        </tr>
-        <tr>
-          <td><b>Project ID </b></td>
-          <td><input class = "form-control" type = "text" name = "project-ID" id = "project-ID" value = <?php if (isset($_GET['project-ID'])) echo $_GET['project-ID']; ?>></td>
-        </tr>
-        <tr>
-          <td><b>Creator's First Name </b></td>
-          <td><input class = "form-control" type = "text" name = "project-firstname" id = "project-firstname" value = <?php if (isset($_GET['project-firstname'])) echo $_GET['project-firstname']; ?>></td>
-        </tr>
-        <tr>
-          <td><b>Creator's Last Name </b></td>
-          <td><input class = "form-control" type = "text" name = "project-lastname" id = "project-lastname" value = <?php if (isset($_GET['project-lastname'])) echo $_GET['project-lastname']; ?>></td>
-        </tr>
-        <tr>
-          <td><b>Category </b></td>
-          <td>
-            <?php
-            $list = $_GET['project-category'];
+<div class = "three col"></div>
+<div class = "three col" style = "text-align:center;">
+  
+  <table border = "0" style="width:60%; text-align: left; margin-left: 30%;">
+-->
 
-            $q = "SELECT c.name
+<form>
+  <table border = "0" style="width:100%; text-align: left;">
+    <col width=\"70%\">
+    <col width=\"30%\">
+    <tr>
+      <td><b>Project Title </b></td>
+      <td><input style = "width:335px; text-align:left;" type = "text" name = "project-title" id = "project-title" value = <?php if (isset($_GET['project-title'])) echo $_GET['project-title']; ?>></td>
+    </tr>
+    <tr>
+      <td><b>Project ID </b></td>
+      <td><input style = "width:335px;" type = "text" name = "project-ID" id = "project-ID" value = <?php if (isset($_GET['project-ID'])) echo $_GET['project-ID']; ?>></td>
+    </tr>
+    <tr>
+      <td><b>Creator's First Name </b></td>
+      <td><input style = "width:335px;" type = "text" name = "project-firstname" id = "project-firstname" value = <?php if (isset($_GET['project-firstname'])) echo $_GET['project-firstname']; ?>></td>
+    </tr>
+    <tr>
+      <td><b>Creator's Last Name </b></td>
+      <td><input style = "width:335px;" type = "text" name = "project-lastname" id = "project-lastname" value = <?php if (isset($_GET['project-lastname'])) echo $_GET['project-lastname']; ?>></td>
+    </tr>
+    <tr>
+      <td><b>Category </b></td>
+      <td>
+      <?php
+        $list = $_GET['project-category'];
+
+        $q = "SELECT c.name
             FROM category c 
             ORDER BY c.name ASC;";
 
-            $res = pg_query($q) or die('Query Failed: ' . pg_last_error());
+        $res = pg_query($q) or die('Query Failed: ' . pg_last_error());
 
-            while($cats = pg_fetch_array($res, null, PGSQL_ASSOC)) {
-              foreach($cats as $cat) {
-                $isFound = false;
-                foreach($_GET['project-category'] as $col_value) {
-                  if ($col_value == $cat) {
-                    $isFound = true;
-                    break;
-                  }
-                }
-
-                if ($isFound) {
-                  echo "
-                  <input type = \"checkbox\" name = \"project-category[]\" value = \"".$cat."\" checked>".$cat."<br>
-                  ";
-                } else {
-                  echo "<input type = \"checkbox\" name = \"project-category[]\" value = \"".$cat."\">".$cat."<br>";
-                }
+        while($cats = pg_fetch_array($res, null, PGSQL_ASSOC)) {
+          foreach($cats as $cat) {
+            $isFound = false;
+            foreach($_GET['project-category'] as $col_value) {
+              if ($col_value == $cat) {
+                $isFound = true;
+                break;
               }
             }
+            
+            if ($isFound) {
+              echo "<input type = \"checkbox\" name = \"project-category[]\" value = \"".$cat."\" checked>".$cat."<br>";
+            } else {
+              echo "<input type = \"checkbox\" name = \"project-category[]\" value = \"".$cat."\">".$cat."<br>";
+            }
+          }
+        }
 
-            pg_free_result($res);
-            ?>
-
-          </td>
-        </tr>
-        <tr>
-          <td><b>Country </b></td>
-          <td>
-            <select name = "project-country" style = "width:340px;" id = "project-country">
-              <?php
-              if (isset($_GET['project-country'])){
-                echo "<option value = \"".$_GET['project-country']."\">".$_GET['project-country']."</option>";
-                if ($_GET['project-country'] != "") {
-                  echo "<option value = \"\"></option>";
-                } 
-              } else { 
+        pg_free_result($res);
+      ?>
+        
+      </td>
+    </tr>
+    <tr>
+      <td><b>Country </b></td>
+      <td>
+        <select name = "project-country" style = "width:340px;" id = "project-country">
+          <?php
+            if (isset($_GET['project-country'])){
+              echo "<option value = \"".$_GET['project-country']."\">".$_GET['project-country']."</option>";
+              if ($_GET['project-country'] != "") {
                 echo "<option value = \"\"></option>";
+              } 
+            } else { 
+              echo "<option value = \"\"></option>";
+            }
+
+          
+            $query = "SELECT p.country FROM project p GROUP BY p.country ORDER BY p.country ASC;";
+
+            $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+
+            while($line = pg_fetch_array($result, null, PGSQL_ASSOC)){
+              foreach ($line as $col_value) { 
+                echo"<option value = \"".$col_value."\">".$col_value."</option>";
               }
-
-
-              $query = "SELECT p.country FROM project p GROUP BY p.country ORDER BY p.country ASC;";
-
-              $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-
-              while($line = pg_fetch_array($result, null, PGSQL_ASSOC)){
-                foreach ($line as $col_value) { 
-                  echo"<option value = \"".$col_value."\">".$col_value."</option>";
-                }
-              }
-              pg_free_result($result);
-              ?>
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <td><b>Project Start Date </b></td>
-          <td>
-            <select name = "project-start-D" style = "width:44px;" id = "project-start-D">
-              <?php
-              if (isset($_GET['project-start-D'])){
-                if ($_GET['project-start-D'] == "-1") {
-                  echo "<option value = \"-1\">DD</option>";
-                } else {
-                  echo "<option value = \"".$_GET['project-start-D']."\">".$_GET['project-start-D']."</option>";
-                  echo "<option value = \"-1\">DD</option>";
-                }
-              } else { 
+            }
+            pg_free_result($result);
+          ?>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td><b>Project Start Date </b></td>
+      <td>
+        <select name = "project-start-D" style = "width:44px;" id = "project-start-D">
+          <?php
+            if (isset($_GET['project-start-D'])){
+              if ($_GET['project-start-D'] == "-1") {
+                echo "<option value = \"-1\">DD</option>";
+              } else {
+                echo "<option value = \"".$_GET['project-start-D']."\">".$_GET['project-start-D']."</option>";
                 echo "<option value = \"-1\">DD</option>";
               }
+            } else { 
+              echo "<option value = \"-1\">DD</option>";
+            }
 
-              $num = 1;
-              while($num <= 31) {
-                echo "<option value = \"".$num."\">".$num."</option>";
-                $num = $num + 1;
+            $num = 1;
+            while($num <= 31) {
+              echo "<option value = \"".$num."\">".$num."</option>";
+              $num = $num + 1;
+            }
+          ?>
+       </select>
+       <select name = "project-start-M" style = "width:50px;" id = "project-start-M">
+        <?php
+          if (isset($_GET['project-start-M'])){
+            if ($_GET['project-start-M'] == "-1") {
+              echo "<option value = \"-1\">MM</option>";
+            } else {
+              if ($_GET['project-start-M'] == "1") {
+                echo "<option value = \"1\">Jan</option>";
+              } else if ($_GET['project-start-M'] == "2") {
+                echo "<option value = \"2\">Jan</option>";
+              } if ($_GET['project-start-M'] == "3") {
+                echo "<option value = \"3\">Jan</option>";
+              } if ($_GET['project-start-M'] == "4") {
+                echo "<option value = \"4\">Jan</option>";
+              } if ($_GET['project-start-M'] == "5") {
+                echo "<option value = \"5\">Jan</option>";
+              } if ($_GET['project-start-M'] == "6") {
+                echo "<option value = \"6\">Jan</option>";
+              } if ($_GET['project-start-M'] == "7") {
+                echo "<option value = \"7\">Jan</option>";
+              } if ($_GET['project-start-M'] == "8") {
+                echo "<option value = \"8\">Jan</option>";
+              } if ($_GET['project-start-M'] == "9") {
+                echo "<option value = \"9\">Jan</option>";
+              } if ($_GET['project-start-M'] == "10") {
+                echo "<option value = \"10\">Jan</option>";
+              } if ($_GET['project-start-M'] == "11") {
+                echo "<option value = \"11\">Jan</option>";
+              } if ($_GET['project-start-M'] == "12") {
+                echo "<option value = \"12\">Jan</option>";
+              } 
+              echo "<option value = \"-1\">MM</option>";
+            }
+          } else { 
+            echo "<option value = \"-1\">MM</option>";
+          }
+        ?>
+        <option value = "1">Jan</option>
+        <option value = "2">Feb</option>
+        <option value = "3">Mar</option>
+        <option value = "4">Apr</option>
+        <option value = "5">May</option>
+        <option value = "6">Jun</option>
+        <option value = "7">Jul</option>
+        <option value = "8">Aug</option>
+        <option value = "9">Sep</option>
+        <option value = "10">Oct</option>
+        <option value = "11">Nov</option>
+        <option value = "12">Dec</option>
+       </select>
+       <input type = "number" placeholder = "YYYY" style = "width:57px;" name = "project-start-Y" id = "project-start-Y" min = "1900" value = <?php if (isset($_GET['project-start-Y'])) echo $_GET['project-start-Y']; ?>></td>
+    </tr>
+    <tr>
+      <td><b>Project Expiry </b></td>
+      <td>
+      <select name = "project-expiry-D" style = "width:44px;" id = "project-expiry-D">
+          <?php
+            if (isset($_GET['project-expiry-D'])){
+              if ($_GET['project-expiry-D'] == "-1") {
+                echo "<option value = \"-1\">DD</option>";
+              } else {
+                echo "<option value = \"".$_GET['project-expiry-D']."\">".$_GET['project-expiry-D']."</option>";
+                echo "<option value = \"-1\">DD</option>";
               }
-              ?>
-            </select>
-            <select name = "project-start-M" style = "width:50px;" id = "project-start-M">
-              <?php
-              if (isset($_GET['project-start-M'])){
-                if ($_GET['project-start-M'] == "-1") {
-                  echo "<option value = \"-1\">MM</option>";
-                } else {
-                  if ($_GET['project-start-M'] == "1") {
-                    echo "<option value = \"1\">Jan</option>";
-                  } else if ($_GET['project-start-M'] == "2") {
-                    echo "<option value = \"2\">Jan</option>";
-                  } if ($_GET['project-start-M'] == "3") {
-                    echo "<option value = \"3\">Jan</option>";
-                  } if ($_GET['project-start-M'] == "4") {
-                    echo "<option value = \"4\">Jan</option>";
-                  } if ($_GET['project-start-M'] == "5") {
-                    echo "<option value = \"5\">Jan</option>";
-                  } if ($_GET['project-start-M'] == "6") {
-                    echo "<option value = \"6\">Jan</option>";
-                  } if ($_GET['project-start-M'] == "7") {
-                    echo "<option value = \"7\">Jan</option>";
-                  } if ($_GET['project-start-M'] == "8") {
-                    echo "<option value = \"8\">Jan</option>";
-                  } if ($_GET['project-start-M'] == "9") {
-                    echo "<option value = \"9\">Jan</option>";
-                  } if ($_GET['project-start-M'] == "10") {
-                    echo "<option value = \"10\">Jan</option>";
-                  } if ($_GET['project-start-M'] == "11") {
-                    echo "<option value = \"11\">Jan</option>";
-                  } if ($_GET['project-start-M'] == "12") {
-                    echo "<option value = \"12\">Jan</option>";
-                  } 
-                  echo "<option value = \"-1\">MM</option>";
-                }
-              } else { 
-                echo "<option value = \"-1\">MM</option>";
-              }
-              ?>
-              <option value = "1">Jan</option>
-              <option value = "2">Feb</option>
-              <option value = "3">Mar</option>
-              <option value = "4">Apr</option>
-              <option value = "5">May</option>
-              <option value = "6">Jun</option>
-              <option value = "7">Jul</option>
-              <option value = "8">Aug</option>
-              <option value = "9">Sep</option>
-              <option value = "10">Oct</option>
-              <option value = "11">Nov</option>
-              <option value = "12">Dec</option>
-            </select>
-            <input type = "number" placeholder = "YYYY" style = "width:57px;" name = "project-start-Y" id = "project-start-Y" min = "1900" value = <?php if (isset($_GET['project-start-Y'])) echo $_GET['project-start-Y']; ?>></td>
-          </tr>
-          <tr>
-            <td><b>Project Expiry </b></td>
-            <td>
-              <select name = "project-expiry-D" style = "width:44px;" id = "project-expiry-D">
-                <?php
-                if (isset($_GET['project-expiry-D'])){
-                  if ($_GET['project-expiry-D'] == "-1") {
-                    echo "<option value = \"-1\">DD</option>";
-                  } else {
-                    echo "<option value = \"".$_GET['project-expiry-D']."\">".$_GET['project-expiry-D']."</option>";
-                    echo "<option value = \"-1\">DD</option>";
-                  }
-                } else { 
-                  echo "<option value = \"-1\">DD</option>";
-                }
+            } else { 
+              echo "<option value = \"-1\">DD</option>";
+            }
 
-                $num = 1;
-                while($num <= 31) {
-                  echo "<option value = \"".$num."\">".$num."</option>";
-                  $num = $num + 1;
-                }
-                ?>
-              </select>
-              <select name = "project-expiry-M" style = "width:50px;" id = "project-expiry-M">
-                <?php
-                if (isset($_GET['project-expiry-M'])){
-                  if ($_GET['project-expiry-M'] == "-1") {
-                    echo "<option value = \"-1\">MM</option>";
-                  } else {
-                    if ($_GET['project-expiry-M'] == "1") {
-                      echo "<option value = \"1\">Jan</option>";
-                    } else if ($_GET['project-expiry-M'] == "2") {
-                      echo "<option value = \"2\">Jan</option>";
-                    } if ($_GET['project-expiry-M'] == "3") {
-                      echo "<option value = \"3\">Jan</option>";
-                    } if ($_GET['project-expiry-M'] == "4") {
-                      echo "<option value = \"4\">Jan</option>";
-                    } if ($_GET['project-expiry-M'] == "5") {
-                      echo "<option value = \"5\">Jan</option>";
-                    } if ($_GET['project-expiry-M'] == "6") {
-                      echo "<option value = \"6\">Jan</option>";
-                    } if ($_GET['project-expiry-M'] == "7") {
-                      echo "<option value = \"7\">Jan</option>";
-                    } if ($_GET['project-expiry-M'] == "8") {
-                      echo "<option value = \"8\">Jan</option>";
-                    } if ($_GET['project-expiry-M'] == "9") {
-                      echo "<option value = \"9\">Jan</option>";
-                    } if ($_GET['project-expiry-M'] == "10") {
-                      echo "<option value = \"10\">Jan</option>";
-                    } if ($_GET['project-expiry-M'] == "11") {
-                      echo "<option value = \"11\">Jan</option>";
-                    } if ($_GET['project-expiry-M'] == "12") {
-                      echo "<option value = \"12\">Jan</option>";
-                    } 
-                    echo "<option value = \"-1\">MM</option>";
-                  }
-                } else { 
-                  echo "<option value = \"-1\">MM</option>";
-                }
-                ?>
-                <option value = "1">Jan</option>
-                <option value = "2">Feb</option>
-                <option value = "3">Mar</option>
-                <option value = "4">Apr</option>
-                <option value = "5">May</option>
-                <option value = "6">Jun</option>
-                <option value = "7">Jul</option>
-                <option value = "8">Aug</option>
-                <option value = "9">Sep</option>
-                <option value = "10">Oct</option>
-                <option value = "11">Nov</option>
-                <option value = "12">Dec</option>
-              </select>
+            $num = 1;
+            while($num <= 31) {
+              echo "<option value = \"".$num."\">".$num."</option>";
+              $num = $num + 1;
+            }
+          ?>
+       </select>
+       <select name = "project-expiry-M" style = "width:50px;" id = "project-expiry-M">
+        <?php
+          if (isset($_GET['project-expiry-M'])){
+            if ($_GET['project-expiry-M'] == "-1") {
+              echo "<option value = \"-1\">MM</option>";
+            } else {
+              if ($_GET['project-expiry-M'] == "1") {
+                echo "<option value = \"1\">Jan</option>";
+              } else if ($_GET['project-expiry-M'] == "2") {
+                echo "<option value = \"2\">Jan</option>";
+              } if ($_GET['project-expiry-M'] == "3") {
+                echo "<option value = \"3\">Jan</option>";
+              } if ($_GET['project-expiry-M'] == "4") {
+                echo "<option value = \"4\">Jan</option>";
+              } if ($_GET['project-expiry-M'] == "5") {
+                echo "<option value = \"5\">Jan</option>";
+              } if ($_GET['project-expiry-M'] == "6") {
+                echo "<option value = \"6\">Jan</option>";
+              } if ($_GET['project-expiry-M'] == "7") {
+                echo "<option value = \"7\">Jan</option>";
+              } if ($_GET['project-expiry-M'] == "8") {
+                echo "<option value = \"8\">Jan</option>";
+              } if ($_GET['project-expiry-M'] == "9") {
+                echo "<option value = \"9\">Jan</option>";
+              } if ($_GET['project-expiry-M'] == "10") {
+                echo "<option value = \"10\">Jan</option>";
+              } if ($_GET['project-expiry-M'] == "11") {
+                echo "<option value = \"11\">Jan</option>";
+              } if ($_GET['project-expiry-M'] == "12") {
+                echo "<option value = \"12\">Jan</option>";
+              } 
+              echo "<option value = \"-1\">MM</option>";
+            }
+          } else { 
+            echo "<option value = \"-1\">MM</option>";
+          }
+        ?>
+        <option value = "1">Jan</option>
+        <option value = "2">Feb</option>
+        <option value = "3">Mar</option>
+        <option value = "4">Apr</option>
+        <option value = "5">May</option>
+        <option value = "6">Jun</option>
+        <option value = "7">Jul</option>
+        <option value = "8">Aug</option>
+        <option value = "9">Sep</option>
+        <option value = "10">Oct</option>
+        <option value = "11">Nov</option>
+        <option value = "12">Dec</option>
+       </select>
 
-              <input type = "number" placeholder = "YYYY" style = "width:57px;" name = "project-expiry-Y" id = "project-expiry-Y" min = "1900" value = <?php if (isset($_GET['project-expiry-Y'])) echo $_GET['project-expiry-Y']; ?>></td>
-            </tr>
-          </table>
+       <input type = "number" placeholder = "YYYY" style = "width:57px;" name = "project-expiry-Y" id = "project-expiry-Y" min = "1900" value = <?php if (isset($_GET['project-expiry-Y'])) echo $_GET['project-expiry-Y']; ?>></td>
+    </tr>
+  </table>
 
-          <div style = "text-align:center;"><input type="submit" value="Submit" class="button" name="adv-search-submit-btn"></div>
-        </form>
-        <!-- END ADV SEARCH FORM-->
-  </div>
-</div> <!-- END CONTAINER-->
+  <div style = "text-align:center;"><input type="submit" value="Submit" class="button" name="adv-search-submit-btn"></div>
+  </form>
+<!-- END ADV SEARCH FORM-->
 
 <!-- START SEARCH QUERIES-->
   <?php
@@ -581,7 +591,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 <!-- LOOK FOR SOME DATE PICKER -->
 
 
-
+</div> <!-- END CONTAINER-->
 <!-- END SEARCH QUERIES-->
 
 <!-- START PRINT-->
