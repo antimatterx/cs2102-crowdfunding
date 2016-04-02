@@ -200,8 +200,9 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
 <!--start of middle content-->
 <div class = "container">
-      <!-- display whether the user is logged in -->
-    <p style = "text-align: right; " id="login_display"><?php echo $log_status_string ?></p>
+  
+  <!-- display whether the user is logged in -->
+  <p style = "text-align: right; " id="login_display"><?php echo $log_status_string ?></p>
 
   <!--start of top big picture and intro-->
   <div = class = "row">      
