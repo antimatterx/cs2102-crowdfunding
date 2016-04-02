@@ -1,10 +1,11 @@
+<?php session_start(); ?>
 
-
-  <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>Uptown Fund &raquo; Your One-Stop Crowdfunding Hub</title>
 <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
@@ -30,6 +31,23 @@ $db = "test";
 
 $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     or die('Could not connect: ' . pg_last_error());
+?>
+
+<?php 
+  $isAdmin = $_SESSION['email'];
+
+  $sql = "SELECT p.admin FROM person p WHERE p.email = '" . $isAdmin . "';";
+
+  echo "<br><br><br><br><h1>" . $sql . "</h1>";
+  $result = pg_query($sql) or die("Query failed: " . pg_last_error());
+
+  $isAdmin = pg_fetch_array($result);
+  $isAdmin = $isAdmin['admin'];
+  $isAdmin = ($isAdmin == "Y");
+
+  if (!$isAdmin) {
+    echo "<meta http-equiv='refresh' content='0; login.php'/>";      
+  }
 ?>
 
 

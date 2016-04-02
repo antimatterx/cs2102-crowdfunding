@@ -14,19 +14,17 @@ $curr_id = $_GET['id'];
 //$curr_id = 2;
 $sql = "SELECT p.id AS ID, 
         p.title AS Title,
-        c.firstname AS Creator,
+        p.creator AS Creator,
         to_char(p.start, 'DD/MM/YYYY') AS Start,
         to_char(p.expiry, 'DD/MM/YYYY') AS Expiry,
         p.target AS Target,
         p.status AS Status,
         p.country AS Country
-        FROM project p, donation d, person c, has_category h 
-        WHERE d.project = p.id 
-        AND h.id = p.id
-        AND c.email = p.creator
-        AND p.id = $curr_id
-        GROUP BY p.id, p.title, c.firstname, p.start, p.expiry, p.target, p.status
-        ORDER BY p.id;";
+        FROM project p 
+        WHERE p.id = $curr_id
+        GROUP BY p.id, p.title, p.start, p.expiry, p.target, p.status
+        ORDER BY p.id = " . $curr_id;
+// echo "<br><br><br><br><h1>" . $sql . "</h1>";
 $result = pg_query($dbcon, $sql);
 if (!$result || pg_num_rows($result) == 0) {
     echo "Nothing here but us chickens";
