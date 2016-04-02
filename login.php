@@ -1,10 +1,3 @@
-<?php
-$host = "localhost";
-$user = "postgres";
-$pass = "password";
-$db = "test";
-$dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass") or die('Could not connect: ' . pg_last_error());
-?>
 <html>
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
