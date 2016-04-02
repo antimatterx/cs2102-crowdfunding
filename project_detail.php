@@ -41,48 +41,6 @@
     </script>
 </head>
 
-<?php
-$host = "localhost";
-$user = "postgres";
-$pass = "password";
-$db = "test";
-
-$dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
-or die('Could not connect: ' . pg_last_error());
-session_start();
-$curr_id = $_GET['id'];
-//$curr_id = 2;
-$sql = "SELECT * FROM project
-        WHERE id=$curr_id;";
-$result = pg_query($dbcon, $sql);
-if (!$result || pg_num_rows($result) == 0) {
-    echo "Nothing here but us chickens";
-}
-else {
-$received_query = "SELECT SUM(amount) FROM donation WHERE project=$curr_id;";
-if (is_null($received_query))
-    $donated = pg_fetch_assoc(pg_query($dbcon,$received_query))['sum'];
-else
-    $donated = 0;
-$image = pg_fetch_assoc($pic_query)['data'];
-$row = pg_fetch_assoc($result);
-$creator = $row['creator'];
-$title  = $row['title'];
-$description = $row['description'];
-$start = $row['start'];
-$expiry = $row['expiry'];
-$country = $row['country'];
-$target = $row['target'];
-$status = $row['status'];
-//category query
-$cat_sql = "SELECT tag FROM has_category WHERE id=$curr_id;";
-$cat_result = pg_query($dbcon, $cat_sql);
-$category = "";
-while ($cat_row = pg_fetch_array($cat_result)) {
-    $category = $category . ", " . $cat_row['tag'];
-}
-$category = ltrim($category, ",");
-?>
 
 
 <body>
@@ -116,6 +74,48 @@ $category = ltrim($category, ",");
         <li class="page-nav-top-posts active"><a href="search.php" id="feature-scroll" class="page-anchor-link">Search</a></li>
     </ul>
     <!--nav bar left side content ends here-->
+        <?php
+        $host = "localhost";
+        $user = "postgres";
+        $pass = "password";
+        $db = "test";
+
+        $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
+        or die('Could not connect: ' . pg_last_error());
+        session_start();
+        $curr_id = $_GET['id'];
+        //$curr_id = 2;
+        $sql = "SELECT * FROM project
+        WHERE id=$curr_id;";
+        $result = pg_query($dbcon, $sql);
+        if (!$result || pg_num_rows($result) == 0) {
+            echo "<br>Nothing here but us chickens<br>";
+        }
+        else {
+        $received_query = "SELECT SUM(amount) FROM donation WHERE project=$curr_id;";
+        if (is_null($received_query))
+            $donated = pg_fetch_assoc(pg_query($dbcon,$received_query))['sum'];
+        else
+            $donated = 0;
+        $image = pg_fetch_assoc($pic_query)['data'];
+        $row = pg_fetch_assoc($result);
+        $creator = $row['creator'];
+        $title  = $row['title'];
+        $description = $row['description'];
+        $start = $row['start'];
+        $expiry = $row['expiry'];
+        $country = $row['country'];
+        $target = $row['target'];
+        $status = $row['status'];
+        //category query
+        $cat_sql = "SELECT tag FROM has_category WHERE id=$curr_id;";
+        $cat_result = pg_query($dbcon, $cat_sql);
+        $category = "";
+        while ($cat_row = pg_fetch_array($cat_result)) {
+            $category = $category . ", " . $cat_row['tag'];
+        }
+        $category = ltrim($category, ",");
+        ?>
 
       <!-- Check if Logged in -->
       <?php 
