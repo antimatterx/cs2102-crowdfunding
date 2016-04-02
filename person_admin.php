@@ -1,16 +1,26 @@
-<?php session_start();?>
-
-<!DOCTYPE html>
+<html>
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Uptown Fund &raquo; Your One-Stop Crowdfunding Hub</title>
-<link rel="stylesheet" id="child-theme-css" href="css/style.css" type="text/css" media="all" />
-<link rel="stylesheet" id="responsive-main-css-css" href="css/responsive-main.min.css" type="text/css" media="all" />
-<link rel="stylesheet" id="responsive-css-css" href="css/responsive.css" type="text/css" media="all" />
-<link rel="stylesheet" id="tb_styles-css" href="css/tb-styles.min.css" type="text/css" media="all" />
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+<script src="js/jquery-2.2.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap.js"></script>
+
+<!--footer files-->
+<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+<link rel = "stylesheet" type = "text/css" href = "css/footer_JH.css">
+
+<!--own css, js links-->
+<link rel = "stylesheet" type = "text/css" href = "css/bodypadding.css">
+<link rel = "stylesheet" type = "text/css" href = "css/style_JH.css">
 
 <?php
 $host = "localhost"; 
@@ -195,279 +205,280 @@ $sql = "SELECT p.email AS EMAIL,
 		jQuery('.page-nav-top-posts').addClass('active');
 	   }
   });
-  
-  jQuery(document).ready(function (){
-//scroll the popular
-  jQuery('#popular-scroll').click(function (){
-            //jQuery(this).animate(function(){
-                jQuery('html, body').animate({
-                    scrollTop: jQuery('#popular-upcoming').offset().top
-                     }, 1000);
-            //});
-        });
-
-//scroll the home button
-		jQuery('#feature-scroll').click(function (){
-            //jQuery(this).animate(function(){
-                jQuery('html, body').animate({
-                    scrollTop: jQuery('#inner').offset().top
-                     }, 1000);
-            //});
-        });
-
-//scroll the category button
-				jQuery('#category-scroll').click(function (){
-            //jQuery(this).animate(function(){
-                jQuery('html, body').animate({
-                    scrollTop: jQuery('#categories').offset().top
-                     }, 1000);
-            //});
-        });
-
-//scroll the country button
-				jQuery('#Countries-scroll').click(function (){
-            //jQuery(this).animate(function(){
-                jQuery('html, body').animate({
-                    scrollTop: jQuery('#countries').offset().top
-                     }, 1000);
-            //});
-        });
-
-
-		  });
 	  </script>
 </head>
+<body>
 
-<body class="home blog header-full-width full-width-content">
-	<div id="header">
-		<div class="site-header">
-		  <h1 class="site-header-logo-container">
-		    <a>Logo</span>
-		      <img src="images/logo.png" width="100%" id="bigg-logo" alt="Bigg" />
-		    </a>
-		  </h1>
+<div id = "homelinkhere"></div>
 
-			<ul id="page-nav" class="horizontal-list">
-				<li class="page-nav-top-posts active"><a href="index.php" id="feature-scroll" class="page-anchor-link">Home</a></li>
-				<li class="page-nav-popular-posts"><a href="index.php#countries" id="popular-scroll" class="page-anchor-link">Most Popular</a></li>
-				<li class="page-nav-top-posts active"><a href="index.php#categories" id="category-scroll" class="page-anchor-link">Categories</a></li>
-				<li class="page-nav-popular-posts"><a href="index.php#countries" id="Countries-scroll" class="page-anchor-link">Countries</a></li>
-				<li class="page-nav-top-posts active"><a href="search.php" id="feature-scroll" class="page-anchor-link">Search</a></li>
-			</ul>
+<div id="paddingstart"></div>
 
-			<div id="site-nav" class="horizontal-list">
-				<div class="menu-main-menu-container">
-				<ul id="menu-main-menu" class="menu">
-					<li id="menu-item-144" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-144"><a href="/">Sign Up</a></li>
-					<li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="sample-page.htm">Log In</a></li>
-					<li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="sample-page.htm">Host Project</a></li>
-				</ul>
-				</div>
-			</div><!-- #site-nav -->
+<!--nav bar strat here-->
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
 
-			<div id="site-header-bigg-social">
-			</div>  
-		</div>
-	</div>
+    <!--logo img starts here-->    
+    <div class="navbar-header" >
+     <!--  <a class="navbar-brand">Project name</a> -->
+     <a><img src="images/logo.png" height="40px" /></a>                                                                                                                       
+    </div>
+   <!--logo img ends here-->      
 
-	<div id="wrap">
-	    <div id="inner">
-			<div class="wrap">
-				<div id="content-sidebar-wrap">
-						
-					<!-- INSERT CONTENT HERE -->
-					<br><br><br>	
-					<?php
-						if ($email == "") {
-							echo "<h3> Account does not exist!</h3>";
-						} else { 
-							if(isset($_GET['edit-account-submit'])) {
-								if ($_SESSION['success']) {
-									echo "<h3> Changes successful!</h3>";
-								} else {
-									echo "<h3> No Changes Made!</h3>";
-								}
-							}
+   <!--nav content strats here -->
+    <div id="navbar" class="navbar-collapse collapse">
+    <!--nav bar left side content starts here-->          
+    <ul class="nav navbar-nav">
+        <li class="page-nav-top-posts active"><a href="index.php" id="feature-scroll" class="page-anchor-link">Home</a></li>
+
+        <li class="page-nav-popular-posts"><a href="index.php#popular-upcoming" id="popular-scroll" class="page-anchor-link">Most Popular</a></li>
+
+        <li class="page-nav-top-posts active"><a href="index.php#categories" id="feature-scroll" class="page-anchor-link">Categories</a></li>
+
+        <li class="page-nav-popular-posts"><a href="index.php#countries" id="popular-scroll" class="page-anchor-link">Countries</a></li>
+
+        <li class="page-nav-top-posts active"><a href="search.php" id="feature-scroll" class="page-anchor-link">Search</a></li>
+    </ul>
+    <!--nav bar left side content ends here-->
+
+      <!-- Check if Logged in -->
+      <?php 
+      if (!isset($_SESSION['email'])) {
+        $host_url = "login.php";
+        $admin_url = "login.php";
+      } else {
+        $host_url = "new_project.php";
+        $admin_url = "profile.php";
+      }
+      ?>
+
+      <!-- Display Login name -->
+    <?php if (isset($_SESSION['email'])) { ?>
+      <?php $log_button = "Log Out"; ?>
+      <?php $log_url = "logout.php"; ?>
+      <?php $login_query = "SELECT p.firstname, p.lastname, p.admin FROM person p WHERE p.email='$email'"; ?>
+      <?php $name = pg_query($login_query) or die('Query failed: ' . pg_last_error()); ?>
+      <?php $firstname = pg_fetch_result($name, 0, 0); ?>
+      <?php $lastname = pg_fetch_result($name, 0, 1); ?>
+      <?php $is_admin = pg_fetch_result($name, 0, 2); ?>
+      <?php $log_status_string = "You are logged in as " . $firstname . "."; ?>
+
+      <!-- Set Admin/Profile Button and URL -->
+      <?php if($is_admin=='Y') { ?>
+        <?php $profile_button = "Admin"; ?>
+        <?php $profile_url = "admin.php"; ?>
+      <?php } else { ?>
+        <?php $profile_button = "Profile Page"; ?>
+      <?php } ?>
+      <?php pg_free_result($name); ?> 
+      <!-- End Set Admin/Profile Button and URL -->
+    <?php } else { ?>
+      <?php $log_button = "Log In"; ?>
+      <?php $log_url = "login.php" ?>
+      <?php $log_status_string = "You are not logged in" ?>
+    <?php } ?>
+
+
+      <ul class="nav navbar-nav navbar-right">
+        <li id="menu-item-144" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-144"><a href="register.php">Sign Up</a></li>
+        <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142">
+          <a href="<?php echo $log_url ?>"><?php echo $log_button ?></a></li>
+        <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142">
+          <a href="<?php echo $host_url ?>">Host Project</a></li>
+        <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142">
+          <a href="<?php echo $admin_url ?>"><?php echo $profile_button ?></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!--nav bar ends here-->
+<div class = "container">
+	<?php
+	if ($email == "") {
+		echo "<h3> Account does not exist!</h3>";
+	} else { 
+		if(isset($_GET['edit-account-submit'])) {
+			if ($_SESSION['success']) {
+				echo "<h3> Changes successful!</h3>";
+			} else {
+				echo "<h3> No Changes Made!</h3>";
+			}
+		}
+	}
+	?>
+
+
+	<div class = "row"> 
+		<form>
+			<table class = "table">
+			<colgroup>
+				<col width="40%">
+				<col width="60%">
+			</colgroup>
+
+				<tr>
+					<td><b>Email: </b></td>
+					<td>
+						<input class = "form-control" type = "text" name = "person-email" value = 
+						<?php echo "\"".$email."\""; ?>>
+					</td>
+				</tr>
+				<tr>
+					<td><b>First Name: </b></td>
+					<td>
+						<input class = "form-control" type = "text" name = "person-firstname" value = 
+						<?php echo "\"".$firstname."\""; ?>>
+					</td>
+				</tr>
+				<tr>
+					<td><b>Last Name: </b></td>
+					<td>
+						<input class = "form-control" type = "text" name = "person-lastname" value = 
+						<?php echo "\"".$lastname."\""; ?>>
+					</td>
+				</tr>
+				<tr>
+					<td><b>Password: </b></td>
+					<td>
+						<input class = "form-control" type = "text" name = "person-password" value = 
+						<?php echo "\"".$password."\""; ?>>
+					</td>
+				</tr>
+				<tr>
+					<td><b>Sex: </b></td>
+					<td>
+						<?php 
+						if ($sex == "M") {
+							echo "<input type = \"radio\" name = \"person-sex\" value = \"M\" checked> Male ";
+							echo "<input type = \"radio\" name = \"person-sex\" value = \"F\"> Female ";
+							echo "<input type = \"radio\" name = \"person-sex\" value = \"O\"> Other ";
+						} else if ($sex == "F") {
+							echo "<input type = \"radio\" name = \"person-sex\" value = \"M\"> Male ";
+							echo "<input type = \"radio\" name = \"person-sex\" value = \"F\" checked> Female ";
+							echo "<input type = \"radio\" name = \"person-sex\" value = \"O\"> Other ";
+						} else {
+							echo "<input type = \"radio\" name = \"person-sex\" value = \"M\"> M<br>";
+							echo "<input type = \"radio\" name = \"person-sex\" value = \"F\"> F<br>";
+							echo "<input type = \"radio\" name = \"person-sex\" value = \"O\" checked> O<br>";
 						}
-					?>
-
-					<br>
-
-					<div class = "sixcol"> <form>
-						<table border = "0">
-							<col width=\"40%\">
-					        <col width=\"60%\">
-					        <tr>
-					        	<td>
-					        		<th style = "text-align:left;"><b>Email: </b></th>
-				        		</td>
-				        		<td>
-				        			<input style = "width:335px; text-align:left;" type = "text" name = "person-email" value = 
-				        			<?php echo "\"".$email."\""; ?>>
-			        			</td>
-		        			</tr>
-		        			<tr>
-					        	<td>
-					        		<th style = "text-align:left;"><b>First Name: </b></th>
-				        		</td>
-				        		<td>
-				        			<input style = "width:335px; text-align:left;" type = "text" name = "person-firstname" value = 
-				        			<?php echo "\"".$firstname."\""; ?>>
-			        			</td>
-		        			</tr>
-		        			<tr>
-					        	<td>
-					        		<th style = "text-align:left;"><b>Last Name: </b></th>
-				        		</td>
-				        		<td>
-				        			<input style = "width:335px; text-align:left;" type = "text" name = "person-lastname" value = 
-				        			<?php echo "\"".$lastname."\""; ?>>
-			        			</td>
-		        			</tr>
-		        			<tr>
-					        	<td>
-					        		<th style = "text-align:left;"><b>Password: </b></th>
-				        		</td>
-				        		<td>
-				        			<input style = "width:335px; text-align:left;" type = "text" name = "person-password" value = 
-				        			<?php echo "\"".$password."\""; ?>>
-			        			</td>
-		        			</tr>
-					        <tr>
-					        	<td>
-					        		<th style = "text-align:left;"><b>Sex: </b></th>
-				        		</td>
-				        		<td>
-				        			<?php 
-				        				if ($sex == "M") {
-			        						echo "<input type = \"radio\" name = \"person-sex\" value = \"M\" checked> Male ";
-				        					echo "<input type = \"radio\" name = \"person-sex\" value = \"F\"> Female ";
-				        					echo "<input type = \"radio\" name = \"person-sex\" value = \"O\"> Other ";
-				        				} else if ($sex == "F") {
-			        						echo "<input type = \"radio\" name = \"person-sex\" value = \"M\"> Male ";
-				        					echo "<input type = \"radio\" name = \"person-sex\" value = \"F\" checked> Female ";
-				        					echo "<input type = \"radio\" name = \"person-sex\" value = \"O\"> Other ";
-				        				} else {
-				        					echo "<input type = \"radio\" name = \"person-sex\" value = \"M\"> M<br>";
-				        					echo "<input type = \"radio\" name = \"person-sex\" value = \"F\"> F<br>";
-				        					echo "<input type = \"radio\" name = \"person-sex\" value = \"O\" checked> O<br>";
-				        				}
-				        			?>
-			        			</td>
-		        			</tr>
-		        			<tr>
-		        				<td>
-		        					<th style = "text-align:left;"><b>Address: </b></th>
-		        				</td>
-		        				<td>
-				        			<input style = "width:335px; text-align:left;" type = "text" name = "person-address" value = 
-				        			<?php echo "\"".$address."\""; ?>>
-								</td>
-		        			</tr>
-					        <tr>
-					        	<td>
-					        		<th style = "text-align:left;"><b>Date Registered: </b></th>
-					        	</td>
-					        	<td>
-					        		<?php
-					        			$datearray = explode("-", $registerdate);
-					        			$temp = $datearray[2] . "/" . $datearray[1] . "/" . $datearray[0];
-						        		$temp = str_replace("/0", "/", $registerdate);
-									    $temp = ltrim($temp, '0');
+						?>
+					</td>
+				</tr>
+				<tr>
+					<td><b>Address: </b></td>
+					<td>
+						<input class = "form-control" type = "text" name = "person-address" value = 
+						<?php echo "\"".$address."\""; ?>>
+					</td>
+				</tr>
+				<tr>
+					<td><b>Date Registered: </b></td>
+					<td>
+						<?php
+						$datearray = explode("-", $registerdate);
+						$temp = $datearray[2] . "/" . $datearray[1] . "/" . $datearray[0];
+						$temp = str_replace("/0", "/", $registerdate);
+						$temp = ltrim($temp, '0');
 									    echo "<p>" . $temp . "</p>"; #start
-								    ?>
-						        </td>
-					        </tr>
-					        <tr>
-					        	<td>
-					        		<th style = "text-align:left;"><b>Phone Number: </b></th>
-				        		</td>
-				        		<td>
-					        		<input style = "width:335px; text-align:left;" type = "text" name = "person-phone" value = 
-				        			<?php echo "\"".$phone."\""; ?>>
-								</td>
-							</tr>
-		        			<tr>
-					        	<td>
-					        		<th style = "text-align:left;"><b>Admin: </b></th>
-				        		</td>
-				        		<td>
-				        			<?php 
-				        				if ($admin == "Y") {
-			        						echo "<input type = \"radio\" name = \"person-admin\" value = \"Y\" checked> Yes ";
-				        					echo "<input type = \"radio\" name = \"person-admin\" value = \"N\"> No";
-				        				} else {
-				        					echo "<input type = \"radio\" name = \"person-admin\" value = \"Y\"> Yes ";
-				        					echo "<input type = \"radio\" name = \"person-admin\" value = \"N\" checked> No ";
-				        				}
-				        			?>
-			        			</td>
-					        </tr>
-				        </table>
-				        <input type="submit" value="Apply Changes" class="button" name="edit-account-submit">
-				    </form>
-				    </div> <!-- end of sixcol-->
-				</div><!-- end #content-sidebar-wrap -->
-			</div><!-- end .wrap -->
-	    </div><!-- end #inner --> 
-		<div id="bigg-footer">
-			<div class="wrap">
-				<div class="twocol">
-					<div id="text-2" class="widget widget_text">
-						<div class="widget-wrap">
-							<h5 class="widgettitle">Company</h5>			
-							<div class="textwidget">
-								<ul class="plain-list">
-									<li><a href="#">About</a></li>
-									<li><a href="#">Jobs</a></li>
-									<li><a href="#">Contact</a></li>
-									<li><a href="#">Terms</a></li>
-									<li><a href="#">Privacy</a></li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-			    <div class="twocol">
-				    <div id="text-3" class="widget widget_text">
-						<div class="widget-wrap"><h5 class="widgettitle">Community</h5>			
-							<div class="textwidget">
-								<ul class="plain-list">
-									<li><a href="#">Blog</a></li>
-									<li><a href="#">Twitter</a></li>
-									<li><a href="#">Facebook</a></li>
-									<li><a href="#">Help</a></li>
-								</ul>
-							</div>
-						</div>
-				    </div>
-				</div>
-				<div class="fourcol">
-					<div id="text-4" class="widget widget_text">
-						<div class="widget-wrap"><h5 class="widgettitle"></h5>			
-							<div class="textwidget"><p></p>
-								<div>
-								</div>
-							</div>
-						 </div>
-					</div>
-				</div>
-				<div class="fourcol last">
-					<div id="text-4" class="widget widget_text">
-						<div class="widget-wrap"><h5 class="widgettitle">Subscribe to the newsletter</h5>			
-							<div class="textwidget"><p>Get news of the latest inventions in your inbox</p>
-								<div>
-									<input type="text" placeholder="Enter your email address" name="email" class="form-field" id="newsletter-email-input">
-									<input type="button" value="Submit" class="button" id="newsletter-email-submit-btn">
-								</div>
-							<p class="legalese"> 
-							Opt-out anytime with one click and we'll never share your information.</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div><!-- end #wrap -->
-		</div>
-	</div>
+									    ?>
+					</td>
+				</tr>
+				<tr>
+					<td><b>Phone Number: </b></td>
+					<td>
+						<input class = "form-control" type = "text" name = "person-phone" value = 
+						<?php echo "\"".$phone."\""; ?>>
+					</td>
+				</tr>
+				<tr>
+					<td><b>Admin: </b></td>
+					<td>
+						<?php 
+						if ($admin == "Y") {
+							echo "<input type = \"radio\" name = \"person-admin\" value = \"Y\" checked> Yes ";
+							echo "<input type = \"radio\" name = \"person-admin\" value = \"N\"> No";
+						} else {
+							echo "<input type = \"radio\" name = \"person-admin\" value = \"Y\"> Yes ";
+							echo "<input type = \"radio\" name = \"person-admin\" value = \"N\" checked> No ";
+						}
+						?>
+					</td>
+				</tr>
+			</table>
+			<div style="text-align: center;">
+				<input type="submit" value="Apply Changes" class="button btn btn-default" name="edit-account-submit">
+			</div>
+			</form>
+		</div> <!-- end of row-->
+</div><!--end of container-->
+
+<!--start of footer-->
+<footer>
+    <div class="footer" id="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3  col-md-3 col-sm-6 col-xs-6">
+                    <h3> Company </h3>
+                    <ul>
+                      <li><a href="#">About</a></li>
+                      <li><a href="#">Jobs</a></li>
+                      <li><a href="#">Contact</a></li>
+                      <li><a href="#">Terms</a></li>
+                      <li><a href="#">Privacy</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3  col-md-3 col-sm-6 col-xs-6">
+                    <h3> Community</h3>
+                    <ul>
+                      <li><a href="#">Blog</a></li>
+                      <li><a href="#">Twitter</a></li>
+                      <li><a href="#">Facebook</a></li>
+                      <li><a href="#">Help</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3  col-md-3 col-sm-6 col-xs-6">
+                  <h3> Career</h3>
+                  <ul>
+                    <li><a href="#">Why Join us</a></li>
+                    <li><a href="#">What do we offer</a></li>
+                    <li><a href="#">Internship</a></li>
+                    <li><a href="#">More information</a></li>
+                  </ul>
+                </div>
+
+                <div class=" col-lg-3  col-md-3 col-sm-6 col-xs-6 ">
+                    <h3> Subscribe </h3>
+                    <ul>
+                        <li>
+                          Get the latest news in your inbox
+                        </li>
+                        <li>
+                            <div class="input-append newsletter-box text-center">
+                                <input type="text" class="full text-center" placeholder="Email ">
+                                <button class="btn  bg-gray" type="button"> Subscribe to the newsletter </button>
+                            </div>
+                        </li>
+                        <li>
+                          Opt-out anytime with one click and we'll never share your information.
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+            <!--/.row--> 
+        </div>
+        <!--/.container--> 
+    </div>
+    <!--/.footer-->
+    
+    <div class="footer-bottom">
+        <div class="container">
+            <p class="pull-left"> Copyright © Uptown Fund Pre Ltd. All right reserved. </p>
+        </div>
+    </div>
+    <!--/.footer-bottom--> 
+</footer>
+<!--end of footer-->
+
 </body>
 </html>
