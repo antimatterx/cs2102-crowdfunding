@@ -45,3 +45,12 @@
 }
 /*end of Categories
 ------------------------------------------------------------ */
+
+
+.overlay {
+  position: absolute;
+  width: 90%;
+  top: 0px;
+  left: 16px;
+  z-index: 1;
+}
