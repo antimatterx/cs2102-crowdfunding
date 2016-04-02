@@ -33,7 +33,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 ?>
 
 
-<?php //session_start(); ?>
+<?php session_start(); ?>
 <script type="text/javascript">
   jQuery(window).scroll(function (event) {
       
