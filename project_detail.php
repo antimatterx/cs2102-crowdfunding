@@ -264,7 +264,7 @@ echo "<img src=$file_name class=\"alignleft post-image\" alt=\"Image Not Found\"
         <h4>You can donate below:</h4>
               <div class="input-group">
                   <span class="input-group-addon" id="basic-addon1">$</span>
-                  <input class = "form-control" id="donation" name="donation" required="required" type="number" aria-describedby="basic-addon1">
+                  <input class = "form-control" id="donation" name="donation" required="required" type="number" min="1" aria-describedby="basic-addon1">
                   <span class="input-group-btn">
                     <input class = "btn btn-default" type="submit" name="donate" value="Donate" />
                 </span>
