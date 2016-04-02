@@ -1,26 +1,14 @@
+<!DOCTYPE HTML>
 
-
-  <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
 <title>Uptown Fund &raquo; Your One-Stop Crowdfunding Hub</title>
-<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css">
-<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
-<script src="js/jquery-2.2.2.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/bootstrap.js"></script>
-
-<!--footer files-->
-<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
-<link rel = "stylesheet" type = "text/css" href = "css/footer_JH.css">
-
-<!--own css, js links-->
-<link rel = "stylesheet" type = "text/css" href = "css/bodypadding.css">
-<link rel = "stylesheet" type = "text/css" href = "css/style_JH.css">
+<link rel="stylesheet" id="child-theme-css" href="css/style.css" type="text/css" media="all" />
+<link rel="stylesheet" id="responsive-main-css-css" href="css/responsive-main.min.css" type="text/css" media="all" />
+<link rel="stylesheet" id="responsive-css-css" href="css/responsive.css" type="text/css" media="all" />
+<link rel="stylesheet" id="tb_styles-css" href="css/tb-styles.min.css" type="text/css" media="all" />
 
 <?php
 $host = "localhost"; 
@@ -32,7 +20,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     or die('Could not connect: ' . pg_last_error());
 ?>
 
-
+<script type="text/javascript" src="js/jquery.js"></script>
 <?php //session_start(); ?>
 <script type="text/javascript">
   jQuery(window).scroll(function (event) {
@@ -52,114 +40,90 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
      }
   });
   
+  jQuery(document).ready(function (){
+  jQuery('#popular-scroll').click(function (){
+            //jQuery(this).animate(function(){
+                jQuery('html, body').animate({
+                    scrollTop: jQuery('#popular-upcoming').offset().top
+                     }, 2000);
+            //});
+        });
+    
+    jQuery('#feature-scroll').click(function (){
+            //jQuery(this).animate(function(){
+                jQuery('html, body').animate({
+                    scrollTop: jQuery('#inner').offset().top
+                     }, 2000);
+            //});
+        });
+      });
     </script>
 </head>
 
-<body>
+<body class="home blog header-full-width full-width-content">
+  <div id="header">
+  <div class="site-header">
+    <h1 class="site-header-logo-container">
+    <a>Logo</span>
+    <img src="images/logo.png" width="100%" id="bigg-logo" alt="Bigg" /></a>
+    </h1>
+      
+            <ul id="page-nav" class="horizontal-list">
+<li class="page-nav-top-posts active"><a href="index.php">Home</a></li>
 
-<div id = "homelinkhere"></div>
+<li class="page-nav-popular-posts"><a href="index.php#countries" id="popular-scroll" class="page-anchor-link">Most Popular</a></li>
 
-<div id="paddingstart"></div>
+<li class="page-nav-top-posts active"><a href="index.php#categories" id="feature-scroll" class="page-anchor-link">Categories</a></li>
 
-<!--nav bar strat here-->
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container">
+<li class="page-nav-popular-posts"><a href="index.php#countries" id="popular-scroll" class="page-anchor-link">Countries</a></li>
 
-    <!--logo img starts here-->    
-    <div class="navbar-header" >
-     <!--  <a class="navbar-brand">Project name</a> -->
-     <a><img src="images/logo.png" height="40px" /></a>                                                                                                                       
-    </div>
-   <!--logo img ends here-->      
+</ul>
 
-   <!--nav content strats here -->
-    <div id="navbar" class="navbar-collapse collapse">
-    <!--nav bar left side content starts here-->          
-    <ul class="nav navbar-nav">
-        <li class="page-nav-top-posts active"><a href="index.php" id="feature-scroll" class="page-anchor-link">Home</a></li>
-
-        <li class="page-nav-popular-posts"><a href="index.php#popular-upcoming" id="popular-scroll" class="page-anchor-link">Most Popular</a></li>
-
-        <li class="page-nav-top-posts active"><a href="index.php#categories" id="feature-scroll" class="page-anchor-link">Categories</a></li>
-
-        <li class="page-nav-popular-posts"><a href="index.php#countries" id="popular-scroll" class="page-anchor-link">Countries</a></li>
-
-        <li class="page-nav-top-posts active"><a href="search.php" id="feature-scroll" class="page-anchor-link">Search</a></li>
-    </ul>
-    <!--nav bar left side content ends here-->
-
-      <!-- Check if Logged in -->
-      <?php 
-      if (!isset($_SESSION['email'])) {
-        $host_url = "login.php";
-        $admin_url = "login.php";
-      } else {
-        $host_url = "new_project.php";
-        $admin_url = "profile.php";
-      }
-      ?>
-
-      <!-- Display Login name -->
-    <?php if (isset($_SESSION['email'])) { ?>
-      <?php $log_button = "Log Out"; ?>
-      <?php $log_url = "logout.php"; ?>
-      <?php $login_query = "SELECT p.firstname, p.lastname, p.admin FROM person p WHERE p.email='$email'"; ?>
-      <?php $name = pg_query($login_query) or die('Query failed: ' . pg_last_error()); ?>
-      <?php $firstname = pg_fetch_result($name, 0, 0); ?>
-      <?php $lastname = pg_fetch_result($name, 0, 1); ?>
-      <?php $is_admin = pg_fetch_result($name, 0, 2); ?>
-      <?php $log_status_string = "You are logged in as " . $firstname . "."; ?>
-
-      <!-- Set Admin/Profile Button and URL -->
-      <?php if($is_admin=='Y') { ?>
-        <?php $profile_button = "Admin"; ?>
-        <?php $profile_url = "admin.php"; ?>
-      <?php } else { ?>
-        <?php $profile_button = "Profile Page"; ?>
-      <?php } ?>
-      <?php pg_free_result($name); ?> 
-      <!-- End Set Admin/Profile Button and URL -->
-    <?php } else { ?>
-      <?php $log_button = "Log In"; ?>
-      <?php $log_url = "login.php" ?>
-      <?php $log_status_string = "You are not logged in" ?>
-    <?php } ?>
-
-
-      <ul class="nav navbar-nav navbar-right">
-        <li id="menu-item-144" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-144"><a href="register.php">Sign Up</a></li>
-        <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142">
-          <a href="<?php echo $log_url ?>"><?php echo $log_button ?></a></li>
-        <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142">
-          <a href="<?php echo $host_url ?>">Host Project</a></li>
-        <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142">
-          <a href="<?php echo $admin_url ?>"><?php echo $profile_button ?></a></li>
-      </ul>
+<div id="site-nav" class="horizontal-list"><div class="menu-main-menu-container"><ul id="menu-main-menu" class="menu"><li id="menu-item-144" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-144"><a href="/">Sign Up</a></li>
+<li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="sample-page.htm">Log In</a></li>
+</ul></div></div><!-- #site-nav -->
+<div id="site-header-bigg-social">
+<!-- <ul class="horizontal-list">
+<li><a href="https://twitter.com/opendesigns" target="_blank" class="bigg-social-twitter bigg-social-icon image-replace">Twitter</a></li>
+<li><a href="http://www.facebook.com/opendesigns/" target="_blank" class="bigg-social-fb bigg-social-icon image-replace">Facebook</a></li>
+<li><a href="https://plus.google.com/101703942483092652776/posts" target="_blank" class="bigg-social-gplus bigg-social-icon image-replace">Google+</a></li>
+</ul>
+ -->      
+    </div>  
     </div>
   </div>
-</nav>
-<!--nav bar ends here-->
+  <div id="wrap">
+<div id="inner">
+<div class="wrap">
+<div id="content-sidebar-wrap">
+<br><br><br><br>
+</div><!-- end #top--> 
 
 <!-- startsearch -->
-<div class = "container">
-<div class = "row">
+
+<div style = "text-align:center;">
+<br><br><br><br><br><br>
+</div>
+
+<div class = "three col"></div>
+<div class = "three col" style = "text-align:center;">
   <form>
-  <table class = "table">
+  <table border = "0" style="width:60%; text-align: left; margin-left: 30%;">
     <tr>
       <td><b>Project Title </b></td>
-      <td><input class = "form-control" type = "text" name = "project-title" id = "project-title" value = <?php if (isset($_GET['project-title'])) echo $_GET['project-title']; ?>></td>
+      <td><input style = "width:335px; text-align:left;" type = "text" name = "project-title" id = "project-title" value = <?php if (isset($_GET['project-title'])) echo $_GET['project-title']; ?>></td>
     </tr>
     <tr>
       <td><b>Project ID </b></td>
-      <td><input class = "form-control" type = "text" name = "project-ID" id = "project-ID" value = <?php if (isset($_GET['project-ID'])) echo $_GET['project-ID']; ?>></td>
+      <td><input style = "width:335px;" type = "text" name = "project-ID" id = "project-ID" value = <?php if (isset($_GET['project-ID'])) echo $_GET['project-ID']; ?>></td>
     </tr>
     <tr>
       <td><b>Creator's First Name </b></td>
-      <td><input class = "form-control" type = "text" name = "project-firstname" id = "project-firstname" value = <?php if (isset($_GET['project-firstname'])) echo $_GET['project-firstname']; ?>></td>
+      <td><input style = "width:335px;" type = "text" name = "project-firstname" id = "project-firstname" value = <?php if (isset($_GET['project-firstname'])) echo $_GET['project-firstname']; ?>></td>
     </tr>
     <tr>
       <td><b>Creator's Last Name </b></td>
-      <td><input class = "form-control" type = "text" name = "project-lastname" id = "project-lastname" value = <?php if (isset($_GET['project-lastname'])) echo $_GET['project-lastname']; ?>></td>
+      <td><input style = "width:335px;" type = "text" name = "project-lastname" id = "project-lastname" value = <?php if (isset($_GET['project-lastname'])) echo $_GET['project-lastname']; ?>></td>
     </tr>
     <tr>
       <td><b>Category </b></td>
@@ -199,7 +163,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     <tr>
       <td><b>Country </b></td>
       <td>
-        <select name = "project-country" class = "form-control" id = "project-country">
+        <select name = "project-country" style = "width:340px;" id = "project-country">
           <?php
             if (isset($_GET['project-country'])){
               echo "<option value = \"".$_GET['project-country']."\">".$_GET['project-country']."</option>";
@@ -228,9 +192,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     <tr>
       <td><b>Project Start Date </b></td>
       <td>
-        <div class = "row">
-        <div class = "col-md-2">
-        <select name = "project-start-D" class = "form-control" id = "project-start-D">
+        <select name = "project-start-D" style = "width:44px;" id = "project-start-D">
           <?php
             if (isset($_GET['project-start-D'])){
               if ($_GET['project-start-D'] == "-1") {
@@ -250,9 +212,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
             }
           ?>
        </select>
-       </div>
-       <div class = "col-md-2">
-       <select name = "project-start-M" class = "form-control" id = "project-start-M">
+       <select name = "project-start-M" style = "width:50px;" id = "project-start-M">
         <?php
           if (isset($_GET['project-start-M'])){
             if ($_GET['project-start-M'] == "-1") {
@@ -302,18 +262,12 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
         <option value = "11">Nov</option>
         <option value = "12">Dec</option>
        </select>
-       </div>
-       <div class = "col-md-2">
-       <input type = "number" placeholder = "YYYY" class = "form-control" name = "project-start-Y" id = "project-start-Y" min = "1900" value = <?php if (isset($_GET['project-start-Y'])) echo $_GET['project-start-Y']; ?>></td>
-       </div>
-    </div>
+       <input type = "number" placeholder = "YYYY" style = "width:57px;" name = "project-start-Y" id = "project-start-Y" min = "1900" value = <?php if (isset($_GET['project-start-Y'])) echo $_GET['project-start-Y']; ?>></td>
     </tr>
     <tr>
       <td><b>Project Expiry </b></td>
       <td>
-      <div class = "row">
-      <div class = "col-md-2">
-      <select name = "project-expiry-D" class = "form-control" id = "project-expiry-D">
+      <select name = "project-expiry-D" style = "width:44px;" id = "project-expiry-D">
           <?php
             if (isset($_GET['project-expiry-D'])){
               if ($_GET['project-expiry-D'] == "-1") {
@@ -333,9 +287,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
             }
           ?>
        </select>
-       </div>
-       <div class = "col-md-2">
-       <select name = "project-expiry-M" class = "form-control" id = "project-expiry-M">
+       <select name = "project-expiry-M" style = "width:50px;" id = "project-expiry-M">
         <?php
           if (isset($_GET['project-expiry-M'])){
             if ($_GET['project-expiry-M'] == "-1") {
@@ -385,16 +337,14 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
         <option value = "11">Nov</option>
         <option value = "12">Dec</option>
        </select>
-       </div>
-       <div class = "col-md-2">
-       <input type = "number" placeholder = "YYYY" class = "form-control" name = "project-expiry-Y" id = "project-expiry-Y" min = "1900" value = <?php if (isset($_GET['project-expiry-Y'])) echo $_GET['project-expiry-Y']; ?>></td>
-       </div>
+
+       <input type = "number" placeholder = "YYYY" style = "width:57px;" name = "project-expiry-Y" id = "project-expiry-Y" min = "1900" value = <?php if (isset($_GET['project-expiry-Y'])) echo $_GET['project-expiry-Y']; ?>></td>
     </tr>
   </table>
 
-  <div style = "text-align:center;"><input type="submit" value="Apply Filter" class="button btn btn-default" name="adv-search-submit-btn"></div>
+  <div style = "text-align:center;"><input type="submit" value="Apply Filter" class="button" name="adv-search-submit-btn"></div>
   </form>
-</div>
+
 <!--   <h1>test35</h1><br> -->
   <?php
     
@@ -528,22 +478,19 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
       array_push($print, $row);
     }
   ?>
+</div>
 
-
+<!-- <p> nothing here</p> -->
 <!-- LOOK FOR SOME DATE PICKER -->
 
 <!-- endsearch -->
-<div class = "row">
+
 <!--START PRINT -->
 <?php
   if (sizeof($print) == 0) {
     echo "<br><br><p>No Results Found</p>";
   } else {
-  echo "<table class=\"table table-striped\">
-    <colgroup>
-        <col width=40%>
-        <col width=60%>
-    </colgroup>
+    echo "<br><table border=\"1\" style=\"border-collapse:collapse;\">
     <col width=\"5%\">
     <col width=\"20%\">
     <col width=\"15%\">
@@ -617,79 +564,68 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
   }
   echo "</table>";
 ?>
+
+
+  </div><!-- end #content-sidebar-wrap -->
+  </div><!-- end .wrap --></div><!-- end #inner --> 
+  <br><br><br><br><br>
+<div id="bigg-footer">
+<div class="wrap">
+        <div class="twocol">
+            <div id="text-2" class="widget widget_text"><div class="widget-wrap"><h5 class="widgettitle">Company</h5>     
+      <div class="textwidget"><ul class="plain-list">
+<li><a href="#">About</a></li>
+<li><a href="#">Jobs</a></li>
+<li><a href="#">Contact</a></li>
+<li><a href="#">Terms</a></li>
+<li><a href="#">Privacy</a></li>
+</ul>
 </div>
+    </div>
+    </div>
+        </div>
+        <div class="twocol">
+            <div id="text-3" class="widget widget_text">
+            <div class="widget-wrap"><h5 class="widgettitle">Community</h5>     
+            <div class="textwidget"><ul class="plain-list">
+<li><a href="#">Blog</a></li>
+<li><a href="#">Twitter</a></li>
+<li><a href="#">Facebook</a></li>
+<li><a href="#">Help</a></li>
+</ul>
 </div>
 
-
-
-<!--start of footer-->
-<footer>
-    <div class="footer" id="footer">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-3  col-md-3 col-sm-6 col-xs-6">
-                    <h3> Company </h3>
-                    <ul>
-                      <li><a href="#">About</a></li>
-                      <li><a href="#">Jobs</a></li>
-                      <li><a href="#">Contact</a></li>
-                      <li><a href="#">Terms</a></li>
-                      <li><a href="#">Privacy</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-3  col-md-3 col-sm-6 col-xs-6">
-                    <h3> Community</h3>
-                    <ul>
-                      <li><a href="#">Blog</a></li>
-                      <li><a href="#">Twitter</a></li>
-                      <li><a href="#">Facebook</a></li>
-                      <li><a href="#">Help</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-3  col-md-3 col-sm-6 col-xs-6">
-                  <h3> Career</h3>
-                  <ul>
-                    <li><a href="#">Why Join us</a></li>
-                    <li><a href="#">What do we offer</a></li>
-                    <li><a href="#">Internship</a></li>
-                    <li><a href="#">More information</a></li>
-                  </ul>
-                </div>
-
-                <div class=" col-lg-3  col-md-3 col-sm-6 col-xs-6 ">
-                    <h3> Subscribe </h3>
-                    <ul>
-                        <li>
-                          Get the latest news in your inbox
-                        </li>
-                        <li>
-                            <div class="input-append newsletter-box text-center">
-                                <input type="text" class="full text-center" placeholder="Email ">
-                                <button class="btn  bg-gray" type="button"> Subscribe to the newsletter </button>
-                            </div>
-                        </li>
-                        <li>
-                          Opt-out anytime with one click and we'll never share your information.
-                        </li>
-                    </ul>
-
-                </div>
-            </div>
-            <!--/.row--> 
-        </div>
-        <!--/.container--> 
     </div>
-    <!--/.footer-->
-    
-    <div class="footer-bottom">
-        <div class="container">
-            <p class="pull-left"> Copyright © Uptown Fund Pre Ltd. All right reserved. </p>
-        </div>
     </div>
-    <!--/.footer-bottom--> 
-</footer>
-<!--end of footer-->
+        </div>
+    <div class="fourcol">
+      <div id="text-4" class="widget widget_text">
+        <div class="widget-wrap"><h5 class="widgettitle"></h5>      
+          <div class="textwidget"><p></p>
 
+          <div>
+
+          </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+        <div class="fourcol last">
+             <div id="text-4" class="widget widget_text"><div class="widget-wrap"><h5 class="widgettitle">Subscribe to the newsletter</h5>      <div class="textwidget"><p>Get news of the latest inventions in your inbox</p>
+
+<div>
+<input type="text" placeholder="Enter your email address" name="email" class="form-field" id="newsletter-email-input"> <input type="button" value="Submit" class="button" id="newsletter-email-submit-btn">
+</div>
+<p class="legalese">
+Opt-out anytime with one click and we'll never share your information.
+</p></div>
+        </div>
+</div>
+ 
+</div><!-- end #wrap -->
+
+
+</div>
 </body>
 </html>
