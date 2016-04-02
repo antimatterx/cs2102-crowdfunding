@@ -136,7 +136,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 <div class = "row">
   <?php
 
-  $query = "SELECT p.id, p.title, p.status FROM has_category h, project p WHERE p.id=h.id AND h.tag='$var_value' ORDER BY p.status DESC, p.title;";
+  $query = "SELECT p.id, p.title, p.status FROM project p WHERE p.country='$country' ORDER BY p.status DESC, p.title;";
   $result = pg_query($query) or die('Query failed: ' . pg_last_error());
   ?>
 
