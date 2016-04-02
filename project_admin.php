@@ -395,20 +395,7 @@ $sql = "SELECT p.id AS ID,
 		<!--image below-->
 		<div class = "col-md-3 col-xs-12">
 			<?php
-			if ($ID == "") {
-				if(isset($_GET['delete-project-submit'])) {
-					echo "<h3> Project has been successfully deleted!</h3>";
-				} else {
-					echo "<h3> Project does not exist!</h3>";
-				}
-			} else { 
-				if(isset($_GET['edit-project-submit'])) {
-					if ($_SESSION['success']) {
-						echo "<h3> Changes successful!</h3>";
-					} else {
-						echo "<h3> No Changes Made!</h3>";
-					}
-				}
+			if ($ID != "") { 
 				$query = "SELECT i.data FROM image i WHERE i.id = ".$ID.";";
 
 				$result = pg_query($query) or die('Query failed: ' . pg_last_error());
@@ -715,6 +702,23 @@ $sql = "SELECT p.id AS ID,
 						</td>
 					</tr>
 				</table>
+				<?php
+					if ($ID == "") {
+						if(isset($_GET['delete-project-submit'])) {
+							echo "<h3> Project has been successfully deleted!</h3>";
+						} else {
+							echo "<h3> Project does not exist!</h3>";
+						}
+					} else {
+						if(isset($_GET['edit-project-submit'])) {
+							if ($_SESSION['success']) {
+								echo "<h3> Changes successful!</h3>";
+							} else {
+								echo "<h3> No Changes Made!</h3>";
+							}
+						}
+					}
+				?>
 				<input type="submit" value="Apply Changes" class="button btn btn-default" name="edit-project-submit">
 				<input style = "background-color:"type="submit" value="Delete Project" class="button btn btn-default" name="delete-project-submit">
 			</form>
