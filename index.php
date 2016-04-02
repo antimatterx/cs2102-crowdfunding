@@ -123,9 +123,11 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
   <div class="container">
 
     <!--logo img starts here-->    
-    <div class="navbar-header" >
+    <div class="navbar-header">
+    
      <!--  <a class="navbar-brand">Project name</a> -->
-     <a><img src="images/logo.png" height="40px" /></a>                                                                                                                       
+     <a><img src="images/logo.png" height="40px"  /></a> 
+                                                                                                                          
     </div>
    <!--logo img ends here-->      
 
