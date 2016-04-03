@@ -451,11 +451,12 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
       $result2 = array();
       $words = explode(" ", $_GET['search-query']);
       $print = array();
+      $past = array();
           
       foreach ($words as $word) {
         if ($word != "") {
           $query = 
-            "(SELECT p.id AS ID,
+            "SELECT p.id AS ID,
             p.title AS Title,
             c.firstname AS FirstName,
             c.lastname AS LastName,
@@ -466,41 +467,27 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
             p.creator AS Email 
             FROM project p, person c
             WHERE c.email = p.creator
-            AND LOWER(p.title) LIKE LOWER('%".$word."%')
-            GROUP BY p.id, p.title, c.firstname, c.lastname, p.start, p.expiry, p.target, p.status, p.creator)
-            UNION
-            (SELECT p.id AS ID,
-            p.title AS Title,
-            c.firstname AS FirstName,
-            c.lastname AS LastName,
-            to_char(p.start, 'DD/MM/YYYY') AS Start,
-            to_char(p.expiry, 'DD/MM/YYYY') AS Expiry,
-            p.target AS Target,
-            p.status AS Status, 
-            p.creator AS Email 
-            FROM project p, person c
-            WHERE c.email = p.creator
-            AND LOWER(c.firstname) LIKE LOWER('%".$word."%')
-            GROUP BY p.id, p.title, c.firstname, c.lastname, p.start, p.expiry, p.target, p.status, p.creator)
-            UNION
-            (SELECT p.id AS ID,
-            p.title AS Title,
-            c.firstname AS FirstName,
-            c.lastname AS LastName,
-            to_char(p.start, 'DD/MM/YYYY') AS Start,
-            to_char(p.expiry, 'DD/MM/YYYY') AS Expiry,
-            p.target AS Target,
-            p.status AS Status, 
-            p.creator AS Email
-            FROM project p, person c
-            WHERE c.email = p.creator
-            AND LOWER(c.lastname) LIKE LOWER('%".$word."%')
-            GROUP BY p.id, p.title, c.firstname, c.lastname, p.start, p.expiry, p.target, p.status, p.creator)";
+            AND (LOWER(p.title) LIKE LOWER('%".$word."%')
+            OR LOWER(c.firstname) LIKE LOWER('%".$word."%')
+            OR LOWER(c.lastname) LIKE LOWER('%".$word."%'))
+            GROUP BY p.id, p.title, c.firstname, c.lastname, p.start, p.expiry, p.target, p.status, p.creator";
 
           #echo "<b>SQL:    </b>".$query."<br><br>";
           $temp = pg_query($query) or die('Query failed: ' . pg_last_error());
           while($row = pg_fetch_array($temp)) {
-            array_push($print, $row);
+			$isFound = false;
+			foreach($past as $proj) {
+				if($proj == $row['id']) {
+					echo "<h1>" . $proj."||". $row['id'] ."</h1>";
+					$isFound = true;
+				}
+			}
+			if(!$isFound) {
+				// echo "<h1>" . $row[0]."||". $row['id'] ."</h1>";
+				array_push($print, $row);
+				array_push($past, $row['id']);
+				// print_r($past);	
+			}
           }
         }
       } 
@@ -558,51 +545,27 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
         $category = $category . " AND '" . $key . "' in (SELECT h1.tag FROM has_category h1 WHERE h1.id = p.id)";
       }
       
-      $query = "";
-      if ($_GET['project-ID'] == "") {
-          "SELECT p.id AS ID,
-          p.title AS Title,
-          c.firstname AS FirstName, 
-          c.lastname AS LastName,
-          to_char(p.start, 'DD/MM/YYYY') AS Start,
-          to_char(p.expiry, 'DD/MM/YYYY') AS Expiry,
-          p.target AS Target,
-          p.status AS Status, 
-          p.creator AS email
-          FROM project p, person c 
-          WHERE c.email = p.creator ".
-          $category . " AND LOWER(p.title) LIKE LOWER('%".$_GET['project-title']."%')
-          AND LOWER(c.firstname) LIKE LOWER('%".$_GET['project-firstname']."%')
-          AND LOWER(c.lastname) LIKE LOWER('%".$_GET['project-lastname']."%')
-          AND LOWER(p.country) LIKE LOWER('%".$_GET['project-country']."%')
-          AND p.start >= '".$startYear."-".$startMonth."-".$startDay."'
-          AND p.expiry <= '".$expiryYear."-".$expiryMonth."-".$expiryDay."'
-          GROUP BY p.id, p.title, c.firstname, c.lastname, p.start, p.expiry, p.target, p.status, p.creator;";
-      } else {
-        $query = 
-        "SELECT p.id AS ID, 
-        p.title AS Title,
-        c.firstname AS FirstName, 
-        c.lastname AS LastName,
-        to_char(p.start, 'DD/MM/YYYY') AS Start,
-        to_char(p.expiry, 'DD/MM/YYYY') AS Expiry,
-        p.target AS Target,
-        p.status AS Status,
-        p.creator AS Email
-        FROM project p, person c 
-        WHERE d.project = p.id ".
-          $category . " AND c.email = p.creator
-        AND LOWER(p.title) LIKE LOWER('%".$_GET['project-title']."%')
-        AND LOWER(c.firstname) LIKE LOWER('%".$_GET['project-firstname']."%')
-        AND LOWER(c.lastname) LIKE LOWER('%".$_GET['project-lastname']."%')
-        AND LOWER(p.country) LIKE LOWER('%".$_GET['project-country']."%')
-        AND p.id = ".$_GET['project-ID']."
-        AND p.start >= '".$startYear."-".$startMonth."-".$startDay."'
-        AND p.expiry <= '".$expiryYear."-".$expiryMonth."-".$expiryDay."'
-        GROUP BY p.id, p.title, c.firstname, c.lastname, p.start, p.expiry, p.target, p.status, p.creator;";
-      }
-      
-      #echo "<b>ADV SQL:    </b>".$query."<br><br>";
+      $query = "SELECT p.id AS ID,
+      p.title AS Title,
+      c.firstname AS FirstName, 
+      c.lastname AS LastName,
+      to_char(p.start, 'DD/MM/YYYY') AS Start,
+      to_char(p.expiry, 'DD/MM/YYYY') AS Expiry,
+      p.target AS Target,
+      p.status AS Status, 
+      p.creator AS email
+      FROM project p, person c 
+      WHERE c.email = p.creator ".
+      $category . " AND LOWER(p.title) LIKE LOWER('%".$_GET['project-title']."%')
+      AND CAST(p.id AS VARCHAR(31)) LIKE '%" . $_GET['project-ID'] . "%'
+      AND LOWER(c.firstname) LIKE LOWER('%".$_GET['project-firstname']."%')
+      AND LOWER(c.lastname) LIKE LOWER('%".$_GET['project-lastname']."%')
+      AND LOWER(p.country) LIKE LOWER('%".$_GET['project-country']."%')
+      AND p.start >= '".$startYear."-".$startMonth."-".$startDay."'
+      AND p.expiry <= '".$expiryYear."-".$expiryMonth."-".$expiryDay."'
+      GROUP BY p.id, p.title, c.firstname, c.lastname, p.start, p.expiry, p.target, p.status, p.creator;";
+   
+      // echo "<b>ADV SQL:    </b>".$query."<br><br>";
       $result = pg_query($query) or die('Query failed: ' . pg_last_error());
     
       $print = array();
@@ -628,18 +591,19 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
       echo "<br><br><p>No Results Found</p>";
     }
   } else {
-    $past = array();
-    echo "<br><br><h4 style = \"text-align:center; border-collapse:collapse;\"> Search Results</h4>";
-    echo "<br><table border=\"1\" >
-    <col width=\"20%\">
+    echo "<br><br><h4 style = \"text-align:center;\"> Search Results</h4>";
+    echo "<br><table border=\"1\" align = 'center'>
+    <col width=\"5%\">
+    <col width=\"25%\">
     <col width=\"15%\">
-    <col width=\"15%\">
     <col width=\"10%\">
     <col width=\"10%\">
     <col width=\"10%\">
     <col width=\"10%\">
     <col width=\"10%\">
+    <col width=\"5%\">
     <tr>
+    <th>ID</th>
     <th>Title</th>
     <th>Creator</th>
     <th>Categories</th>
@@ -651,20 +615,10 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     </tr>";
   
     foreach ($print as $row) {
-      $isPast = false;
-      foreach ($past as $pastVal) {
-        if ($pastVal == $row[0]) {
-          $isPast = true;
-          break;
-        }
-      }
-
-      array_push($past, $row[0]);
-      
-      if (true) { //!$isPast
         echo "<tr>";
+        echo "<td><a href = \"project_detail.php?id=".$row[0]."\">".$row[0]."</a></td>"; #ID
         echo "<td><a href = \"project_detail.php?id=".$row[0]."\">".$row[1]."</a></td>"; #title
-        echo "<td><p>".$row[2]. " " . $row[3] . "</p></td>"; #creator
+        echo "<td>".$row[2]. " " . $row[3] . "</td>"; #creator
         
         #categories
         $q = "SELECT h.tag FROM has_category h WHERE h.id = ".$row[0]." ORDER BY h.tag ASC;";
@@ -697,15 +651,14 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
             if ($col_value == "") {
               $col_value = "0";
             } 
-            echo"$".$col_value.".00";
+            echo"US$".$col_value.".00";
           }
         }
         pg_free_result($res);
 
-        echo "<td>$" . $row[6] . ".00</td>"; #target
+        echo "<td>US$" . $row[6] . ".00</td>"; #target
         echo "<td>" . $row[7] . "</td>"; #status
         echo "</tr>";
-      }
     }
     echo "</table>";
   }
@@ -714,7 +667,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 
   </div><!-- end #content-sidebar-wrap -->
   </div><!-- end .wrap --></div><!-- end #inner --> 
-  <br><br><br><br><br>
+  <br><br><br><br><br><br><br><br><br>
 
 
   <!--start of footer-->

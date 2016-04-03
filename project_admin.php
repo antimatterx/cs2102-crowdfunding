@@ -58,10 +58,7 @@ if(isset($_GET['id'])) {
 $curr_id = $_SESSION['session-ID'];
 
 if (isset($_GET['delete-project-submit'])) { #PROJECT DELETION
-	$sql = "DELETE FROM has_category 
-	WHERE id = " . $curr_id . "; DELETE FROM donation 
-	WHERE project = " . $curr_id . "; DELETE FROM image 
-	WHERE id = ". $curr_id . "; DELETE FROM project 
+	$sql = "DELETE FROM project 
 	WHERE id = ". $curr_id;
 
 	// echo "<br><br><h1>" . $sql . "</h1><br>";
@@ -205,7 +202,7 @@ if (isset($_GET['delete-project-submit'])) { #PROJECT DELETION
 	expiry = '" . $expiry . "', 
 	status = '" . $status . "', 
 	target = '" . $target . "' 
-	WHERE id = " . $curr_id .  ";";
+	WHERE id = " . $curr_id;
 
 	// echo "<br><br><h1>" . $sql . "</h1><br>";
 	pg_query($sql) or die('Query failed: ' . pg_last_error());
@@ -674,7 +671,7 @@ $sql = "SELECT p.id AS ID,
 									if ($col_value == "") {
 										$col_value = "0";
 									} 
-									echo"$".$col_value.".00";
+									echo"US$".$col_value.".00";
 								}
 							}
 							pg_free_result($res);
@@ -686,7 +683,7 @@ $sql = "SELECT p.id AS ID,
 						<th style = "text-align:left;"><b>Target: </b></th>
 
 						<td>
-							<p>$<input class = "form-control" type = "number" name = "project-target" value = <?php echo $target;  ?>>
+							<p>US$<input class = "form-control" type = "number" name = "project-target" value = <?php echo $target;  ?>>
 							</p>
 						</td>
 					</tr>

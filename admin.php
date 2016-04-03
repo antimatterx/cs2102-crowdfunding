@@ -491,7 +491,30 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
         $category = $category . " AND '" . $key . "' in (SELECT h1.tag FROM has_category h1 WHERE h1.id = p.id)";
       }
 
-      if ($_GET['project-ID'] == "") {
+      if ($_GET['project-title'] == "" AND $_GET['project-ID'] == "" AND $_GET['project-country'] == "" AND $_GET['project-start-D'] == "-1" AND $_GET['project-start-M'] == "-1" AND $_GET['project-start-Y'] == "" AND $_GET['project-expiry-D'] == "-1" AND $_GET['project-expiry-M'] == "-1" AND $_GET['project-expiry-Y'] == "" AND sizeof($_GET['project-category']) == 0) {
+          #get people with no projects that fit with the person filters
+          $query1 = "SELECT 
+            c.firstname AS Firstname,
+            c.lastname AS Lastname,
+            c.email AS Email
+            FROM person c, project p, has_category h
+            WHERE (LOWER(c.firstname) LIKE LOWER('%".$_GET['project-firstname']."%')
+            AND LOWER(c.lastname) LIKE LOWER('%".$_GET['project-lastname']."%')) 
+            OR (LOWER(c.firstname) LIKE LOWER('%".$_GET['project-firstname']."%')
+            AND LOWER(c.lastname) LIKE LOWER('%".$_GET['project-lastname']."%')
+            AND h.id = p.id"
+            . $category .
+            " AND c.email = p.creator
+            AND LOWER(p.title) LIKE LOWER('%".$_GET['project-title']."%')
+            AND LOWER(p.country) LIKE LOWER('%".$_GET['project-country']."%')
+            AND p.start >= '".$startYear."-".$startMonth."-".$startDay."'
+            AND p.expiry <= '".$expiryYear."-".$expiryMonth."-".$expiryDay."')
+            GROUP BY c.firstname, c.lastname, c.email
+            ORDER BY c.firstname, c.lastname, c.email";
+
+            // $query1  = "(" . $query1 . ") UNION (" . $query3. ")";
+            // echo "<h1>" . $query1 . "</h1>";
+      } else {
         $query1 = 
           "SELECT 
           c.firstname AS Firstname,
@@ -504,6 +527,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
           AND h.id = p.id"
           . $category .
           " AND c.email = p.creator
+          AND CAST(p.id AS VARCHAR(31)) LIKE '%" . $_GET['project-ID'] . "%'
           AND LOWER(p.title) LIKE LOWER('%".$_GET['project-title']."%')
           AND LOWER(p.country) LIKE LOWER('%".$_GET['project-country']."%')
           AND p.start >= '".$startYear."-".$startMonth."-".$startDay."'
@@ -511,89 +535,30 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
           GROUP BY c.firstname, c.lastname, c.email
           ORDER BY c.firstname, c.lastname";
 
-          
-          $query2 = 
-          "SELECT p.id AS ID,
-          p.title AS Title,
-          to_char(p.start, 'DD/MM/YYYY') AS Start,
-          to_char(p.expiry, 'DD/MM/YYYY') AS Expiry,
-          p.target AS Target,
-          p.status AS Status,
-          p.creator AS Email 
-          FROM project p, person c, has_category h 
-          WHERE h.id = p.id"
-          . $category .
-          " AND c.email = p.creator
-          AND LOWER(p.title) LIKE LOWER('%".$_GET['project-title']."%')
-          AND LOWER(c.firstname) LIKE LOWER('%".$_GET['project-firstname']."%')
-          AND LOWER(c.lastname) LIKE LOWER('%".$_GET['project-lastname']."%')
-          AND LOWER(p.country) LIKE LOWER('%".$_GET['project-country']."%')
-          AND p.start >= '".$startYear."-".$startMonth."-".$startDay."'
-          AND p.expiry <= '".$expiryYear."-".$expiryMonth."-".$expiryDay."'
-          GROUP BY p.id, p.title, p.start, p.expiry, p.target, p.status, p.creator
-          ORDER BY p.creator";
-      } else {
-        #get people with projects that fit with the project filters
-        $query1 = 
-          "SELECT 
-          c.firstname AS Firstname,
-          c.lastname AS Lastname,
-          c.email AS Email 
-          FROM project p, person c, has_category h 
-          WHERE 
-          p.id = " . $_GET['project-ID'] . " 
-          AND LOWER(c.firstname) LIKE LOWER('%".$_GET['project-firstname']."%')
-          AND LOWER(c.lastname) LIKE LOWER('%".$_GET['project-lastname']."%')
-          AND h.id = p.id"
-          . $category .
-          " AND c.email = p.creator
-          AND LOWER(p.title) LIKE LOWER('%".$_GET['project-title']."%')
-          AND LOWER(p.country) LIKE LOWER('%".$_GET['project-country']."%')
-          AND p.start >= '".$startYear."-".$startMonth."-".$startDay."'
-          AND p.expiry <= '".$expiryYear."-".$expiryMonth."-".$expiryDay."'
-          GROUP BY c.firstname, c.lastname, c.email
-          ORDER BY c.firstname, c.lastname";
-
-          // echo "<h1>". $query1 ."</h1>";
-          $query2 = 
-          "SELECT p.id AS ID,
-          p.title AS Title,
-          to_char(p.start, 'DD/MM/YYYY') AS Start,
-          to_char(p.expiry, 'DD/MM/YYYY') AS Expiry,
-          p.target AS Target,
-          p.status AS Status,
-          p.creator AS Email 
-          FROM project p, person c, has_category h 
-          WHERE 
-          p.id = " . $_GET['project-ID'] . "  
-          AND h.id = p.id"
-          . $category .
-          " AND c.email = p.creator
-          AND LOWER(p.title) LIKE LOWER('%".$_GET['project-title']."%')
-          AND LOWER(c.firstname) LIKE LOWER('%".$_GET['project-firstname']."%')
-          AND LOWER(c.lastname) LIKE LOWER('%".$_GET['project-lastname']."%')
-          AND LOWER(p.country) LIKE LOWER('%".$_GET['project-country']."%')
-          AND p.start >= '".$startYear."-".$startMonth."-".$startDay."'
-          AND p.expiry <= '".$expiryYear."-".$expiryMonth."-".$expiryDay."'
-          GROUP BY p.id, p.title, p.start, p.expiry, p.target, p.status, p.creator
-          ORDER BY p.creator";
+          echo "<h1>'$query1'</h1>";
       }
-
-      if ($_GET['project-title'] == "" AND $_GET['project-ID'] == "" AND $_GET['project-country'] == "" AND $_GET['project-start-D'] == "-1" AND $_GET['project-start-M'] == "-1" AND $_GET['project-start-Y'] == "" AND $_GET['project-expiry-D'] == "-1" AND $_GET['project-expiry-M'] == "-1" AND $_GET['project-expiry-Y'] == "" AND sizeof($_GET['project-category']) == 0) {
-        #get people with no projects that fit with the person filters
-        $query3 = "SELECT 
-          p.firstname AS Firstname,
-          p.lastname AS Lastname,
-          p.email AS Email
-          FROM person p
-          WHERE LOWER(p.firstname) LIKE LOWER('%".$_GET['project-firstname']."%')
-          AND LOWER(p.lastname) LIKE LOWER('%".$_GET['project-lastname']."%')
-          ORDER BY p.firstname ASC, p.lastname";
-
-          $query1  = "(" . $query1 . ") UNION (" . $query3. ")";
-          // echo "<h1>" . $query1 . "</h1>";
-      }
-      
+      $query2 = 
+      "SELECT p.id AS ID,
+      p.title AS Title,
+      to_char(p.start, 'DD/MM/YYYY') AS Start,
+      to_char(p.expiry, 'DD/MM/YYYY') AS Expiry,
+      p.target AS Target,
+      p.status AS Status,
+      p.creator AS Email 
+      FROM project p, person c, has_category h 
+      WHERE h.id = p.id"
+      . $category .
+      " AND c.email = p.creator
+      AND CAST(p.id AS VARCHAR(31)) LIKE '%" . $_GET['project-ID'] . "%'
+      AND LOWER(p.title) LIKE LOWER('%".$_GET['project-title']."%')
+      AND LOWER(c.firstname) LIKE LOWER('%".$_GET['project-firstname']."%')
+      AND LOWER(c.lastname) LIKE LOWER('%".$_GET['project-lastname']."%')
+      AND LOWER(p.country) LIKE LOWER('%".$_GET['project-country']."%')
+      AND p.start >= '".$startYear."-".$startMonth."-".$startDay."'
+      AND p.expiry <= '".$expiryYear."-".$expiryMonth."-".$expiryDay."'
+      GROUP BY p.id, p.title, p.start, p.expiry, p.target, p.status, p.creator
+      ORDER BY p.creator";
+    
       #echo "<b>ADV SQL:   </b>".$query."<br><br>";
     }
     // echo "<h1>". $query1 ."</h1>";
@@ -721,12 +686,12 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
             if ($col_value == "") {
               $col_value = "0";
             } 
-            echo"$".$col_value.".00";
+            echo"US$".$col_value.".00";
           }
         }
         pg_free_result($res);
 
-        echo "<td>$" . $proj['target'] . ".00</td>"; #target
+        echo "<td>US$" . $proj['target'] . ".00</td>"; #target
         echo "<td>" . $proj['status'] . "</td>"; #status
         echo "</tr>";
       }
