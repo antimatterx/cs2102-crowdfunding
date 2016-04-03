@@ -533,7 +533,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
           AND p.start >= '".$startYear."-".$startMonth."-".$startDay."'
           AND p.expiry <= '".$expiryYear."-".$expiryMonth."-".$expiryDay."'
           GROUP BY c.firstname, c.lastname, c.email
-          ORDER BY c.firstname, c.lastname";
+          ORDER BY c.firstname, c.lastname, c.email";
 
           echo "<h1>'$query1'</h1>";
       }
