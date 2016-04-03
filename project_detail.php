@@ -206,7 +206,7 @@ $query = "SELECT i.data FROM image i WHERE i.id = $curr_id;";
 
 $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
-echo "<img src=$file_name class=\"alignleft post-image\" alt=\"Image Not Found\" />";
+echo "<img src=$file_name class=\"alignleft post-image\" alt=\"Image Not Found\" style='max-width: 350px;'/>";
 ?>
 </div>
 

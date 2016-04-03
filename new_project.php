@@ -6,11 +6,12 @@ $pass = "password";
 $db = "test";
 $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass") or die('Could not connect: ' . pg_last_error());
 
-$sql = "SELECT p.id FROM project p
-        GROUP BY p.id
-        HAVING p.id >= ALL (
-          SELECT id FROM project
-        );";
+//$sql = "SELECT p.id FROM project p
+//        GROUP BY p.id
+//        HAVING p.id >= ALL (
+//          SELECT id FROM project
+//        );";
+$sql = "SELECT MAX(id) FROM project;";
 $result = pg_query($dbcon, $sql);
 $row = pg_fetch_assoc($result);
 $newid = $row['id'] + 1;
@@ -57,7 +58,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
     $es_data = pg_escape_bytea($data);
     fclose($img);
 
-    $query = "INSERT INTO image(id, data) Values($newid, '$es_data')";
+    $query = "INSERT INTO image(id, data) Values($newid, '$es_data');";
     pg_query($dbcon, $query);
 
     if($result) {
