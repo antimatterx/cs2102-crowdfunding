@@ -31,7 +31,7 @@
 
       $sql = "INSERT INTO person(firstname, lastname, email, password, sex, address, register_date, phone, admin)
               VALUES ('$myfirstname', '$mylastname', '$myemail', '$mypassword', '$mysex', '$myaddress',
-              '$register_date', '$myphone', 'N')";
+              '$register_date', '$myphone', 'N');";
       $result = pg_query($dbcon, $sql);
 
       if(!$result) {
