@@ -223,8 +223,7 @@ $sql = "SELECT p.id AS ID,
     FROM project p, person c
     WHERE c.email = p.creator
     AND p.id = ".$curr_id."
-    GROUP BY p.id, p.title, c.firstname, c.lastname, p.start, p.expiry, p.target, p.status
-    ORDER BY p.id;";
+    GROUP BY p.id, p.title, c.firstname, c.lastname, p.start, p.expiry, p.target, p.status";
 
     // Fetch the image
     $sqlImg = "SELECT data

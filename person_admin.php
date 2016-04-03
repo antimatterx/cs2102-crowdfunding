@@ -180,8 +180,7 @@ $sql = "SELECT p.email AS EMAIL,
     p.admin AS Admin
     FROM person p
     WHERE p.email = '".$curr_id."'
-    GROUP BY p.email, p.firstname, p.lastname, p.password, p.sex, p.register_date, p.address, p.phone, p.admin
-    ORDER BY p.email ASC;";
+    GROUP BY p.email, p.firstname, p.lastname, p.password, p.sex, p.register_date, p.address, p.phone, p.admin";
 
 	// echo"<br><br><br><br><br><h1>" . $sql . "</h1>";
 
