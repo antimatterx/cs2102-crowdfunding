@@ -273,10 +273,13 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
         <?php $profile_url = "admin.php"; ?>
       <?php } else { ?>
         <?php $profile_button = "Profile Page"; ?>
+        <?php $profile_url = "profile.php"; ?>
       <?php } ?>
       <?php pg_free_result($name); ?> 
       <!-- End Set Admin/Profile Button and URL -->
     <?php } else { ?>
+      <?php $profile_button = "Profile Page"; ?>
+      <?php $profile_url = "profile.php"; ?>
       <?php $log_button = "Log In"; ?>
       <?php $log_url = "login.php" ?>
       <?php $log_status_string = "You are not logged in" ?>

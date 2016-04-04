@@ -268,21 +268,25 @@ $sql = "SELECT p.email AS EMAIL,
     <!--nav bar left side content ends here-->
 
       <!-- Check if Logged in -->
+
+      <?php $profile_button = "Profile Page"; ?>
+      <?php $profile_url = "profile.php"; ?>
+      <?php $host_url = "new_project.php"; ?>
+
       <?php 
       if (!isset($_SESSION['email'])) {
         $host_url = "login.php";
-        $admin_url = "login.php";
       } else {
         $host_url = "new_project.php";
-        $admin_url = "profile.php";
       }
       ?>
 
       <!-- Display Login name -->
     <?php if (isset($_SESSION['email'])) { ?>
+      <?php $isAdmin = $_SESSION['email']; ?>
       <?php $log_button = "Log Out"; ?>
       <?php $log_url = "logout.php"; ?>
-      <?php $login_query = "SELECT p.firstname, p.lastname, p.admin FROM person p WHERE p.email='$email'"; ?>
+      <?php $login_query = "SELECT p.firstname, p.lastname, p.admin FROM person p WHERE p.email='$isAdmin'"; ?>
       <?php $name = pg_query($login_query) or die('Query failed: ' . pg_last_error()); ?>
       <?php $firstname = pg_fetch_result($name, 0, 0); ?>
       <?php $lastname = pg_fetch_result($name, 0, 1); ?>
@@ -312,7 +316,7 @@ $sql = "SELECT p.email AS EMAIL,
         <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142">
           <a href="<?php echo $host_url ?>">Host Project</a></li>
         <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142">
-          <a href="<?php echo $admin_url ?>"><?php echo $profile_button ?></a></li>
+          <a href="<?php echo $profile_url ?>"><?php echo $profile_button ?></a></li>
       </ul>
     </div>
   </div>

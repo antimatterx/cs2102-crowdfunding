@@ -155,6 +155,7 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
         $profile_url = "login.php";
       } else {
         $host_url = "new_project.php";
+        $profile_url = "profile.php";
       }
       ?>
 

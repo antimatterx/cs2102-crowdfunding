@@ -44,6 +44,8 @@ $isAdmin = pg_fetch_array($result);
 $isAdmin = $isAdmin['admin'];
 $isAdmin = ($isAdmin == "Y");
 
+
+
 if (!$isAdmin) {
 	echo "<script type='text/javascript'>";
 	echo " $(function(){
@@ -257,8 +259,8 @@ $sql = "SELECT p.id AS ID,
 
 	    $ID = $rowInit[0];
 	    $title  = $rowInit[1];
-	    $firstname = $rowInit[2];
-	    $lastname = $rowInit[3];
+	    $cfirstname = $rowInit[2];
+	    $clastname = $rowInit[3];
 	    $description = $rowInit[4];
 	    $start = $rowInit[5];
 	    $expiry = $rowInit[6];
@@ -333,21 +335,25 @@ $sql = "SELECT p.id AS ID,
     <!--nav bar left side content ends here-->
 
       <!-- Check if Logged in -->
+      <?php $profile_button = "Profile Page"; ?>
+      <?php $profile_url = "profile.php"; ?>
+      <?php $host_url = "new_project.php"; ?>
+      
+      <!-- Check if Logged in -->
       <?php 
       if (!isset($_SESSION['email'])) {
         $host_url = "login.php";
-        $admin_url = "login.php";
       } else {
         $host_url = "new_project.php";
-        $admin_url = "profile.php";
       }
       ?>
 
       <!-- Display Login name -->
     <?php if (isset($_SESSION['email'])) { ?>
+      <?php $isAdmin = $_SESSION['email']; ?>
       <?php $log_button = "Log Out"; ?>
       <?php $log_url = "logout.php"; ?>
-      <?php $login_query = "SELECT p.firstname, p.lastname, p.admin FROM person p WHERE p.email='$email'"; ?>
+      <?php $login_query = "SELECT p.firstname, p.lastname, p.admin FROM person p WHERE p.email='$isAdmin'"; ?>
       <?php $name = pg_query($login_query) or die('Query failed: ' . pg_last_error()); ?>
       <?php $firstname = pg_fetch_result($name, 0, 0); ?>
       <?php $lastname = pg_fetch_result($name, 0, 1); ?>
@@ -377,7 +383,7 @@ $sql = "SELECT p.id AS ID,
         <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142">
           <a href="<?php echo $host_url ?>">Host Project</a></li>
         <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142">
-          <a href="<?php echo $admin_url ?>"><?php echo $profile_button ?></a></li>
+          <a href="<?php echo $profile_url ?>"><?php echo $profile_button ?></a></li>
       </ul>
     </div>
   </div>
@@ -428,7 +434,7 @@ $sql = "SELECT p.id AS ID,
 							<th><b>Creator: </b></th>
 						<td>
 							<?php
-							echo"<p><a href = \"person_admin.php?id=".$email."\">".$firstname . " " . $lastname."</a></p>";
+							echo"<p><a href = \"person_admin.php?id=".$email."\">".$cfirstname . " " . $clastname."</a></p>";
 							?>
 						</td>
 					</tr>
