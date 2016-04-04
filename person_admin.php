@@ -78,17 +78,17 @@ if (isset($_GET['edit-account-submit'])) { #ACCOUNT EDIT
 	}
 
 	if ($_GET['person-firstname'] == "") {
-		$firstname = $_SESSION['session-firstname'];
+		$cfirstname = $_SESSION['session-firstname'];
 		$fnameSuccess = false;
 	} else {
-		$firstname = $_GET['person-firstname'];
+		$cfirstname = $_GET['person-firstname'];
 	}
 
-	$lastname = $_GET['person-lastname'];
-	if ($lastname == "") {
-		$lastname = "NULL";
+	$clastname = $_GET['person-lastname'];
+	if ($clastname == "") {
+		$clastname = "NULL";
 	} else {
-		$lastname = "'" . $lastname . "'";
+		$clastname = "'" . $clastname . "'";
 	}
 
 	if ($_GET['person-password'] == "") {
@@ -148,8 +148,8 @@ if (isset($_GET['edit-account-submit'])) { #ACCOUNT EDIT
 	$password = trim($password);
 	$sql = "UPDATE person 
 	SET email = '" . $email . "',
-	firstname = '" . $firstname . "', 
-	lastname = " . $lastname . ", 
+	firstname = '" . $cfirstname . "', 
+	lastname = " . $clastname . ", 
 	password = '" . $password . "', 
 	sex = '" . $sex . "', 
 	address = " . $address . ", 
@@ -193,8 +193,8 @@ $sql = "SELECT p.email AS EMAIL,
 	    $rowInit = pg_fetch_row($resultInit);
 
 	    $email =  $rowInit[0]; 
-	    $firstname = $rowInit[1];
-	    $lastname =  $rowInit[2];
+	    $cfirstname = $rowInit[1];
+	    $clastname =  $rowInit[2];
 	    $password =  $rowInit[3];
 	    $sex = $rowInit[4];
 	    $registerdate = $rowInit[5];
@@ -340,7 +340,7 @@ $sql = "SELECT p.email AS EMAIL,
 				<tr>
 					<td><b>Email: </b></td>
 					<td>
-						<input class = "form-control" type = "text" name = "person-email" value = 
+						<input class = "form-control" type = "email" name = "person-email" value = 
 						<?php echo "\"".$email."\""; ?>>
 					</td>
 				</tr>
@@ -348,14 +348,14 @@ $sql = "SELECT p.email AS EMAIL,
 					<td><b>First Name: </b></td>
 					<td>
 						<input class = "form-control" type = "text" name = "person-firstname" value = 
-						<?php echo "\"".$firstname."\""; ?>>
+						<?php echo "\"".$cfirstname."\""; ?>>
 					</td>
 				</tr>
 				<tr>
 					<td><b>Last Name: </b></td>
 					<td>
 						<input class = "form-control" type = "text" name = "person-lastname" value = 
-						<?php echo "\"".$lastname."\""; ?>>
+						<?php echo "\"".$clastname."\""; ?>>
 					</td>
 				</tr>
 				<tr>
@@ -407,7 +407,7 @@ $sql = "SELECT p.email AS EMAIL,
 				<tr>
 					<td><b>Phone Number: </b></td>
 					<td>
-						<input class = "form-control" type = "text" name = "person-phone" value = 
+						<input class = "form-control" type = "number" name = "person-phone" value = 
 						<?php echo "\"".$phone."\""; ?>>
 					</td>
 				</tr>

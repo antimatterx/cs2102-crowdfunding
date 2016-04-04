@@ -341,7 +341,7 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 					        		<th style = "text-align:left;"><b>Email: </b></th>
 
 				        		<td>
-				        			<input class = "form-control"  type = "text" name = "person-email" value = 
+				        			<input class = "form-control"  type = "email" name = "person-email" value = 
 				        			<?php echo "\"".$email."\""; ?>>
 			        			</td>
 		        			</tr>
@@ -422,7 +422,7 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 					        		<th style = "text-align:left;"><b>Phone Number: </b></th>
 
 				        		<td>
-					        		<input class = "form-control"  type = "text" name = "person-phone" value = 
+					        		<input class = "form-control"  type = "number" name = "person-phone" value = 
 				        			<?php echo "\"".$phone."\""; ?>>
 								</td>
 							</tr>
