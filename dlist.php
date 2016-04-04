@@ -98,9 +98,10 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 
       <!-- Display Login name -->
     <?php if (isset($_SESSION['email'])) { ?>
+      <?php $is_admin = $_SESSION['email']; ?>
       <?php $log_button = "Log Out"; ?>
       <?php $log_url = "logout.php"; ?>
-      <?php $login_query = "SELECT p.firstname, p.lastname, p.admin FROM person p WHERE p.email='$email'"; ?>
+      <?php $login_query = "SELECT p.firstname, p.lastname, p.admin FROM person p WHERE p.email='$is_admin'"; ?>
       <?php $name = pg_query($login_query) or die('Query failed: ' . pg_last_error()); ?>
       <?php $firstname = pg_fetch_result($name, 0, 0); ?>
       <?php $lastname = pg_fetch_result($name, 0, 1); ?>
@@ -113,6 +114,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
         <?php $profile_url = "admin.php"; ?>
       <?php } else { ?>
         <?php $profile_button = "Profile Page"; ?>
+        <?php $profile_url = "profile.php"; ?>
       <?php } ?>
       <?php pg_free_result($name); ?> 
       <!-- End Set Admin/Profile Button and URL -->
@@ -120,6 +122,8 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
       <?php $log_button = "Log In"; ?>
       <?php $log_url = "login.php" ?>
       <?php $log_status_string = "You are not logged in" ?>
+      <?php $profile_button = "Profile Page"; ?>
+      <?php $profile_url = "login.php"; ?>
     <?php } ?>
 
 
@@ -130,7 +134,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
         <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142">
           <a href="<?php echo $host_url ?>">Host Project</a></li>
         <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142">
-          <a href="<?php echo $admin_url ?>"><?php echo $profile_button ?></a></li>
+          <a href="<?php echo $profile_url ?>"><?php echo $profile_button ?></a></li>
       </ul>
     </div>
   </div>

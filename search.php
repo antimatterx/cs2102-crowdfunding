@@ -135,6 +135,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
       <?php $log_url = "login.php" ?>
       <?php $log_status_string = "You are not logged in" ?>
       <?php $profile_url = "login.php"; ?>
+      <?php $profile_button = ""; ?>
     <?php } ?>
 
       <ul class="nav navbar-nav navbar-right">

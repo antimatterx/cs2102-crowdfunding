@@ -93,7 +93,7 @@
         }
         else {
         $received_query = "SELECT SUM(amount) FROM donation WHERE project=$curr_id;";
-        if (is_null($received_query))
+        if (!is_null($received_query))
             $donated = pg_fetch_assoc(pg_query($dbcon,$received_query))['sum'];
         else
             $donated = 0;
@@ -248,7 +248,7 @@ echo "<img src=$file_name class=\"alignleft post-image\" alt=\"Image Not Found\"
       </tr>
       <tr>
         <th>Currently received</th>
-        <td><?php echo $donated; ?></td>
+        <td><?php echo "US$" . $donated . ".00"; ?></td>
       </tr>
       <tr>
         <th>Current status</th>
