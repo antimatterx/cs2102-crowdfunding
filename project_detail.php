@@ -93,10 +93,10 @@
         }
         else {
         $received_query = "SELECT SUM(amount) FROM donation WHERE project=$curr_id;";
-        if (!is_null($received_query))
-            $donated = pg_fetch_assoc(pg_query($dbcon,$received_query))['sum'];
-        else
-            $donated = 0;
+        
+        $donated = pg_fetch_assoc(pg_query($dbcon,$received_query))['sum'];
+        if (is_null($donated)) 
+        $donated = 0;
         $image = pg_fetch_assoc($pic_query)['data'];
         $row = pg_fetch_assoc($result);
         $creator = $row['creator'];
