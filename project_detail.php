@@ -244,7 +244,7 @@ echo "<img src=$file_name class=\"alignleft post-image\" alt=\"Image Not Found\"
       </tr>
       <tr>
         <th>Target amount:</th>
-        <td><?php echo $target; ?></td>
+        <td><?php echo "US$" . $target . ".00"; ?></td>
       </tr>
       <tr>
         <th>Currently received</th>
