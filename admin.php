@@ -176,7 +176,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     </tr>
     <tr>
       <td><b>Project ID </b></td>
-      <td><input class = "form-control" type = "text" name = "project-ID" id = "project-ID" value = <?php if (isset($_GET['project-ID'])) echo $_GET['project-ID']; ?>></td>
+      <td><input class = "form-control" type = "number" name = "project-ID" id = "project-ID" value = <?php if (isset($_GET['project-ID'])) echo $_GET['project-ID']; ?>></td>
     </tr>
     <tr>
       <td><b>Creator's First Name </b></td>
@@ -494,6 +494,19 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
         $category = $category . " AND '" . $key . "' in (SELECT h1.tag FROM has_category h1 WHERE h1.id = p.id)";
       }
 
+      $project_title = $_GET['project-title'];
+      $project_title = trim($project_title);
+      $project_title = str_replace("'", "''", $project_title);
+
+      $project_firstname = $_GET['project-firstname'];
+      $project_firstname = trim($project_firstname);
+      $project_firstname = str_replace("'", "''", $project_firstname);
+
+      $project_lastname = $_GET['project-lastname'];
+      $project_lastname = trim($project_lastname);
+      $project_lastname = str_replace("'", "''", $project_lastname);
+
+
       if ($_GET['project-title'] == "" AND $_GET['project-ID'] == "" AND $_GET['project-country'] == "" AND $_GET['project-start-D'] == "-1" AND $_GET['project-start-M'] == "-1" AND $_GET['project-start-Y'] == "" AND $_GET['project-expiry-D'] == "-1" AND $_GET['project-expiry-M'] == "-1" AND $_GET['project-expiry-Y'] == "" AND sizeof($_GET['project-category']) == 0) {
           #get people with no projects that fit with the person filters
           $query1 = "SELECT 
@@ -501,14 +514,14 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
             c.lastname AS Lastname,
             c.email AS Email
             FROM person c, project p, has_category h
-            WHERE (LOWER(c.firstname) LIKE LOWER('%".$_GET['project-firstname']."%')
-            AND LOWER(c.lastname) LIKE LOWER('%".$_GET['project-lastname']."%')) 
-            OR (LOWER(c.firstname) LIKE LOWER('%".$_GET['project-firstname']."%')
-            AND LOWER(c.lastname) LIKE LOWER('%".$_GET['project-lastname']."%')
+            WHERE (LOWER(c.firstname) LIKE LOWER('%".$project_firstname."%')
+            AND LOWER(c.lastname) LIKE LOWER('%".$project_lastname."%')) 
+            OR (LOWER(c.firstname) LIKE LOWER('%".$project_firstname."%')
+            AND LOWER(c.lastname) LIKE LOWER('%".$project_lastname."%')
             AND h.id = p.id"
             . $category .
             " AND c.email = p.creator
-            AND LOWER(p.title) LIKE LOWER('%".$_GET['project-title']."%')
+            AND LOWER(p.title) LIKE LOWER('%".$project_title."%')
             AND LOWER(p.country) LIKE LOWER('%".$_GET['project-country']."%')
             AND p.start >= '".$startYear."-".$startMonth."-".$startDay."'
             AND p.expiry <= '".$expiryYear."-".$expiryMonth."-".$expiryDay."')
@@ -525,13 +538,13 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
           c.email AS Email 
           FROM project p, person c, has_category h 
           WHERE 
-          LOWER(c.firstname) LIKE LOWER('%".$_GET['project-firstname']."%')
-          AND LOWER(c.lastname) LIKE LOWER('%".$_GET['project-lastname']."%')
+          LOWER(c.firstname) LIKE LOWER('%".$project_firstname."%')
+          AND LOWER(c.lastname) LIKE LOWER('%".$project_lastname."%')
           AND h.id = p.id"
           . $category .
           " AND c.email = p.creator
           AND CAST(p.id AS VARCHAR(31)) LIKE '%" . $_GET['project-ID'] . "%'
-          AND LOWER(p.title) LIKE LOWER('%".$_GET['project-title']."%')
+          AND LOWER(p.title) LIKE LOWER('%".$project_title."%')
           AND LOWER(p.country) LIKE LOWER('%".$_GET['project-country']."%')
           AND p.start >= '".$startYear."-".$startMonth."-".$startDay."'
           AND p.expiry <= '".$expiryYear."-".$expiryMonth."-".$expiryDay."'
@@ -553,9 +566,9 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
       . $category .
       " AND c.email = p.creator
       AND CAST(p.id AS VARCHAR(31)) LIKE '%" . $_GET['project-ID'] . "%'
-      AND LOWER(p.title) LIKE LOWER('%".$_GET['project-title']."%')
-      AND LOWER(c.firstname) LIKE LOWER('%".$_GET['project-firstname']."%')
-      AND LOWER(c.lastname) LIKE LOWER('%".$_GET['project-lastname']."%')
+      AND LOWER(p.title) LIKE LOWER('%".$project_title."%')
+      AND LOWER(c.firstname) LIKE LOWER('%".$project_firstname."%')
+      AND LOWER(c.lastname) LIKE LOWER('%".$project_lastname."%')
       AND LOWER(p.country) LIKE LOWER('%".$_GET['project-country']."%')
       AND p.start >= '".$startYear."-".$startMonth."-".$startDay."'
       AND p.expiry <= '".$expiryYear."-".$expiryMonth."-".$expiryDay."'

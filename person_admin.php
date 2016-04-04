@@ -70,32 +70,37 @@ if (isset($_GET['edit-account-submit'])) { #ACCOUNT EDIT
 	$phoneSuccess = ($_GET['person-phone'] != $_SESSION['session-phone']);
 	$adminSuccess = ($_GET['person-admin'] != $_SESSION['session-admin']);
 	
-	if ($_GET['person-email'] == "") {
+	$email = $_GET['person-email'];
+	$email = trim($email);
+	$email = str_replace("'", "''", $email);
+	if ($email == "") {
 		$email = $curr_id;
 		$emailSuccess = false;
-	} else {
-		$email = $_GET['person-email'];
 	}
 
-	if ($_GET['person-firstname'] == "") {
+	$cfirstname = $_GET['person-firstname'];
+	$cfirstname = trim($cfirstname);
+	$cfirstname = str_replace("'", "''", $cfirstname);
+	if ($cfirstname == "") {
 		$cfirstname = $_SESSION['session-firstname'];
 		$fnameSuccess = false;
-	} else {
-		$cfirstname = $_GET['person-firstname'];
 	}
 
 	$clastname = $_GET['person-lastname'];
+	$clastname = trim($clastname);
+	$clastname = str_replace("'", "''", $clastname);
 	if ($clastname == "") {
 		$clastname = "NULL";
 	} else {
 		$clastname = "'" . $clastname . "'";
 	}
 
-	if ($_GET['person-password'] == "") {
+	$password = $_GET['person-password'];
+	$password = trim($password);
+	$password = str_replace("'", "''", $password);
+	if ($password == "") {
 		$password = $_SESSION['session-password'];
 		$passwordSuccess = false;
-	} else {
-		$password = $_GET['person-password'];
 	}
 	
 	if ($_GET['person-sex'] != "M" and $_GET['person-sex'] != "F" and $_GET['person-sex'] != "O") {
@@ -106,6 +111,8 @@ if (isset($_GET['edit-account-submit'])) { #ACCOUNT EDIT
 	}
 
 	$address = $_GET['person-address'];
+	$address = trim($address);
+	$address = str_replace("'", "''", $address);
 	if ($address == "") {
 		$address = "NULL";
 	} else {

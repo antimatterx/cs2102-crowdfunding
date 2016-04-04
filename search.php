@@ -204,7 +204,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
         </tr>
         <tr>
           <td><b>Project ID </b></td>
-          <td><input class = "form-control" type = "text" name = "project-ID" id = "project-ID" value = <?php if (isset($_GET['project-ID'])) echo $_GET['project-ID']; ?>></td>
+          <td><input class = "form-control" type = "number" name = "project-ID" id = "project-ID" value = <?php if (isset($_GET['project-ID'])) echo $_GET['project-ID']; ?>></td>
         </tr>
         <tr>
           <td><b>Creator's First Name </b></td>
@@ -484,6 +484,8 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
       $past = array();
           
       foreach ($words as $word) {
+        $word = trim($word);
+        $word = str_replace("'", "''", $word);
         if ($word != "") {
           $query = 
             "SELECT p.id AS ID,
@@ -574,6 +576,19 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
       foreach ($list as $key) {
         $category = $category . " AND '" . $key . "' in (SELECT h1.tag FROM has_category h1 WHERE h1.id = p.id)";
       }
+
+      $project_title = $_GET['project-title'];
+      $project_title = trim($project_title);
+      $project_title = str_replace("'", "''", $project_title);
+
+      $project_firstname = $_GET['project-firstname'];
+      $project_firstname = trim($project_firstname);
+      $project_firstname = str_replace("'", "''", $project_firstname);
+
+      $project_lastname = $_GET['project-lastname'];
+      $project_lastname = trim($project_lastname);
+      $project_lastname = str_replace("'", "''", $project_lastname);
+
       
       $query = "SELECT p.id AS ID,
       p.title AS Title,
@@ -586,10 +601,10 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
       p.creator AS email
       FROM project p, person c 
       WHERE c.email = p.creator ".
-      $category . " AND LOWER(p.title) LIKE LOWER('%".$_GET['project-title']."%')
+      $category . " AND LOWER(p.title) LIKE LOWER('%".$project_title."%')
       AND CAST(p.id AS VARCHAR(31)) LIKE '%" . $_GET['project-ID'] . "%'
-      AND LOWER(c.firstname) LIKE LOWER('%".$_GET['project-firstname']."%')
-      AND LOWER(c.lastname) LIKE LOWER('%".$_GET['project-lastname']."%')
+      AND LOWER(c.firstname) LIKE LOWER('%".$project_firstname."%')
+      AND LOWER(c.lastname) LIKE LOWER('%".$project_lastname."%')
       AND LOWER(p.country) LIKE LOWER('%".$_GET['project-country']."%')
       AND p.start >= '".$startYear."-".$startMonth."-".$startDay."'
       AND p.expiry <= '".$expiryYear."-".$expiryMonth."-".$expiryDay."'

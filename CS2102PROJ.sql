@@ -12,7 +12,7 @@ admin CHAR CHECK(admin='Y' OR admin='N') NOT NULL
 
 CREATE TABLE project (
 id NUMERIC PRIMARY KEY,
-creator VARCHAR(256) REFERENCES person(email),
+creator VARCHAR(256) REFERENCES person(email) ON DELETE CASCADE ON UPDATE CASCADE,
 title VARCHAR(256) NOT NULL,
 description VARCHAR(2048),
 start DATE,
@@ -26,7 +26,7 @@ CREATE TABLE donation (
 time TIMESTAMP, -- must be later than the project start and earlier than project end
 donor VARCHAR(256) REFERENCES person(email) ON DELETE CASCADE ON UPDATE CASCADE,
 amount NUMERIC NOT NULL CHECK(amount > 0),
-project NUMERIC REFERENCES project(id) ON DELETE CASCADE,
+project NUMERIC REFERENCES project(id) ON DELETE CASCADE ON UPDATE CASCADE,
 PRIMARY KEY(time, donor, project)
 );
 
@@ -35,7 +35,7 @@ name VARCHAR(64) PRIMARY KEY
 );
 
 CREATE TABLE has_category (
-id NUMERIC REFERENCES project(id) ON DELETE CASCADE,
+id NUMERIC REFERENCES project(id) ON DELETE CASCADE ON UPDATE CASCADE,
 tag VARCHAR(64) REFERENCES category(name) ON DELETE CASCADE ON UPDATE CASCADE,
 PRIMARY KEY(id, tag)
 );

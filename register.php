@@ -20,10 +20,15 @@
 
 
        $myfirstname = trim($_GET['firstname']);
+       $myfirstname = str_replace("'", "''", $myfirstname);
        $mylastname = trim($_GET['lastname']);
+       $mylastname = str_replace("'", "''", $mylastname);
        $myemail = trim($_GET['email']);
+       $myfirstname = str_replace("'", "''", $myemail);
        $mypassword = $_GET['password'];
        $mypassword2 = $_GET['password_confirm'];
+       $mypassword = str_replace("'", "''", $mypassword);
+       $mypassword2 = str_replace("'", "''", $mypassword2);
        $mysex = $_GET['sex'];
        $myaddress = $_GET['address'];
        $myphone = $_GET['phone'];

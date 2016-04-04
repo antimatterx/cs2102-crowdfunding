@@ -94,14 +94,17 @@ if (isset($_GET['delete-project-submit'])) { #PROJECT DELETION
 
 	$list = $_GET['project-category'];
 	
-	if ($_GET['project-title'] == "") {
+	$title = $_GET['project-title'];
+	$title = trim($title);
+	$title = str_replace("'", "''", $title);
+	if ($title == "") {
 		$title = $_SESSION['session-title'];
 		$titleSuccess = false;
-	} else {
-		$title = $_GET['project-title'];
 	}
 
 	$description = $_GET['project-description'];
+	$description = trim($description);
+	$description = str_replace("'", "''", $description);
 	if ($description == "") {
 		$description = "NULL";
 	} else {

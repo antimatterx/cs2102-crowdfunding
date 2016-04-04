@@ -48,33 +48,44 @@ if (isset($_GET['edit-account-submit'])) { #ACCOUNT EDIT
 	$addressSuccess = ($_GET['person-address'] != $_SESSION['session-address']);
 	$phoneSuccess = ($_GET['person-phone'] != $_SESSION['session-phone']);
 	
+
+	$email = $_GET['person-email'];
+	$email = trim($email);
 	if ($_GET['person-email'] == "") {
 		$email = $curr_id;
 		$emailSuccess = false;
 	} else {
 		$email = $_GET['person-email'];
 	}
+	$email = str_replace("'", "''", $email);
 
+	$firstname = $_GET['person-firstname'];
+	$firstname = trim($firstname);
 	if ($_GET['person-firstname'] == "") {
 		$firstname = $_SESSION['session-firstname'];
 		$fnameSuccess = false;
 	} else {
 		$firstname = $_GET['person-firstname'];
 	}
+	$firstname = str_replace("'", "''", $firstname);
+
 
 	$lastname = $_GET['person-lastname'];
+	$lastname = trim($lastname);
 	if ($lastname == "") {
 		$lastname = "NULL";
 	} else {
+		$lastname = str_replace("'", "''", $lastname);
 		$lastname = "'" . $lastname . "'";
 	}
 
-	if ($_GET['person-password'] == "") {
+	$password = $_GET['person-password'];
+	$password = trim($password);
+	if ($password == "") {
 		$password = $_SESSION['session-password'];
 		$passwordSuccess = false;
-	} else {
-		$password = $_GET['person-password'];
-	}
+	} 
+	$password = str_replace("'", "''", $password);
 	
 	if ($_GET['person-sex'] != "M" and $_GET['person-sex'] != "F" and $_GET['person-sex'] != "O") {
 		$sex = $_SESSION['session-sex'];
@@ -84,9 +95,11 @@ if (isset($_GET['edit-account-submit'])) { #ACCOUNT EDIT
 	}
 
 	$address = $_GET['person-address'];
+	$address = trim($address);
 	if ($address == "") {
 		$address = "NULL";
 	} else {
+		$address = str_replace("'", "''", $address);
 		$address = "'" . $address . "'";
 	}
 
@@ -115,6 +128,9 @@ if (isset($_GET['edit-account-submit'])) { #ACCOUNT EDIT
 
 
 	$email = trim($email);
+	$password = trim($password);
+	$firstname = trim($firstname);
+	$lastname = trim($lastname);
 	$password = trim($password);
 	$sql = "UPDATE person 
 	SET email = '" . $email . "',
