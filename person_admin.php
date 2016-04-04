@@ -405,9 +405,9 @@ $sql = "SELECT p.email AS EMAIL,
 						<?php
 						$datearray = explode("-", $registerdate);
 						$temp = $datearray[2] . "/" . $datearray[1] . "/" . $datearray[0];
-						$temp = str_replace("/0", "/", $registerdate);
+						$temp = str_replace("/0", "/", $temp);
 						$temp = ltrim($temp, '0');
-									    echo "<p>" . $temp . "</p>"; #start
+									    echo  $temp; #registerdate
 									    ?>
 					</td>
 				</tr>
