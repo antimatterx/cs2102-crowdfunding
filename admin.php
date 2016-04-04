@@ -538,7 +538,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
           GROUP BY c.firstname, c.lastname, c.email
           ORDER BY c.firstname, c.lastname, c.email";
 
-          echo "<h1>'$query1'</h1>";
+          // echo "<h1>'$query1'</h1>";
       }
       $query2 = 
       "SELECT p.id AS ID,
@@ -598,7 +598,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 <!--START PRINT -->
 <?php
   if (sizeof($nameList) == 0) {
-    echo "<br><br><p>No Results Found</p>";
+    echo "<br><br><p style=\"text-align:center;\">No Results Found</p>";
   } else {
   echo "<table class=\"table table-striped\">
     <colgroup>

@@ -617,7 +617,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
 <?php
   if (sizeof($print) == 0) {
     if(isset($_GET['search-submit-btn']) or isset($_GET['adv-search-submit-btn'])){
-      echo "<br><br><p>No Results Found</p>";
+      echo "<br><br><p style=\"text-align:center;\">No Results Found</p>";
     }
   } else {
     echo "<br><br><h4 style = \"text-align:center;\"> Search Results</h4>";
