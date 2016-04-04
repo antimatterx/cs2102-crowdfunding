@@ -768,7 +768,7 @@ $dbcon = pg_connect("host=$host dbname=$db user=$user password=$pass")
     
     <div class="footer-bottom">
         <div class="container">
-            <p class="pull-left"> Copyright © Uptown Fund Pre Ltd. All right reserved. </p>
+            <p class="pull-left"> Copyright © 2016 Uptown Fund Pte. Ltd. All rights reserved. </p>
         </div>
     </div>
     <!--/.footer-bottom--> 
